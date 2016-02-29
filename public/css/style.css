@@ -1,0 +1,663 @@
+/* line 11, ../sass/style.scss */
+.panel-footer {
+  background-color: transparent  !important;
+}
+
+/* line 16, ../sass/style.scss */
+body {
+  padding-top: 70px;
+}
+
+/* line 50, ../sass/style.scss */
+.separator {
+  margin-bottom: 2px;
+  margin-top: 2px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/* line 66, ../sass/style.scss */
+a {
+  text-decoration: none;
+  color: #78C3AE;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+/* line 73, ../sass/style.scss */
+a:hover {
+  color: #78C3AE;
+}
+
+/* line 77, ../sass/style.scss */
+.row-centered {
+  text-align: center !important;
+}
+
+/* line 81, ../sass/style.scss */
+.col-centered {
+  display: inline-block !important;
+  float: none !important;
+  /* reset the text-align */
+  text-align: left !important;
+  /* inline-block space fix */
+  margin-right: -4px !important;
+}
+
+/* line 90, ../sass/style.scss */
+section {
+  padding: 10px;
+}
+
+/* line 95, ../sass/style.scss */
+footer {
+  border-radius: .25rem;
+  border-color: #000;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* line 103, ../sass/style.scss */
+body {
+  background-color: #FFFFFF !important;
+}
+
+/* line 107, ../sass/style.scss */
+.input-fieldformat {
+  height: 34px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+/* line 124, ../sass/style.scss */
+.input-row {
+  margin-top: 10px;
+}
+
+/* line 130, ../sass/style.scss */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* line 139, ../sass/style.scss */
+footer {
+  border-radius: .25rem;
+  border-color: #000;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
+
+/* line 155, ../sass/style.scss */
+body {
+  background-color: #FFFFFF !important;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+/* line 173, ../sass/style.scss */
+.topbar {
+  border-color: #ffffff;
+  background-color: #FFFFFF;
+}
+
+/* line 207, ../sass/style.scss */
+#landingpage-container {
+  padding-bottom: 30px;
+}
+/* line 211, ../sass/style.scss */
+#landingpage-container *, #landingpage-container *:before, #landingpage-container *:after {
+  box-sizing: border-box;
+}
+/* line 217, ../sass/style.scss */
+#landingpage-container html {
+  overflow-y: scroll;
+}
+/* line 222, ../sass/style.scss */
+#landingpage-container a {
+  text-decoration: none;
+  color: #78C3AE;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+/* line 228, ../sass/style.scss */
+#landingpage-container a:hover {
+  color: #78C3AE;
+}
+/* line 232, ../sass/style.scss */
+#landingpage-container .login-info {
+  padding: 40px;
+  margin: 40px auto;
+  border-radius: 4px;
+}
+/* line 239, ../sass/style.scss */
+#landingpage-container .form {
+  background: #FFFFFF;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+/* line 245, ../sass/style.scss */
+#landingpage-container h1 {
+  color: #2F3131;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+/* line 251, ../sass/style.scss */
+#landingpage-container label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+  transform: translateY(6px);
+  left: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+/* line 263, ../sass/style.scss */
+#landingpage-container label .req {
+  margin: 2px;
+  color: #17949c;
+}
+/* line 268, ../sass/style.scss */
+#landingpage-container label.active {
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+/* line 274, ../sass/style.scss */
+#landingpage-container label.active .req {
+  opacity: 0;
+}
+/* line 278, ../sass/style.scss */
+#landingpage-container label.highlight {
+  color: #ffffff;
+}
+/* line 282, ../sass/style.scss */
+#landingpage-container input, #landingpage-container textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #2F3131;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+/* line 295, ../sass/style.scss */
+#landingpage-container input:focus, #landingpage-container textarea:focus {
+  outline: 0;
+  border-color: #17949c;
+}
+/* line 300, ../sass/style.scss */
+#landingpage-container textarea {
+  border: 2px solid #a0b3b0;
+  resize: vertical;
+}
+/* line 306, ../sass/style.scss */
+#landingpage-container .button {
+  background-color: #1253A4;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  padding: 9px 29px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000B29;
+}
+/* line 326, ../sass/style.scss */
+#landingpage-container .button:hover {
+  background-color: #78C3AE;
+}
+/* line 328, ../sass/style.scss */
+#landingpage-container s
+.button:active {
+  position: relative;
+  top: 1px;
+}
+/* line 334, ../sass/style.scss */
+#landingpage-container .button-block {
+  display: block;
+  width: 100%;
+}
+/* line 339, ../sass/style.scss */
+#landingpage-container .forgot {
+  margin-top: -20px;
+  text-align: right;
+}
+/* line 344, ../sass/style.scss */
+#landingpage-container #lpgreet {
+  background-color: #FFFFFF;
+  padding: 200px;
+}
+/* line 347, ../sass/style.scss */
+#landingpage-container #lpgreet button {
+  padding-left: 30px !important;
+  padding-left: 30px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+/* line 356, ../sass/style.scss */
+#landingpage-container #lpinfo {
+  background-color: #FFFFFF;
+}
+/* line 357, ../sass/style.scss */
+#landingpage-container #lpinfo #lpinfo-heading {
+  text-align: center;
+  margin-bottom: 20px !important;
+}
+
+/* line 399, ../sass/style.scss */
+#login-container .panel {
+  padding: 50px !important;
+}
+/* line 403, ../sass/style.scss */
+#login-container *, #login-container *:before, #login-container *:after {
+  box-sizing: border-box;
+}
+/* line 407, ../sass/style.scss */
+#login-container html {
+  overflow-y: scroll;
+}
+/* line 412, ../sass/style.scss */
+#login-container a {
+  text-decoration: none;
+  color: #78C3AE;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+/* line 418, ../sass/style.scss */
+#login-container a:hover {
+  color: #78C3AE;
+}
+/* line 422, ../sass/style.scss */
+#login-container .login-info {
+  padding: 40px;
+  margin: 40px auto;
+  border-radius: 4px;
+}
+/* line 429, ../sass/style.scss */
+#login-container .form {
+  background: #FFFFFF;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+/* line 435, ../sass/style.scss */
+#login-container h1 {
+  text-align: center;
+  color: #2F3131;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+/* line 442, ../sass/style.scss */
+#login-container label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+  transform: translateY(6px);
+  left: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+/* line 454, ../sass/style.scss */
+#login-container label .req {
+  margin: 2px;
+  color: #17949c;
+}
+/* line 459, ../sass/style.scss */
+#login-container label.active {
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+/* line 465, ../sass/style.scss */
+#login-container label.active .req {
+  opacity: 0;
+}
+/* line 469, ../sass/style.scss */
+#login-container label.highlight {
+  color: #ffffff;
+}
+/* line 473, ../sass/style.scss */
+#login-container input, #login-container textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #2F3131;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+/* line 486, ../sass/style.scss */
+#login-container input:focus, #login-container textarea:focus {
+  outline: 0;
+  border-color: #17949c;
+}
+/* line 491, ../sass/style.scss */
+#login-container textarea {
+  border: 2px solid #a0b3b0;
+  resize: vertical;
+}
+/* line 496, ../sass/style.scss */
+#login-container .field-wrap {
+  position: relative;
+  margin-bottom: 40px;
+}
+/* line 502, ../sass/style.scss */
+#login-container .button {
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #000B29;
+  color: #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+/* line 520, ../sass/style.scss */
+#login-container .button:hover, #login-container .button:focus {
+  background: #78C3AE;
+}
+/* line 524, ../sass/style.scss */
+#login-container .button-block {
+  display: block;
+  width: 100%;
+}
+/* line 529, ../sass/style.scss */
+#login-container .forgot {
+  margin-top: -20px;
+  text-align: right;
+}
+
+/* line 542, ../sass/style.scss */
+.overview-content {
+  padding: 35px;
+}
+
+/* line 548, ../sass/style.scss */
+#overview-mainimg {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* line 584, ../sass/style.scss */
+.createorder-container *, .createorder-container *:before, .createorder-container *:after {
+  box-sizing: border-box;
+}
+/* line 588, ../sass/style.scss */
+.createorder-container html {
+  overflow-y: scroll;
+}
+/* line 594, ../sass/style.scss */
+.createorder-container a {
+  text-decoration: none;
+  color: #000000;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+/* line 600, ../sass/style.scss */
+.createorder-container a:hover {
+  color: #000000;
+}
+/* line 605, ../sass/style.scss */
+.createorder-container .form {
+  background: #000000;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+/* line 610, ../sass/style.scss */
+.createorder-container h1 {
+  text-align: center;
+  color: #000000;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+/* line 617, ../sass/style.scss */
+.createorder-container label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+  transform: translateY(6px);
+  left: 13px;
+  color: #000000;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+/* line 629, ../sass/style.scss */
+.createorder-container label .req {
+  margin: 2px;
+  color: #000000;
+}
+/* line 634, ../sass/style.scss */
+.createorder-container label.active {
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+/* line 640, ../sass/style.scss */
+.createorder-container label.active .req {
+  opacity: 0;
+}
+/* line 644, ../sass/style.scss */
+.createorder-container label.highlight {
+  color: #58F8AB;
+}
+/* line 648, ../sass/style.scss */
+.createorder-container input, .createorder-container textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #000000;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+/* line 661, ../sass/style.scss */
+.createorder-container input:focus, .createorder-container textarea:focus {
+  outline: 0;
+  border-color: #58F8AB;
+}
+/* line 666, ../sass/style.scss */
+.createorder-container textarea {
+  border: 2px solid #000000;
+  resize: vertical;
+}
+/* line 671, ../sass/style.scss */
+.createorder-container .field-wrap {
+  position: relative;
+  margin-bottom: 40px;
+}
+/* line 677, ../sass/style.scss */
+.createorder-container .button {
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #000B29;
+  color: #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+/* line 692, ../sass/style.scss */
+.createorder-container .button:hover, .createorder-container .button:focus {
+  background: #78C3AE;
+}
+/* line 696, ../sass/style.scss */
+.createorder-container .button-block {
+  display: block;
+  width: 100%;
+}
+
+/* line 759, ../sass/style.scss */
+.customeroverview-container #customeroverview-content {
+  max-height: 200px;
+}
+
+/* line 780, ../sass/style.scss */
+#restaurant-hdrcontainer {
+  background-image: url("../images/placeholder.jpg");
+}
+
+/* line 784, ../sass/style.scss */
+#rhdr-shoppingicon {
+  font-size: 40px;
+  float: right;
+}
+
+/* line 789, ../sass/style.scss */
+#avgrating {
+  padding-top: 30%;
+}
+
+/* line 794, ../sass/style.scss */
+#avgrating-star {
+  font-size: 30px;
+}
+
+/* line 798, ../sass/style.scss */
+#avgrating-emptystar {
+  font-size: 30px;
+}
+
+/* line 802, ../sass/style.scss */
+#rhdr-info {
+  padding-top: 30%;
+}
+
+/* line 815, ../sass/style.scss */
+.menu-items {
+  border-width: 1px;
+  border: 1px solid #e5e5e5;
+  border-radius: .25rem;
+}
+
+/* line 820, ../sass/style.scss */
+.item-price {
+  border-top: 1px solid;
+  border-color: #e5e5e5;
+  border-radius: .25rem;
+}
+
+/* line 825, ../sass/style.scss */
+.item-description {
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-color: #e5e5e5;
+  border-radius: .25rem;
+}
+
+/* line 831, ../sass/style.scss */
+#shopping-cart {
+  float: right;
+  position: fixed;
+  top: 20%;
+  right: 2%;
+}
+
+/* line 838, ../sass/style.scss */
+#orderdropdown {
+  float: right;
+  position: fixed;
+  top: 20%;
+  right: 2%;
+}
+
+/* line 846, ../sass/style.scss */
+.collapse.in {
+  display: block;
+  visibility: visible;
+}
+
+/* line 851, ../sass/style.scss */
+tr.collapse.in {
+  display: table-row;
+}
+
+/* line 854, ../sass/style.scss */
+tbody.collapse.in {
+  display: table-row-group;
+}
+
+/* line 857, ../sass/style.scss */
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: 0.35s;
+  transition-duration: 0.35s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+}
+
+/* line 868, ../sass/style.scss */
+.collapsing.width {
+  -webkit-transition-property: width, visibility;
+  transition-property: width, visibility;
+  width: 0;
+  height: auto;
+}
+
+/* line 882, ../sass/style.scss */
+td a {
+  display: block !important;
+  width: 100% !important;
+}
+
+/* line 899, ../sass/style.scss */
+#restaurant-signup-form {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 30px;
+}
