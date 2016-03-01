@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +25,17 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
+
+    Route::get('/login', [
+        'uses'=>'MasterController@vform'
+        'as'=>'valid'
+    ]);
+
+
+
+
 });
