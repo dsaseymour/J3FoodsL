@@ -12,16 +12,8 @@ J3 Foods - Online Food Ordering
 <div class="container text-center" id="login-container" >
   <div class="row row-centered">
     <div class="col-sm-5 panel panel-default col-centered " id="login-panel">
-      <div class="panel-header text-center">  <h1>Welcome </h1></div>
+      <div class="panel-header text-center"><h1>Welcome {{$usertype}}  </h1></div>
       <div class="panel-body">
-        @if(count($errors)>0)
-        <div>
-          <ul>
-            @foreach(->all() as $error)
-                    {{$error}}
-            @endforeach
-          </ul>
-        </div>
         <form action="/" method="POST" role="form">
               <div class="form-group">
                 <label class="sr-only" for="username">Username:</label>

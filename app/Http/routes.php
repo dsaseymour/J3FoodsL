@@ -26,16 +26,25 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/', [
+    'uses'=>'MasterController@showhome',
+    'as'=>'homelink'
+    ]);
 
-    Route::get('/login', [
-        'uses'=>'MasterController@vform'
-        'as'=>'valid'
+    Route::get('/login/{user?}',[
+    'uses'=>'MasterController@login',
+    'as'=>'loginlink'
+    ]);
+
+    Route::get('/register/{user?}',[
+    'uses'=>'MasterController@register',
+    'as'=>'registerlink'
     ]);
 
 
+    Route::get('/customerlogin', function () {
+            return view('customerlogin');
+        })->name('customerlogin');
 
 
 });
