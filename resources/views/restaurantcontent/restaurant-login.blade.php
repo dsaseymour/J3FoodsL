@@ -12,7 +12,7 @@ J3 Foods - Online Food Ordering
 <div class="container text-center" id="login-container" >
   <div class="row row-centered">
     <div class="col-sm-5 panel panel-default col-centered " id="login-panel">
-      <div class="panel-header text-center">  <h1>Customer Login</h1></div>
+      <div class="panel-header text-center">  <h1>Restaurant Login</h1></div>
       <div class="panel-body">
         <form action="/" method="POST" role="form">
               <div class="form-group">
