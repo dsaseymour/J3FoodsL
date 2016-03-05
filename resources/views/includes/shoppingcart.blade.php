@@ -32,7 +32,7 @@
       </div><!-- End table container -->
     </div>
     <div class="panel-footer text-right">
-    <a href="../../php/customercontent/confirmation-page.php"><button  type="button" class="btn btn-lg">Order</button></a>
+    <a href="{{ route('customerconfirmationlink'  ) }}"><button  type="button" class="btn btn-lg">Order</button></a>
     </div>
   </div>
 

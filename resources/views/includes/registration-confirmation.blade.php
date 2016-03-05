@@ -1,6 +1,6 @@
 <div class="container content" >
   <div id="index-logo">
-    <a href="../index.php"></a>
+    <a href="{{ route('homelink'  ) }}"></a>
 
   </div>
   <div id="reg-conf" class="info-box">

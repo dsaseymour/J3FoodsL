@@ -14,7 +14,7 @@ J3 Foods - Online Food Ordering
     <div class="row row-centered">
       <div class="col-sm-5 panel panel-default col-centered " id="profile-panel">
         <div class="panel-header center-block">
-      <?php    require("../../php/customercontent/customer-profile-contentbar.php"); ?>
+          @include('includes.customer-profilecontentbar')
         </div>
 
 

@@ -16,7 +16,7 @@
               <li><a href="#">Welcome</a></li>
               <li><a href="#">Edit Profile</a></li>
               <li class="separator"> </li>
-              <li><a href="http://localhost/J3Foods/index.php#">Logout</a></li>
+              <li><a href="{{ route('homelink'  ) }}">Logout</a></li>
             </ul>
           </li>
         </ul>

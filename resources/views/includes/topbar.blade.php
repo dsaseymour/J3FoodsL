@@ -3,7 +3,7 @@
   <nav class="navbar navbar-default navbar-fixed-top ">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="../../index.php">
+        <a class="navbar-brand" href="{{ route('homelink'  ) }}">
           <span class="glyphicon glyphicon-road"></span> J3 Delivery
         </a>
       </div>

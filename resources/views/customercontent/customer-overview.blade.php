@@ -27,7 +27,7 @@ J3 Foods - Online Food Ordering
 
               <div class="row">
                   <div class="col-sm-3 text-center">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -35,7 +35,7 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -43,7 +43,7 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -51,43 +51,7 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-              </div>
-              <!-- /.row -->
-
-              <div class="row">
-                  <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -99,7 +63,7 @@ J3 Foods - Online Food Ordering
 
               <div class="row">
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -107,7 +71,7 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -115,7 +79,7 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
@@ -123,7 +87,43 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
                   <div class="col-sm-3 ">
-                      <a href="http://localhost/J3Foods/php/customercontent/menu-overview.php">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="#">Restaurant Name</a>
+                      </h5>
+                  </div>
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                  <div class="col-sm-3 ">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="#">Restaurant Name</a>
+                      </h5>
+                  </div>
+                  <div class="col-sm-3 ">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="#">Restaurant Name</a>
+                      </h5>
+                  </div>
+                  <div class="col-sm-3 ">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="#">Restaurant Name</a>
+                      </h5>
+                  </div>
+                  <div class="col-sm-3 ">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>

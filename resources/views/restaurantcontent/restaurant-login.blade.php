@@ -24,14 +24,16 @@ J3 Foods - Online Food Ordering
               </div>
               <div id="forgotpass"><a href='#'>Forgot Password?</a> </div>
               <div id="loginsign-up">New to J3Foods?
-                  <a href="#">Sign up</a>
+                  <a href="{{ route('restaurantregisterlink'  ) }}">Sign up</a>
               </div>
 
 
       </div>
         <div class="sign-up ">
         </div>
-      <button type="submit" class="login-btn btn btn-lg btn-primary  center-block btn-block" />Log In</button> <!-- //:TODO a href is  only here for debugging until login starts working using php to redirect when pressing the login button to help debuggin -->
+        <a href="{{ route('restaurantoverviewlink'  ) }}">
+        <div  class="login-btn btn btn-lg btn-primary  center-block btn-block" />Log In</div>
+        </a><!-- //:TODO a href is  only here for debugging until login starts working using php to redirect when pressing the login button to help debuggin -->
 
             </form>
     </div>

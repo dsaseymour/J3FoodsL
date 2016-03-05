@@ -9,12 +9,6 @@ use App\Http\Requests;
 class MasterController extends Controller
 {
 
-  public function __construct()
-   {
-//define middleware
-
-   }
-
 
   public function showhome(){
           return view('home');
