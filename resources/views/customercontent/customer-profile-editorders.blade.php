@@ -83,7 +83,7 @@ J3 Foods - Online Food Ordering
 <script>
 $(function() {
 
-$("#cpcontent-profile").addClass("active");
+      $("#cpcontent-history").addClass("active");
 
 
 
