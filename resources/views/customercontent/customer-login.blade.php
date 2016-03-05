@@ -12,7 +12,7 @@ J3 Foods - Online Food Ordering
 <div class="container text-center" id="login-container" >
   <div class="row row-centered">
     <div class="col-sm-5 panel panel-default col-centered " id="login-panel">
-      <div class="panel-header text-center">  <h1>Welcome </h1></div>
+      <div class="panel-header text-center">  <h1>Customer Login</h1></div>
       <div class="panel-body">
         <form action="/" method="POST" role="form">
               <div class="form-group">
@@ -24,12 +24,8 @@ J3 Foods - Online Food Ordering
               </div>
               <div id="forgotpass"><a href='#'>Forgot Password?</a> </div>
               <div id="loginsign-up">New to J3Foods?
-              <!--
-                Deciding whether to redirect to customer registration page or restaurant registration page
-              -->
-                <a > >Sign up</a>
-
-
+                  <a href="#">Sign up</a>
+                  <button class='btn btn-sm btn-default ' /> Enter as a Guest</button>
               </div>
 
 

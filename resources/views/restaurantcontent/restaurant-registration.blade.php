@@ -15,8 +15,6 @@ J3 Foods - Online Food Ordering
           <div class="col-md-5 panel panel-default col-centered " id="login-panel">
             <div class="panel-header text-center">  <h1>Customer Sign Up</h1></div>
 
-
-
             <div class="panel-body">
             <form id="customer-signup-form" action="" accept-charset="utf-8" method="POST" role="form" >
 
