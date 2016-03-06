@@ -9,7 +9,10 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
+
 <div class="container">
+  @include('includes.restaurant-nav')
+
   <div id="restaurant-hdrcontainer" >
   <div class="row">
               <div id="rhdr-left" class="col-sm-3">
@@ -46,7 +49,6 @@ J3 Foods - Online Food Ordering
   </div>
   </div>
   <hr />
-
 
 
 
@@ -270,6 +272,12 @@ J3 Foods - Online Food Ordering
 
 
 </div>
+@section('javascript')
+<script>
+$(function() {
+  $("#restaurantnavlink-menu").addClass("active");
+  $('[data-toggle="tooltip"]').tooltip();
 
-
+});
+</script>
 @endsection
