@@ -19,6 +19,14 @@ class MasterController extends Controller
   }
 
   public function validatecustomerlogin(Request $request){
+    
+          $this->validate($request, [
+              'username'=>'required',
+              'password'=>'required',
+          ]);
+
+
+
           if(isset($request['username'])&&isset($request['password'])){
                 if(strlen($request['username'])>0){
                   return view('customercontent.customer-overview');

@@ -14,6 +14,15 @@ J3 Foods - Online Food Ordering
     <div class="col-sm-5 panel panel-default col-centered " id="login-panel">
       <div class="panel-header text-center">  <h1>Customer Login</h1></div>
       <div class="panel-body">
+        @if(count($errors)>0)
+        <div >
+        <ul  class="list-group">
+            @foreach($errors->all() as $error)
+            <li class="list-group-item list-group-item-danger">{{$error}}</li>
+            @endforeach
+          </ul>
+        </div >
+        @endif
         <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
               <div class="form-group">
                 <label class="sr-only" for="username">Username:</label>
