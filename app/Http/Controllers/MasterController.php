@@ -18,7 +18,7 @@ class MasterController extends Controller
           return view('customercontent.customer-login');
   }
 
-  public function validatecustomerlogin(\Illuminate\Http\Request $request){
+  public function validatecustomerlogin(Request $request){
           if(isset($request['username'])&&isset($request['password'])){
                 if(strlen($request['username'])>0){
                   return view('customercontent.customer-overview');
