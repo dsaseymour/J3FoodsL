@@ -18,6 +18,18 @@ class MasterController extends Controller
           return view('customercontent.customer-login');
   }
 
+  public function validatecustomerlogin(\Illuminate\Http\Request $request){
+          if(isset($request['username'])&&isset($request['password'])){
+                if(strlen($request['username'])>0){
+                  return view('customercontent.customer-overview');
+                }
+                return redirect()->route('customerloginlink');
+          }
+          return redirect()->route('customerloginlink');
+  }
+
+
+
   public function showcustomerregister(){
           return view('customercontent.customer-registration');
   }
@@ -86,10 +98,11 @@ class MasterController extends Controller
           return view('login.forgottenpassword');
   }
 
+  public function postCustomerLogin(Request $request)
+  {
 
 
-
-
+  }
 
 
 }

@@ -14,7 +14,7 @@ J3 Foods - Online Food Ordering
     <div class="col-sm-5 panel panel-default col-centered " id="login-panel">
       <div class="panel-header text-center">  <h1>Customer Login</h1></div>
       <div class="panel-body">
-        <form action="/" method="POST" role="form">
+        <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
               <div class="form-group">
                 <label class="sr-only" for="username">Username:</label>
                 <input type="text" class="form-control" name="username" id="username" placeholder="Username"/>
@@ -32,11 +32,11 @@ J3 Foods - Online Food Ordering
       </div>
         <div class="sign-up ">
         </div>
-      <a href="{{ route('customeroverviewlink'  ) }}">
-      <div  class="login-btn btn btn-lg btn-primary  center-block btn-block" />Log In</div>
-      </a><!-- //:TODO a href is  only here for debugging until login starts working using php to redirect when pressing the login button to help debuggin -->
 
-            </form>
+      <button type='submit'  class="login-btn btn btn-lg btn-primary  center-block btn-block" />Log In</button>
+
+        <input type="hidden" value="{{Session::token()}}" name="_token" />
+        </form>
     </div>
 </div>
 </div><!-- container --->

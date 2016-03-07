@@ -36,6 +36,12 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customerloginlink'
     ]);
 
+    Route::post('/validcustomerlogin',[
+    'uses'=>'MasterController@validatecustomerlogin',
+    'as'=>'validcustomerloginlink'
+    ]);
+
+
     Route::get('/customerregister',[
     'uses'=>'MasterController@showcustomerregister',
     'as'=>'customerregisterlink'
@@ -121,6 +127,7 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'MasterController@showforgotpassword',
         'as'=>'forgotpasswordlink'
         ]);
+
 
 
 });
