@@ -13,8 +13,13 @@ class CreateRestaurantsTable extends Migration
     public function up()
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('rest_ID')->nullable(false);
+            $table->char('rest_Pass', 15);
+            $table->char('business_Phone', 15);
+            $table->char('business_Address', 30);
             $table->timestamps();
+
+
         });
     }
 

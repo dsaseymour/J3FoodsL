@@ -13,8 +13,13 @@ class CreateHoursTable extends Migration
     public function up()
     {
         Schema::create('hours', function (Blueprint $table) {
-            $table->increments('id');
+            $table->char('day_ID', 4);
+            $table->time('open_Time');
+            $table->integer('interval_Open');
             $table->timestamps();
+            $table->integer('rest_ID')->unsigned()->primary();
+            $table->foreign('rest_ID')->references('rest_ID')->on('restaurants');
+
         });
     }
 
