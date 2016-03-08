@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Customer;
+use App\CustomerFavourites;
+use App\CustomerRatings;
+use App\Hours;
+use App\Items;
+use App\Menu;
+use App\Orders;
+use App\Restaurant;
+use App\User;
+
+
+
 class MasterController extends Controller
 {
 
@@ -23,14 +35,7 @@ class MasterController extends Controller
               'username'=>'required',
               'password'=>'required',
           ]);
-
-          if(isset($request['username'])&&isset($request['password'])){
-                if(strlen($request['username'])>0){
                   return view('customercontent.customer-overview');
-                }
-                return redirect()->route('customerloginlink');
-          }
-          return redirect()->route('customerloginlink');
   }
 
 
