@@ -47,9 +47,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/customerlogin', function () {
             return view('customerlogin');
         })->name('customerlogin');
-		
-		
-	Route::get('/riley', 'MasterController@riley');
+
 	Route::get('/login/{user}', 'AuthController@login');
 
 

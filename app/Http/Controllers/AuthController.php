@@ -8,10 +8,9 @@ use App\Http\Requests;
 
 class AuthController extends Controller
 {
-    //
 	public function login($user){
 
-		return view('login.login', ["usertype" => $user] );
+		return view('login.login', ["usertype" => $user]);
 		
 	}
 }
