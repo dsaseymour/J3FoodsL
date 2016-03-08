@@ -20,14 +20,18 @@ class MasterController extends Controller
           return view('home');
   }
 
-  public function login($user="customer"){
+  public function login($user){
 
-          return view('login',['usertype'=>$user]);
+          return view('login.login',['usertype'=>$user]);
   }
 
-  public function register($user="customer"){
+  public function register($user){
 
           return view('register',['usertype'=>$user]);
+  }
+  
+  public function riley(){
+	  return view('restaurantcontent.restaurant-login');
   }
 
 

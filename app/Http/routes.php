@@ -36,6 +36,8 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'loginlink'
     ]);
 
+	
+	//URL('login/{id}), ['id' => ])
     Route::get('/register/{user?}',[
     'uses'=>'MasterController@register',
     'as'=>'registerlink'
@@ -45,6 +47,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/customerlogin', function () {
             return view('customerlogin');
         })->name('customerlogin');
+		
+		
+		Route::get('/riley', 'MasterController@riley');
 
 
 });

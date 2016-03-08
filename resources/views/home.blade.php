@@ -21,7 +21,7 @@ J3 Foods - Online Food Ordering
 
 </div>
 <div class="col-sm-6">
-  <a href="{{ url('/login', array('restaurant') )}}"> <button type="button" class="button btn-lg" id="landinglogin-res" >Restaurant</button> </a>
+  <a href="{{ route('loginlink', ['user'=>'restaurant'] )}}"> <button type="button" class="button btn-lg" id="landinglogin-res" >Restaurant</button> </a>
 </div>
           </div>
         </div>
@@ -34,7 +34,7 @@ J3 Foods - Online Food Ordering
         <h1 class="card-title text-center">Registered Customer</h1>
         <img class="img-circle img-responsive center-block" src="images/placeholder2.png"  alt="...">
         <p class="card-text">Are you  hungry but don't want to leave the house? Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.</p>
-        <a href="{{ secure_url('/login', array('customer') ) }}" class="btn btn-primary btn-block">Get Started</a>
+        <a href="{{ url('/riley' ) }}" class="btn btn-primary btn-block">Get Started</a>
       </div>
     </div>
     <div class="col-md-4">
