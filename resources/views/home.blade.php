@@ -17,11 +17,11 @@ J3 Foods - Online Food Ordering
         <div class="col-md-12 text-center" id="lpgreet">
           <div class="row">
             <div class="col-sm-6">
-              <a href= "{{ route('loginlink', ['user'=>'customer'] ) }}"> <button type="button" class="button btn-lg" id="landinglogin-cus" >Customer</button> </a>
+              <a href= "{{ URL('/login', ['user'=>'customer'] ) }}"> <button type="button" class="button btn-lg" id="landinglogin-cus" >Customer</button> </a>
 
 </div>
 <div class="col-sm-6">
-  <a href="{{ route('loginlink', ['user'=>'restaurant'] )}}"> <button type="button" class="button btn-lg" id="landinglogin-res" >Restaurant</button> </a>
+  <a href="{{ URl('/login', ['user'=>'restaurant'] )}}"> <button type="button" class="button btn-lg" id="landinglogin-res" >Restaurant</button> </a>
 </div>
           </div>
         </div>

@@ -31,10 +31,10 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'homelink'
     ]);
 
-    Route::get('/login/{user?}',[
+/*    Route::get('/login/{user?}',[
     'uses'=>'MasterController@login',
     'as'=>'loginlink'
-    ]);
+    ]);*/
 
 	
 	//URL('login/{id}), ['id' => ])
@@ -49,7 +49,8 @@ Route::group(['middleware' => ['web']], function () {
         })->name('customerlogin');
 		
 		
-		Route::get('/riley', 'MasterController@riley');
+	Route::get('/riley', 'MasterController@riley');
+	Route::get('/login/{user}', 'AuthController@login');
 
 
 });
