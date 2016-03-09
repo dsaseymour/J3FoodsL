@@ -55,7 +55,7 @@ J3 Foods - Online Food Ordering
 
   <div class="row"> <!-- start of row -->
     <div class="col-sm-4 menu-items">
-      <a href="http://www.msn.com/en-ca/">
+      <a data-toggle="modal" data-target="#item-subscreen">
         <div class="card ">
           <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
             <div class="row">
@@ -72,7 +72,7 @@ J3 Foods - Online Food Ordering
     </div>
 
     <div class="col-sm-4 menu-items">
-      <a href="http://www.msn.com/en-ca/">
+      <a data-toggle="modal" data-target="#item-subscreen">
         <div class="card ">
           <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
             <div class="row">
@@ -90,7 +90,7 @@ J3 Foods - Online Food Ordering
 
 
     <div class="col-sm-4 menu-items">
-      <a href="http://www.msn.com/en-ca/">
+      <a data-toggle="modal" data-target="#item-subscreen">
         <div class="card ">
           <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
             <div class="row">
@@ -114,7 +114,7 @@ J3 Foods - Online Food Ordering
     <h1>Appetizers</h1>
   <div class="row"> <!-- start of row -->
   <div class="col-sm-3 menu-items">
-    <a href="http://www.msn.com/en-ca/">
+    <a data-toggle="modal" data-target="#item-subscreen">
       <div class="card ">
         <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
           <div class="row">
@@ -131,25 +131,7 @@ J3 Foods - Online Food Ordering
   </div>
 
   <div class="col-sm-3 menu-items">
-    <a href="http://www.msn.com/en-ca/">
-      <div class="card ">
-        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-          <div class="row">
-            <div class="item-description col-sm-8">
-              <p class="card-text"> pizza
-              and chicken</p>
-            </div>
-            <div class="item-price col-sm-4">
-              <p class="card-text">$50.00</p>
-            </div>
-          </div>
-    </div>
-  </a>
-  </div>
-
-
-  <div class="col-sm-3 menu-items">
-    <a href="http://www.msn.com/en-ca/">
+    <a data-toggle="modal" data-target="#item-subscreen">
       <div class="card ">
         <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
           <div class="row">
@@ -167,7 +149,25 @@ J3 Foods - Online Food Ordering
 
 
   <div class="col-sm-3 menu-items">
-    <a href="http://www.msn.com/en-ca/">
+    <a data-toggle="modal" data-target="#item-subscreen">
+      <div class="card ">
+        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
+          <div class="row">
+            <div class="item-description col-sm-8">
+              <p class="card-text"> pizza
+              and chicken</p>
+            </div>
+            <div class="item-price col-sm-4">
+              <p class="card-text">$50.00</p>
+            </div>
+          </div>
+    </div>
+  </a>
+  </div>
+
+
+  <div class="col-sm-3 menu-items">
+    <a data-toggle="modal" data-target="#item-subscreen">
       <div class="card ">
         <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
           <div class="row">
@@ -194,7 +194,7 @@ J3 Foods - Online Food Ordering
 
     <div class="row"> <!-- start of row -->
       <div class="col-sm-3 menu-items">
-        <a href="http://www.msn.com/en-ca/">
+        <a data-toggle="modal" data-target="#item-subscreen">
           <div class="card ">
             <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
               <div class="row">
@@ -211,25 +211,7 @@ J3 Foods - Online Food Ordering
       </div>
 
       <div class="col-sm-3 menu-items">
-        <a href="http://www.msn.com/en-ca/">
-          <div class="card ">
-            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-              <div class="row">
-                <div class="item-description col-sm-8">
-                  <p class="card-text"> pizza
-                  and chicken</p>
-                </div>
-                <div class="item-price col-sm-4">
-                  <p class="card-text">$50.00</p>
-                </div>
-              </div>
-        </div>
-      </a>
-      </div>
-
-
-      <div class="col-sm-3 menu-items">
-        <a href="http://www.msn.com/en-ca/">
+        <a data-toggle="modal" data-target="#item-subscreen">
           <div class="card ">
             <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
               <div class="row">
@@ -247,7 +229,25 @@ J3 Foods - Online Food Ordering
 
 
       <div class="col-sm-3 menu-items">
-        <a href="http://www.msn.com/en-ca/">
+        <a data-toggle="modal" data-target="#item-subscreen">
+          <div class="card ">
+            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
+              <div class="row">
+                <div class="item-description col-sm-8">
+                  <p class="card-text"> pizza
+                  and chicken</p>
+                </div>
+                <div class="item-price col-sm-4">
+                  <p class="card-text">$50.00</p>
+                </div>
+              </div>
+        </div>
+      </a>
+      </div>
+
+
+      <div class="col-sm-3 menu-items">
+        <a data-toggle="modal" data-target="#item-subscreen">
           <div class="card ">
             <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
               <div class="row">
@@ -267,7 +267,6 @@ J3 Foods - Online Food Ordering
   </div>
   <hr />
 
-  <div class="btn btn-default btn-lg" data-toggle="modal" data-target="#item-subscreen">Item SubScreen</div>
 
   <!-- Modal -->
   <div id="item-subscreen" class="modal fade" role="dialog">
@@ -278,16 +277,45 @@ J3 Foods - Online Food Ordering
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <p>Order Successfully Processed</p>
+          <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
+            <div class="list-group">
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Size</h4>
+                          <label for="pizzasize" class="sr-only">Pizza Sizes</label>
+                          <select class="form-control" id="pizzasize">
+                            <option>Small</option>
+                            <option>Medium</option>
+                            <option>Large</option>
+                            <option>Extra Large</option>
+                          </select>
+                        </a>
+
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Sauces</h4>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
+                        </a>
+
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Toppings</h4>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
+                        </a>
+            </div>
+          <input type="hidden" value="{{Session::token()}}" name="_token" />
+          </form>
         </div>
         <div class="modal-footer">
-          <a href="{{ route('customermenuoverviewlink'  ) }}"><button type="button" class="btn btn-default" >Return</button></a>
+          <div class = "btn-group btn-group-lg">
+            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Add to Shopping Cart</button></a>
+            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Return</button></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-
 
 
 </div>
