@@ -131,7 +131,7 @@ Route::group(['middleware' => ['web']], function () {
 //DEBUGGGING
 Route::get('/test', function()
 {
-    return view('registration.registration-confirmation');
+    return view('restaurantcontent.restaurant-profile');
 });
 
 
