@@ -21,54 +21,196 @@ J3 Foods - Online Food Ordering
 
   <div class="panel-body">
       <form action="/" method="POST" role="form">
-          <div class="form-group">
+        <div class="input-row row" >
+            <div class="table-responsive"><!-- Start table container -->
+              <table class="table table-condensed table-hover table-bordered">
+                  <h4>Hours of Operation</h4>
+                <thead>
+                  <tr>
+                    <th>
+                        Day
+                    </th> <!-- Day-->
 
-              <div class="input-row row">
-              <label class="sr-only" for="email">Email:</label>
-              <input type="text" class="form-control" name="email" id="email" placeholder="Email"/>
-                  </div>
+                    <th>
+                    Closed?
+                   </th><!-- Closed-->
 
-              <div class="input-row row">
-              <label class="sr-only" for="firstname">Firstname:</label>
-              <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"/>
-              </div>
+                    <th>
+                    Opening
+                    </th><!-- Open-->
 
-              <div class="input-row row">
-              <label class="sr-only" for="lastname">Last Name:</label>
-              <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"/>
-                  </div>
+                    <th>
 
-                  <div class="input-row row">
-                  <label class="sr-only" for="phonenumber">Phone Number:</label>
-                  <input type="text" class="form-control" name="phoneno" id="phoneno" placeholder="Phone Number"/>
-                      </div>
+                    </th>
+
+                    <th>
+                    Closing
+                   </th><!-- Closing-->
+                  </tr>
+                </thead>
+
+                <tbody> <!-- table body start-->
+
+                  <tr>
+                      <td>
+                          Monday
+                      </td> <!-- Day-->
+
+                      <td>
+                          <input type="checkbox" class="form-control" id="ghours-misclosed" />
+                     </td><!-- Closed-->
+
+                      <td>
+                      <input type="time" class="form-control" id="ghours-mopen" />
+                      </td><!-- Open-->
+
+                      <td>
+
+                      </td>
+
+                      <td>
+                          <input type="time" class="form-control" id="ghours-mopen" />
+                     </td><!-- Closing-->
+                    </tr>
 
 
+                    <tr>
+                        <td>
+                            Tuesday
+                        </td> <!-- Day-->
 
-              <div class="input-row row">
-                  <div class="btn btn-default" data-toggle="collapse" data-target="#changepassword">Change Password?</div>
-                  <div id="changepassword" class="collapse input-row">
-                      <div class="row">
-                          <div class="col-sm-4">
-                              <label class="sr-only" for="password">Password:</label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
-                          </div>
+                        <td>
+                            <input type="checkbox" class="form-control" id="ghours-tisclosed" />
+                       </td><!-- Closed-->
 
-                          <div class="col-sm-4">
-                              <label class="sr-only" for="password">Password:</label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
-                          </div>
+                        <td>
+                            <input type="time" class="form-control" id="ghours-topen" />
+                        </td><!-- Open-->
 
-                      </div>
-                  </div>
-              </div>
+                        <td>
+
+                        </td>
+
+                        <td>
+                            <input type="time" class="form-control" id="ghours-tclose" />
+                       </td><!-- Closing-->
+                      </tr>
+
+                      <tr>
+                          <td>
+                              Wednesday
+                          </td> <!-- Day-->
+
+                          <td>
+                              <input type="checkbox" class="form-control" id="ghours-wisclosed" />
+                         </td><!-- Closed-->
+
+                          <td>
+                              <input type="time" class="form-control" id="ghours-wopen" />
+                          </td><!-- Open-->
+
+                          <td>
+
+                          </td>
+
+                          <td>
+                              <input type="time" class="form-control" id="ghours-wclose" />
+                         </td><!-- Closing-->
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Thursday
+                            </td> <!-- Day-->
+
+                            <td>
+                                <input type="checkbox" class="form-control" id="ghours-risclosed" />
+                           </td><!-- Closed-->
+
+                            <td>
+                                <input type="time" class="form-control" id="ghours-ropen" />
+                            </td><!-- Open-->
+
+                            <td>
+
+                            </td>
+
+                            <td>
+                                <input type="time" class="form-control" id="ghours-rclose" />
+                           </td><!-- Closing-->
+                          </tr>
+
+                          <tr>
+                              <td>
+                                  Friday
+                              </td> <!-- Day-->
+
+                              <td>
+                                  <input type="checkbox" class="form-control" id="ghours-fisclosed" />
+                             </td><!-- Closed-->
+
+                              <td>
+                                  <input type="time" class="form-control" id="ghours-fopen" />
+                              </td><!-- Open-->
+
+                              <td>
+
+                              </td>
+
+                              <td>
+                                  <input type="time" class="form-control" id="ghours-fclose" />
+                             </td><!-- Closing-->
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Saturday
+                                </td> <!-- Day-->
+                                <td>
+                                <input type="checkbox" class="form-control" id="ghours-satisclosed" />
+                               </td><!-- Closed-->
+
+                                <td>
+                                    <input type="time" class="form-control" id="ghours-satopen" />
+                                </td><!-- Open-->
+
+                                <td>
+
+                                </td>
+
+                                <td>
+                                    <input type="time" class="form-control" id="ghours-satclose" />
+                               </td><!-- Closing-->
+                              </tr>
 
 
-          </div>
+                              <tr>
+                                  <td>
+                                      Sunday
+                                  </td> <!-- Day-->
 
+                                  <td>
+                                      <input type="checkbox" class="form-control" id="ghours-sunisclosed" />
+                                 </td><!-- Closed-->
 
-      <div class="login-btn btn btn-lg btn-primary  center-block btn-block" />Save Changes</div>
+                                  <td>
+                                      <input type="time" class="form-control" id="ghours-sunopen" />
+                                  </td><!-- Open-->
 
+                                  <td>
+
+                                  </td>
+
+                                  <td>
+                                      <input type="time" class="form-control" id="ghours-sunclose" />
+                                 </td><!-- Closing-->
+                                </tr>
+
+              </tbody> <!-- table body end-->
+              </table>
+            </div><!-- End table container -->
+
+        </div>
           </form>
 
       </div>
@@ -84,7 +226,7 @@ J3 Foods - Online Food Ordering
 <script>
 $(function() {
 
-$("#rpcontent-profile").addClass("active");
+$("#rpcontent-hours").addClass("active");
 
 
 
