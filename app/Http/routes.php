@@ -128,6 +128,14 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'forgotpasswordlink'
         ]);
 
+//DEBUGGGING
+Route::get('/test', function()
+{
+    return view('registration.registration-confirmation');
+});
+
+
+//DEBUGGING
 
 
 });
