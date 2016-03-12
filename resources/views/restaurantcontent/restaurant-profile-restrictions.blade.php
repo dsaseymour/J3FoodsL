@@ -15,63 +15,66 @@ J3 Foods - Online Food Ordering
       <div class="col-sm-5 panel panel-default col-centered " id="profile-panel">
         <div class="panel-header center-block">
           @include('includes.restaurant-profilecontentbar')
-
         </div>
+        <div class="table-responsive"><!-- Start table container -->
+          <table class="table table-condensed table-hover table-bordered">
+            <thead>
+              <h3>Order Restrictions</h3>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td>General Order Limit</td>
+                <td>$32</td>
+              </tr>
+
+              <tr>
+                <td>General Order Limit</td>
+                <td>$52</td>
+              </tr>
+
+              <tr>
+                <td>General Order Limit</td>
+                <td>$66</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div><!-- End table container -->
 
 
-  <div class="panel-body">
-      <form action="/" method="POST" role="form">
-          <div class="form-group">
+    <div class="table-responsive"><!-- Start table container -->
+    <table class="table table-condensed table-hover table-bordered">
+      <thead>
+    <h3>Guest Restrictions</h3>
+  </thead>
+  <tbody>
 
-              <div class="input-row row">
-              <label class="sr-only" for="email">Email:</label>
-              <input type="text" class="form-control" name="email" id="email" placeholder="Email"/>
-                  </div>
+    <tr>
+      <td>Chicken</td>
+      <td>$32</td>
+    </tr>
 
-              <div class="input-row row">
-              <label class="sr-only" for="firstname">Firstname:</label>
-              <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"/>
-              </div>
+    <tr>
+      <td>Pizza</td>
+      <td>$52</td>
+    </tr>
 
-              <div class="input-row row">
-              <label class="sr-only" for="lastname">Last Name:</label>
-              <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"/>
-                  </div>
+    <tr>
+      <td>Rice</td>
+      <td>$66</td>
+    </tr>
 
-                  <div class="input-row row">
-                  <label class="sr-only" for="phonenumber">Phone Number:</label>
-                  <input type="text" class="form-control" name="phoneno" id="phoneno" placeholder="Phone Number"/>
-                      </div>
-
-
-
-              <div class="input-row row">
-                  <div class="btn btn-default" data-toggle="collapse" data-target="#changepassword">Change Password?</div>
-                  <div id="changepassword" class="collapse input-row">
-                      <div class="row">
-                          <div class="col-sm-4">
-                              <label class="sr-only" for="password">Password:</label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
-                          </div>
-
-                          <div class="col-sm-4">
-                              <label class="sr-only" for="password">Password:</label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
-                          </div>
-
-                      </div>
-                  </div>
-              </div>
+  </tbody>
+</table>
+</div><!-- End table container -->
 
 
-          </div>
 
 
-      <div class="login-btn btn btn-lg btn-primary  center-block btn-block" />Save Changes</div>
 
-          </form>
 
-      </div>
+
   </div>
   </div><!-- container --->
 </div>

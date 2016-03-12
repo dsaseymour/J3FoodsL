@@ -42,7 +42,13 @@ J3 Foods - Online Food Ordering
         <div class="input-row row" >
                 <input type="email" name="email" id="email" class="input-fieldformat form-control"  placeholder="Email Address"/>
         </div>
+
+        <div class="input-row row text-right" >
+          <button type='submit'  class="btn  btn-primary   " />Save Changes</button>
+        </div>
         </div><!-- panel body container -->
+
+        <input type="hidden" value="{{Session::token()}}" name="_token" />
     </form>
       </div>
   </div>
