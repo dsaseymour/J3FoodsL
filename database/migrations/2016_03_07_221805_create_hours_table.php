@@ -17,8 +17,8 @@ class CreateHoursTable extends Migration
             $table->time('open_Time');
             $table->integer('interval_Open');
             $table->timestamps();
-            $table->integer('rest_ID')->unsigned()->primary();
-            $table->foreign('rest_ID')->references('rest_ID')->on('restaurants');
+            $table->integer('restaurant_id')->unsigned()->primary();
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
 
         });
     }

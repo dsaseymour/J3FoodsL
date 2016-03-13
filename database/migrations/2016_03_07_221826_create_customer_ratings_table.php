@@ -16,11 +16,10 @@ class CreateCustomerRatingsTable extends Migration
             $table->integer('rating');
             $table->char('review', 200);
             $table->timestamps();
-            $table->foreign('cust_ID')->references('cust_ID')->on('customers');
-            $table->foreign('rest_ID')->references('rest_ID')->on('restaurants');
-            $table->integer('cust_ID')->unsigned();
-            $table->integer('rest_ID')->unsigned()->primary();
-
+            $table->integer('customer_id')->unsigned();
+            $table->integer('restaurant_id')->unsigned()->primary();
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
     }
 
