@@ -96,6 +96,16 @@ class MasterController extends Controller
           return view('restaurantcontent.restaurant-profile');
   }
 
+  public function showrestaurantrestrictions(){
+          return view('restaurantcontent.restaurant-profile-restrictions');
+  }
+
+  public function showrestaurantprofilehours(){
+          return view('restaurantcontent.restaurant-profile-hours');
+  }
+
+
+
   public function showrestaurantregister(){
           return view('restaurantcontent.restaurant-registration');
   }
@@ -108,11 +118,16 @@ class MasterController extends Controller
           return view('login.forgottenpassword');
   }
 
+
+
   public function postCustomerLogin(Request $request)
   {
 
 
   }
+
+
+
 
 
 }

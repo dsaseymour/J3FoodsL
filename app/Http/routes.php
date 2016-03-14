@@ -112,6 +112,17 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'restaurantprofilelink'
         ]);
 
+        Route::get('/restaurantprofilerestrictions',[
+        'uses'=>'MasterController@showrestaurantrestrictions',
+        'as'=>'restaurantprofilerestrictionslink'
+        ]);
+
+        Route::get('/restaurantprofilehours',[
+        'uses'=>'MasterController@showrestaurantprofilehours',
+        'as'=>'restaurantprofilehourslink'
+        ]);
+
+
         Route::get('/restaurantregister',[
         'uses'=>'MasterController@showrestaurantregister',
         'as'=>'restaurantregisterlink'
@@ -127,6 +138,9 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'MasterController@showforgotpassword',
         'as'=>'forgotpasswordlink'
         ]);
+
+
+
 
 //DEBUGGGING
 Route::get('/test', function()

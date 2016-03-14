@@ -18,4 +18,18 @@ class Customer extends Model
      }
 
 
+
+    public function dummycreate(){
+         $customer = new Customer;
+         $user->username     = Input::get('username');
+         $user->password     = Hash::make(Input::get('password'));
+         $user->email        = Input::get('email');
+         $user->save();
+
+         return Response::make('User created! Hurray!');
+    }
+
+    
+
+
 }

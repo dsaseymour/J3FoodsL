@@ -13,9 +13,14 @@ J3 Foods - Online Food Ordering
   <div class="container text-center" id="profile-container" >
     <div class="row row-centered">
       <div class="col-sm-5 panel panel-default col-centered " id="profile-panel">
+        <form action="/" method="POST" role="form">
+
         <div class="panel-header center-block">
           @include('includes.restaurant-profilecontentbar')
         </div>
+
+        <div class="panel-body">
+
         <div class="table-responsive"><!-- Start table container -->
           <table class="table table-condensed table-hover table-bordered">
             <thead>
@@ -25,17 +30,17 @@ J3 Foods - Online Food Ordering
 
               <tr>
                 <td>General Order Limit</td>
-                <td>$32</td>
+                <td><input type="number" class="form-control"  /></td>
               </tr>
 
               <tr>
                 <td>General Order Limit</td>
-                <td>$52</td>
+                <td><input type="number" class="form-control"  /></td>
               </tr>
 
               <tr>
                 <td>General Order Limit</td>
-                <td>$66</td>
+                <td><input type="text" class="form-control"  /></td>
               </tr>
 
             </tbody>
@@ -52,29 +57,31 @@ J3 Foods - Online Food Ordering
 
     <tr>
       <td>Chicken</td>
-      <td>$32</td>
+      <td><input type="text" class="form-control" /></td>
     </tr>
 
     <tr>
       <td>Pizza</td>
-      <td>$52</td>
+      <td><input type="text" class="form-control" /></td>
     </tr>
 
     <tr>
       <td>Rice</td>
-      <td>$66</td>
+      <td><input type="text" class="form-control" /></td>
     </tr>
 
   </tbody>
 </table>
 </div><!-- End table container -->
 
+<div class="input-row row text-right" >
+  <button type='submit'  class="btn  btn-primary   " />Save Changes</button>
+</div>
+</div>
 
 
-
-
-
-
+<input type="hidden" value="{{Session::token()}}" name="_token" />
+</form>
   </div>
   </div><!-- container --->
 </div>
