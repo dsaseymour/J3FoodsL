@@ -57,7 +57,12 @@ J3 Foods - Online Food Ordering
           </div>
 
 
-      <div class="btn  btn-primary  " /><span class="glyphicon glyphicon-plus"></span>New Address</div>
+
+
+      <div class="input-row row text-right" >
+        <button type='submit'  class="btn  btn-primary   " /><span class="glyphicon glyphicon-plus"></span>New Address</button>
+      </div>
+
 
           </form>
       </div>
