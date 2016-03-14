@@ -29,11 +29,8 @@ J3 Foods - Online Food Ordering
       <div class="input-row row text-right" >
         <button type='submit'  class="btn  btn-primary   " />Save Changes</button>
       </div>
-
-
           </form>
-
-      </div>
+      </div> <!-- panel body end -->
   </div>
   </div><!-- container --->
 </div>

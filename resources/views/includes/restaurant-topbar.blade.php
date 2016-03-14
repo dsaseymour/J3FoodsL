@@ -3,7 +3,7 @@
   <nav class="navbar  topbar-loggednav navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('restaurantoverviewlink'  ) }}">
           <span class="glyphicon glyphicon-road"></span> J3 Delivery
         </a>
       </div>
@@ -14,6 +14,7 @@
             <span class="glyphicon glyphicon-menu-down"></span>
             <ul class="dropdown-menu">
               <li><a href="#">Welcome</a></li>
+              <li><a href="{{ route('restaurantoverviewlink'  ) }}">Overview</a></li>
               <li><a href="{{ route('restaurantprofilelink'  ) }}">Edit Profile</a></li>
               <li class="separator"> </li>
               <li><a href="{{ route('homelink'  ) }}">Logout</a></li>

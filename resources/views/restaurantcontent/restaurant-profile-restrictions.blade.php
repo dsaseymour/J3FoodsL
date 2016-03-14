@@ -4,7 +4,7 @@ J3 Foods - Online Food Ordering
 @endsection
 
 @section('navigation')
-@include('includes.topbar')
+@include('includes.restaurant-topbar')
 @endsection
 
 
