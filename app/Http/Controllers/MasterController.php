@@ -30,10 +30,6 @@ class MasterController extends Controller
           return view('customercontent.customer-login');
   }
 
-
-
-
-
   public function showcustomerregister(){
           return view('customercontent.customer-registration');
   }

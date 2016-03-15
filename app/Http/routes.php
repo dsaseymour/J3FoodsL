@@ -31,18 +31,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'homelink'
     ]);
 
-<<<<<<< HEAD
-/*    Route::get('/login/{user?}',[
-    'uses'=>'MasterController@login',
-    'as'=>'loginlink'
-    ]);*/
-
-	
-	//URL('login/{id}), ['id' => ])
     Route::get('/register/{user?}',[
     'uses'=>'MasterController@register',
     'as'=>'registerlink'
-=======
+	]);
+
     Route::get('/customerlogin',[
     'uses'=>'MasterController@showcustomerlogin',
     'as'=>'customerloginlink'
@@ -51,7 +44,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/validcustomerlogin',[
     'uses'=>'AuthController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
->>>>>>> master
     ]);
 
 
@@ -164,7 +156,7 @@ Route::get('/test', function()
 
 //DEBUGGING
 
-	Route::get('/login/{user}', 'AuthController@login');
+	//Route::get('/login/{user}', 'AuthController@login');
 
 
 });
