@@ -16,5 +16,9 @@ class AuthController extends Controller
           ]);
                   return view('customercontent.customer-overview');
   }
+  
+   public function showforgotpassword(){
+          return view('login.forgottenpassword');
+  }
 
 }
