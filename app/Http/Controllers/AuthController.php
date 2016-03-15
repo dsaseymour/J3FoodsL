@@ -8,9 +8,13 @@ use App\Http\Requests;
 
 class AuthController extends Controller
 {
-	public function login($user){
 
-		return view('login.login', ["usertype" => $user]);
-		
-	}
+      public function validatecustomerlogin(Request $request){
+          $this->validate($request, [
+              'username'=>'required',
+              'password'=>'required',
+          ]);
+                  return view('customercontent.customer-overview');
+  }
+
 }

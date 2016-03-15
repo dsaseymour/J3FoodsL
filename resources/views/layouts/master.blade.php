@@ -31,6 +31,7 @@
                   <main>
                         @yield('content')
                   </main>
+
               <footer>
                     <div class="container-fluid" id="footer">
                       <div class="row">
@@ -46,5 +47,6 @@
                      </div>
                     </div>
               </footer>
+              @yield('javascript')
       </body>
 </html>
