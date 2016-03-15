@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     Route::post('/validcustomerlogin',[
-    'uses'=>'MasterController@validatecustomerlogin',
+    'uses'=>'AuthController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
 
