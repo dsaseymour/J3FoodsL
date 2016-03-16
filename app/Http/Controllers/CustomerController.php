@@ -12,7 +12,14 @@ use App\Customer;
 class CustomerController extends Controller
 {
 
-        public function dummycreate(){
+        public function __construct()
+        {
+//            $this->middleware('auth');  
+
+        }
+
+
+        public function dummycreate(Request $request){
              $customer = new Customer;
              $user->username     = Input::get('username');
              $user->password     = Hash::make(Input::get('password'));
@@ -48,6 +55,13 @@ class CustomerController extends Controller
 		
 		
 
+        public function dummygetcustomer(){
+             $customers=Customer::orderBy('created_at', 'asc')->get();
+
+             return viewcustomers('',[
+                        'viewcustomers' => $viewcustomers
+                ]);
+        }
 
 
 

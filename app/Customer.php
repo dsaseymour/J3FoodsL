@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
 
+    protected $table = 'customers'; //this is the name of the table that this model is linked to if the table name is different change the value
+
+
     //a customer has many restaurant favorites
     public function favorites(){
         return $this->hasMany('Restaurant');
@@ -29,7 +32,7 @@ class Customer extends Model
          return Response::make('User created! Hurray!');
     }
 
-    
+
 
 
 }
