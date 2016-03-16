@@ -16,10 +16,8 @@ class RestaurantController extends Controller
 
     public function restaurantlogin(Request $request){
 
-            return view('restaurantcontent.restaurant-login');
+        return view('restaurantcontent.restaurant-login');
     }
-
-
 
      public function showrestauranthistory(){
           return view('restaurantcontent.restaurant-history');
