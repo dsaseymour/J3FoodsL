@@ -29,138 +29,134 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
  */
 
 
-Route::group(['middleware' => ['web']], function () {
 
 
-    Route::get('/', [
+	
+	//Home
+	Route::get('/', [
     'uses'=>'MasterController@showhome',
     'as'=>'homelink'
     ]);
-
-    Route::get('/password/reset',[
-    'uses'=>'MasterController@passwordreset',
-    'as'=>'passwordreset'
-    ]);
-
-
-    Route::get('/customerlogin',[
-    'uses'=>'MasterController@showcustomerlogin',
-    'as'=>'customerloginlink'
-    ]);
-
-    Route::post('/validcustomerlogin',[
+	
+	//Login pressed
+	Route::post('/validcustomerlogin',[
     'uses'=>'AuthController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
 
+	//Login pages
+	Route::get('/customerlogin',[
+    'uses'=>'LoginController@showcustomerlogin',
+    'as'=>'customerloginlink'
+    ]);
+	
+	Route::get('/restaurantlogin',[
+    'uses'=>'LoginController@showrestaurantlogin',
+    'as'=>'restaurantloginlink'
+    ]);
+	
+	
+	//Register Pages
+    Route::get('/register/{user?}',[
+    'uses'=>'RegisterController@register',
+    'as'=>'registerlink'
+	]);
 
     Route::get('/customerregister',[
-    'uses'=>'MasterController@showcustomerregister',
+    'uses'=>'RegisterController@showcustomerregister',
     'as'=>'customerregisterlink'
     ]);
-
-
+	
+	Route::get('/restaurantregister',[
+        'uses'=>'RegisterController@showrestaurantregister',
+        'as'=>'restaurantregisterlink'
+        ]);
+		
+		
+	//Customer pages
     Route::get('/customeroverview',[
-    'uses'=>'MasterController@showcustomeroverview',
+    'uses'=>'CustomerController@showcustomeroverview',
     'as'=>'customeroverviewlink'
     ]);
 
     Route::get('/customermenuoverview',[
-    'uses'=>'MasterController@showcustomermenuoverview',
+    'uses'=>'CustomerController@showcustomermenuoverview',
     'as'=>'customermenuoverviewlink'
     ]);
 
     Route::get('/customerconfirmation',[
-    'uses'=>'MasterController@showcustomerconfirmation',
+    'uses'=>'CustomerController@showcustomerconfirmation',
     'as'=>'customerconfirmationlink'
     ]);
 
     Route::get('/cpeditaddress',[
-    'uses'=>'MasterController@showcpeditaddress',
+    'uses'=>'CustomerController@showcpeditaddress',
     'as'=>'cpeditaddresslink'
     ]);
 
     Route::get('/cpeditorders',[
-    'uses'=>'MasterController@showcpeditorders',
+    'uses'=>'CustomerController@showcpeditorders',
     'as'=>'showcpeditorderslink'
     ]);
 
     Route::get('/customerprofile',[
-    'uses'=>'MasterController@showcustomerprofile',
+    'uses'=>'CustomerController@showcustomerprofile',
     'as'=>'customerprofilelink'
     ]);
 
-
-
-
+	
+	
+	//Restuarant pages
     Route::get('/restauranthistory',[
-    'uses'=>'MasterController@showrestauranthistory',
+    'uses'=>'RestaurantController@showrestauranthistory',
     'as'=>'restauranthistorylink'
     ]);
 
-        Route::get('/restaurantlogin',[
-        'uses'=>'MasterController@showrestaurantlogin',
-        'as'=>'restaurantloginlink'
-        ]);
 
-        Route::post('/restaurantlogin',[
-        'uses'=>'RestaurantController@restaurantlogin',
-        'as'=>'restaurantlogin'
-        ]);
+    Route::get('/restaurantmadmin',[
+    'uses'=>'RestaurantController@showrestaurantmadmin',
+    'as'=>'restaurantmadminlink'
+    ]);
 
+    Route::get('/restaurantmedit',[
+    'uses'=>'RestaurantController@showrestaurantmedit',
+    'as'=>'restaurantmeditlink'
+    ]);
 
+    Route::get('/restaurantmoverview',[
+    'uses'=>'RestaurantController@showrestaurantmoverview',
+    'as'=>'restaurantmoverviewlink'
+    ]);
 
-        Route::get('/restaurantmadmin',[
-        'uses'=>'MasterController@showrestaurantmadmin',
-        'as'=>'restaurantmadminlink'
-        ]);
+    Route::get('/restaurantoverview',[
+    'uses'=>'RestaurantController@showrestaurantoverview',
+    'as'=>'restaurantoverviewlink'
+     ]);
 
-        Route::get('/restaurantmedit',[
-        'uses'=>'MasterController@showrestaurantmedit',
-        'as'=>'restaurantmeditlink'
-        ]);
+    Route::get('/restaurantprofile',[
+    'uses'=>'RestaurantController@showrestaurantprofile',
+    'as'=>'restaurantprofilelink'
+    ]);
 
-        Route::get('/restaurantmoverview',[
-        'uses'=>'MasterController@showrestaurantmoverview',
-        'as'=>'restaurantmoverviewlink'
-        ]);
+    Route::get('/restaurantprofilerestrictions',[
+    'uses'=>'RestaurantController@showrestaurantrestrictions',
+    'as'=>'restaurantprofilerestrictionslink'
+     ]);
 
-        Route::get('/restaurantoverview',[
-        'uses'=>'MasterController@showrestaurantoverview',
-        'as'=>'restaurantoverviewlink'
-        ]);
+    Route::get('/restaurantprofilehours',[
+    'uses'=>'RestaurantController@showrestaurantprofilehours',
+    'as'=>'restaurantprofilehourslink'
+    ]);
 
-        Route::get('/restaurantprofile',[
-        'uses'=>'MasterController@showrestaurantprofile',
-        'as'=>'restaurantprofilelink'
-        ]);
+    Route::get('/registerconfirm',[
+    'uses'=>'RegisterController@showregisterconfirm',
+    'as'=>'registerconfirmlink'
+    ]);
 
-        Route::get('/restaurantprofilerestrictions',[
-        'uses'=>'MasterController@showrestaurantrestrictions',
-        'as'=>'restaurantprofilerestrictionslink'
-        ]);
-
-        Route::get('/restaurantprofilehours',[
-        'uses'=>'MasterController@showrestaurantprofilehours',
-        'as'=>'restaurantprofilehourslink'
-        ]);
-
-
-        Route::get('/restaurantregister',[
-        'uses'=>'MasterController@showrestaurantregister',
-        'as'=>'restaurantregisterlink'
-        ]);
-
-
-        Route::get('/registerconfirm',[
-        'uses'=>'MasterController@showregisterconfirm',
-        'as'=>'registerconfirmlink'
-        ]);
-
-        Route::get('/forgotpassword',[
-        'uses'=>'MasterController@showforgotpassword',
-        'as'=>'forgotpasswordlink'
-        ]);
+    Route::get('/forgotpassword',[
+    'uses'=>'AuthController@showforgotpassword',
+    'as'=>'forgotpasswordlink'
+    ]);
 
 
 
@@ -183,6 +179,8 @@ Route::post('/customerregister',[
 ]);
 
 //DEBUGGING
+
+	//Route::get('/login/{user}', 'AuthController@login');
 
 
 });

@@ -17,10 +17,10 @@ J3 Foods - Online Food Ordering
         <form action="/" method="POST" role="form">
               <div class="form-group">
                 <label class="sr-only" for="username">Username:</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username"/>
+                <input type="text" class="form-control login-input" name="username" id="username" placeholder="Username"/>
 
                 <label class="sr-only" for="password">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
+                <input type="password" class="form-control login-input" name="password" id="password" placeholder="Password"/>
               </div>
               <div id="forgotpass"><a href='#'>Forgot Password?</a> </div>
               <div id="loginsign-up">New to J3Foods?
