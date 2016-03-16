@@ -21,6 +21,10 @@ use App\User;
 class MasterController extends Controller
 {
 
+  public function passwordreset(){
+          return view('login.forgottenpassword');
+  }
+
 
   public function showhome(){
           return view('home');

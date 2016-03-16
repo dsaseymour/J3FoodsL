@@ -37,6 +37,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'homelink'
     ]);
 
+    Route::get('/password/reset',[
+    'uses'=>'MasterController@passwordreset',
+    'as'=>'passwordreset'
+    ]);
+
 
     Route::get('/customerlogin',[
     'uses'=>'MasterController@showcustomerlogin',
@@ -97,6 +102,13 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'MasterController@showrestaurantlogin',
         'as'=>'restaurantloginlink'
         ]);
+
+        Route::post('/restaurantlogin',[
+        'uses'=>'RestaurantController@restaurantlogin',
+        'as'=>'restaurantlogin'
+        ]);
+
+
 
         Route::get('/restaurantmadmin',[
         'uses'=>'MasterController@showrestaurantmadmin',

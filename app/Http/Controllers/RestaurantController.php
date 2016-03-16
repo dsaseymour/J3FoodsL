@@ -10,9 +10,15 @@ class RestaurantController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+    //    $this->middleware('auth');
 
     }
+
+    public function restaurantlogin(Request $request){
+
+            return view('restaurantcontent.restaurant-login');
+    }
+
 
 
     //
