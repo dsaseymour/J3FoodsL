@@ -13,6 +13,7 @@
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -23,13 +24,19 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+/*
+Wrap all routes in the web middleware to have session state and Cross-Site Request Forgery Protection
+ */
+
 
 Route::group(['middleware' => ['web']], function () {
+
 
     Route::get('/', [
     'uses'=>'MasterController@showhome',
     'as'=>'homelink'
     ]);
+
 
     Route::get('/customerlogin',[
     'uses'=>'MasterController@showcustomerlogin',
@@ -46,6 +53,7 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'MasterController@showcustomerregister',
     'as'=>'customerregisterlink'
     ]);
+
 
     Route::get('/customeroverview',[
     'uses'=>'MasterController@showcustomeroverview',
@@ -76,6 +84,9 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'MasterController@showcustomerprofile',
     'as'=>'customerprofilelink'
     ]);
+
+
+
 
     Route::get('/restauranthistory',[
     'uses'=>'MasterController@showrestauranthistory',
@@ -148,6 +159,16 @@ Route::get('/test', function()
     return view('restaurantcontent.restaurant-profile-restrictions');
 });
 
+
+Route::get('/customer', 'CustomerController@index');
+Route::post('/customer', 'CustomerController@store');
+Route::delete('/customer', 'CustomerController@destroy');
+
+
+Route::post('/customerregister',[
+'uses'=>'CustomerController@dummycreate',
+'as'=>'addCustomer'
+]);
 
 //DEBUGGING
 
