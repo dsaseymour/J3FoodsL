@@ -32,7 +32,11 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 Route::group(['middleware' => ['web']], function () {
 	
 
-
+	Route::get('/dbtest', [
+    'uses'=>'CustomerController@showrestaurant',
+    'as'=>'dbtest'
+    ]);
+	
 
 	//Home
 	Route::get('/', [
@@ -88,7 +92,7 @@ Route::group(['middleware' => ['web']], function () {
 	//Customer pages
     Route::get('/customeroverview',[
     'uses'=>'CustomerController@showcustomeroverview',
-    'as'=>'customeroverviewlink'
+    'as'=>'customeroverviewlink',
     ]);
 
     Route::get('/customermenuoverview',[

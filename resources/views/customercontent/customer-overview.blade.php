@@ -24,8 +24,18 @@ J3 Foods - Online Food Ordering
 
       <div class="panel-body">
         <h3>For More Information Click on a Restaurant Below</h3>
-
-              <div class="row">
+			@foreach ($restaurants as $rest)
+				<div class="row">
+                  <div class="col-sm-3 text-center">
+                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="#">{{$rest->username}}</a>
+                      </h5>
+                  </div>
+			@endforeach
+              <!--<div class="row">
                   <div class="col-sm-3 text-center">
                       <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
@@ -34,104 +44,10 @@ J3 Foods - Online Food Ordering
                           <a href="#">Restaurant Name</a>
                       </h5>
                   </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-              </div>
+                  
               <!-- /.row -->
 
-              <div class="row">
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-              </div>
-              <!-- /.row -->
-
-              <div class="row">
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  <div class="col-sm-3 ">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-              </div>
-              <!-- /.row -->
+             
             </div>
     </div>
   </div>
