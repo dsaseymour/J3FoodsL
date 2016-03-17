@@ -31,6 +31,9 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 
 Route::group(['middleware' => ['web']], function () {
 	
+
+
+
 	//Home
 	Route::get('/', [
     'uses'=>'MasterController@showhome',
@@ -53,6 +56,16 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'LoginController@showrestaurantlogin',
     'as'=>'restaurantloginlink'
     ]);
+	
+	Route::get('/password/reset',[
+     'uses'=>'MasterController@passwordreset',
+     'as'=>'passwordreset'
+     ]);
+	 
+	 Route::post('/restaurantlogin',[
+         'uses'=>'RestaurantController@restaurantlogin',
+         'as'=>'restaurantlogin'
+         ]);
 	
 	
 	//Register Pages
@@ -174,9 +187,9 @@ Route::post('/customerregister',[
 'as'=>'addCustomer'
 ]);
 
+});
+
 //DEBUGGING
 
 	//Route::get('/login/{user}', 'AuthController@login');
 
-
-});
