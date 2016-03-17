@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Restaurant;
 use App\Http\Requests;
 
 class AuthController extends Controller
@@ -14,7 +15,12 @@ class AuthController extends Controller
               'username'=>'required',
               'password'=>'required',
           ]);
-                  return view('customercontent.customer-overview');
+		  
+		  $restaurants = Restaurant::all();
+			
+			
+          return view('customercontent.customer-overview',compact('restaurants'));
+              
   }
   
    public function showforgotpassword(){

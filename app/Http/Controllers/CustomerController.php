@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Restaurant;
 use App\Http\Requests;
 use App\Customer;
-
+use DB;
 
 
 class CustomerController extends Controller
 {
+	
+		public function showrestaurant(){
+			
+			
+			
+			
+		}
 
         public function __construct()
         {
@@ -30,7 +38,11 @@ class CustomerController extends Controller
         }
 		
 		public function showcustomeroverview(){
-          return view('customercontent.customer-overview');
+			
+			$restaurants = Restaurant::all();
+			
+			
+          return view('customercontent.customer-overview',compact('restaurants'));
   }
 
   public function showcustomermenuoverview(){
