@@ -1,6 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.master')
+@section('title')
+J3 Foods - Online Food Ordering
+@endsection
+
+@section('navigation')
+@include('includes.topbar')
+@endsection
+
 
 @section('content')
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">

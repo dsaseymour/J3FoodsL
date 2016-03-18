@@ -13,6 +13,19 @@ use DB;
 class CustomerController extends Controller
 {
 	
+     public function validatecustomerlogin(Request $request){
+      /*
+          $this->validate($request, [
+              'username'=>'required',
+              'password'=>'required',
+          ]);
+      */
+          //$restaurants = Restaurant::all();
+            
+               return redirect()->action('CustomerController@showcustomeroverview');
+          //return view('customercontent.customer-overview',compact('restaurants'));
+              
+    }
 		public function showrestaurant(){
 			
 			

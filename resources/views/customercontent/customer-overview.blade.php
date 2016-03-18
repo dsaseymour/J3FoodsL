@@ -31,7 +31,7 @@ J3 Foods - Online Food Ordering
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
-                          <a href="#">{{$rest->username}}</a>
+                          <a href="#">{{$rest->name}}</a>
                       </h5>
                   </div>
 			@endforeach

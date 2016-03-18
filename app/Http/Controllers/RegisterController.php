@@ -19,6 +19,8 @@ class RegisterController extends Controller
   public function showregisterconfirm(){
           return view('registration.registrationconfirmation');
   }
+
+  
   
   
 }
