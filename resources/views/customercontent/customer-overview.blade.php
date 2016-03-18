@@ -18,7 +18,7 @@ J3 Foods - Online Food Ordering
       <!-- Default panel contents -->
       <div class="panel-heading">
         <h1>Currently Open
-        <span class="badge">10</span></h1>
+        <span class="badge">{{$restaurants->count()}}</span></h1>
        </div>
 
 
@@ -35,19 +35,6 @@ J3 Foods - Online Food Ordering
                       </h5>
                   </div>
 			@endforeach
-              <!--<div class="row">
-                  <div class="col-sm-3 text-center">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
-                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                      </a>
-                      <h5>
-                          <a href="#">Restaurant Name</a>
-                      </h5>
-                  </div>
-                  
-              <!-- /.row -->
-
-             
             </div>
     </div>
   </div>

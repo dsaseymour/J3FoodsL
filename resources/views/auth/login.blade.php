@@ -62,17 +62,18 @@ J3 Foods - Online Food Ordering
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Login
                                 </button>
-								@if ($isRest)
-								<button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>This is a restaurant login
-                                </button>
 								
-								@endif
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
                     </form>
+					
+					@if ($isRest)
+					<a href="{{ route('registerrestaurant') }}">Register Restaurant</a>
+					@else
+					<a href="{{ route('registercustomer') }}">Register Customer</a>
+					@endif
                 </div>
             </div>
         </div>

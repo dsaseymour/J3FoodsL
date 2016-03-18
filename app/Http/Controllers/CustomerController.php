@@ -14,24 +14,16 @@ class CustomerController extends Controller
 {
 	
      public function validatecustomerlogin(Request $request){
-      /*
-          $this->validate($request, [
-              'username'=>'required',
-              'password'=>'required',
-          ]);
-      */
-          //$restaurants = Restaurant::all();
-            
-               return redirect()->action('CustomerController@showcustomeroverview');
-          //return view('customercontent.customer-overview',compact('restaurants'));
-              
+        return redirect()->action('CustomerController@showcustomeroverview');
     }
-		public function showrestaurant(){
+	
+	public function showcustomeroverview(){
 			
-			
-			
-			
-		}
+		$restaurants = Restaurant::all();
+        return view('customercontent.customer-overview',compact('restaurants'));
+  }
+  
+	
 
         public function __construct()
         {
@@ -50,13 +42,7 @@ class CustomerController extends Controller
              return Response::make('User created! Hurray!');
         }
 		
-		public function showcustomeroverview(){
-			
-			$restaurants = Restaurant::all();
-			
-			
-          return view('customercontent.customer-overview',compact('restaurants'));
-  }
+		
 
   public function showcustomermenuoverview(){
           return view('customercontent.customer-menuoverview');

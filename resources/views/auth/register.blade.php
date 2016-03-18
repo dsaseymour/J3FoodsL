@@ -80,6 +80,9 @@ J3 Foods - Online Food Ordering
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-user"></i>Register
                                 </button>
+								@if ($isRest)
+								<a href="{{ route('registerrestaurantinfo'  ) }}">Continue</a>
+								@endif
                             </div>
                         </div>
                     </form>

@@ -31,8 +31,6 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 
 Route::group(['middleware' => ['web']], function () {
 	
-
-
     Route::auth();
 
     Route::get('/home', 'MasterController@showhome');
@@ -41,6 +39,20 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'CustomerController@showrestaurant',
     'as'=>'dbtest'
     ]);
+
+	//Home
+	Route::get('/', [
+    'uses'=>'MasterController@showhome',
+    'as'=>'homelink'
+    ]);
+	
+	//Login pressed
+	Route::post('/validcustomerlogin',[
+    'uses'=>'CustomerController@validatecustomerlogin',
+    'as'=>'validcustomerloginlink'
+    ]);
+
+	//Login pages
 	
 	Route::get('/loginRest', [
     'uses'=>'LoginController@showrestaurantlogin',
@@ -52,20 +64,6 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'logincust'
     ]);
 	
-
-	//Home
-	Route::get('/', [
-    'uses'=>'MasterController@showhome',
-    'as'=>'homelink'
-    ]);
-	
-	//Login pressed
-	/*Route::post('/validcustomerlogin',[
-    'uses'=>'CustomerController@validatecustomerlogin',
-    'as'=>'validcustomerloginlink'
-    ]);*/
-
-	//Login pages
 	/*Route::get('/customerlogin',[
     'uses'=>'LoginController@showcustomerlogin',
     'as'=>'customerloginlink'
@@ -89,19 +87,29 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Register Pages
-    Route::get('/register/{user?}',[
+   /* Route::get('/register/{user?}',[
+    'uses'=>'RegisterController@register',
+    'as'=>'registerlink'
+	]);*/
+	
+	Route::get('/register',[
     'uses'=>'RegisterController@register',
     'as'=>'registerlink'
 	]);
 
     Route::get('/customerregister',[
     'uses'=>'RegisterController@showcustomerregister',
-    'as'=>'customerregisterlink'
+    'as'=>'registercustomer'
     ]);
 	
 	Route::get('/restaurantregister',[
         'uses'=>'RegisterController@showrestaurantregister',
-        'as'=>'restaurantregisterlink'
+        'as'=>'registerrestaurant'
+        ]);
+		
+		Route::get('/restaurantregisterinfo',[
+        'uses'=>'RegisterController@showrestaurantregisterinfo',
+        'as'=>'registerrestaurantinfo'
         ]);
 		
 		
