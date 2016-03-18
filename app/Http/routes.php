@@ -35,10 +35,21 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', 'MasterController@showhome');
+	
 	Route::get('/dbtest', [
     'uses'=>'CustomerController@showrestaurant',
     'as'=>'dbtest'
+    ]);
+	
+	Route::get('/loginRest', [
+    'uses'=>'LoginController@showrestaurantlogin',
+    'as'=>'loginrest'
+    ]);
+	
+	Route::get('/loginCust', [
+    'uses'=>'LoginController@showcustomerlogin',
+    'as'=>'logincust'
     ]);
 	
 
@@ -49,13 +60,13 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 	
 	//Login pressed
-	Route::post('/validcustomerlogin',[
+	/*Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
-    ]);
+    ]);*/
 
 	//Login pages
-	Route::get('/customerlogin',[
+	/*Route::get('/customerlogin',[
     'uses'=>'LoginController@showcustomerlogin',
     'as'=>'customerloginlink'
     ]);
@@ -63,17 +74,18 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/restaurantlogin',[
     'uses'=>'LoginController@showrestaurantlogin',
     'as'=>'restaurantloginlink'
-    ]);
+    ]);*/
 	
 	Route::get('/password/reset',[
      'uses'=>'MasterController@passwordreset',
      'as'=>'passwordreset'
      ]);
 	 
+	 /*
 	 Route::post('/restaurantlogin',[
          'uses'=>'RestaurantController@restaurantlogin',
          'as'=>'restaurantlogin'
-         ]);
+         ]);*/
 	
 	
 	//Register Pages

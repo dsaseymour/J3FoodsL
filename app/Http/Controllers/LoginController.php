@@ -9,11 +9,13 @@ use App\Http\Requests;
 class LoginController extends Controller
 {
     public function showcustomerlogin(){
-          return view('customercontent.customer-login');
+		  $isRest = false;
+          return view('auth.login',['isRest' => $isRest]);
   }
   
    public function showrestaurantlogin(){
-          return view('restaurantcontent.restaurant-login');
+			$isRest = true;
+          return view('auth.login',['isRest' => $isRest]);
   }
   
 }
