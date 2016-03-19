@@ -17,7 +17,7 @@
               <li><a href="{{ route('restaurantoverviewlink'  ) }}">Overview</a></li>
               <li><a href="{{ route('restaurantprofilelink'  ) }}">Edit Profile</a></li>
               <li class="separator"> </li>
-              <li><a href="{{ route('homelink'  ) }}">Logout</a></li>
+              <li><a href="{{ url('/logout'  ) }}">Logout</a></li>
             </ul>
           </li>
         </ul>
