@@ -13,7 +13,15 @@ use DB;
 class CustomerController extends Controller
 {
 	
-     public function validatecustomerlogin(Request $request){
+	
+        public function __construct()
+        {
+            $this->middleware('auth');  
+
+        }
+		
+	
+     public function validatecustomerlogin(Request $request){//Why does this redirect to the method directly below? I remeber it had somethign to do with the url 
         return redirect()->action('CustomerController@showcustomeroverview');
     }
 	
@@ -23,27 +31,6 @@ class CustomerController extends Controller
         return view('customercontent.customer-overview',compact('restaurants'));
   }
   
-	
-
-        public function __construct()
-        {
-//            $this->middleware('auth');  
-
-        }
-
-
-        public function dummycreate(Request $request){
-             $customer = new Customer;
-             $user->username     = Input::get('username');
-             $user->password     = Hash::make(Input::get('password'));
-             $user->email        = Input::get('email');
-             $user->save();
-
-             return Response::make('User created! Hurray!');
-        }
-		
-		
-
   public function showcustomermenuoverview(){
           return view('customercontent.customer-menuoverview');
   }
@@ -65,6 +52,22 @@ class CustomerController extends Controller
   }
 		
 		
+		
+		
+		/*
+		
+		Danny working on test database 
+		
+		*/
+        public function dummycreate(Request $request){
+             $customer = new Customer;
+             $user->username     = Input::get('username');
+             $user->password     = Hash::make(Input::get('password'));
+             $user->email        = Input::get('email');
+             $user->save();
+
+             return Response::make('User created! Hurray!');
+        }
 
         public function dummygetcustomer(){
              $customers=Customer::orderBy('created_at', 'asc')->get();

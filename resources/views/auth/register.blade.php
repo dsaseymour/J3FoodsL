@@ -74,6 +74,17 @@ J3 Foods - Online Food Ordering
                                 @endif
                             </div>
                         </div>
+						<div class="form-group">
+                            <label class="col-md-4 control-label">Are you a restaurant</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="isRestaurant" value="{{ old('isRestaurant') }}">
+
+                                
+                   
+                               
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

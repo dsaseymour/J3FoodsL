@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -28,7 +33,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/customeroverview';
 
     /**
      * Create a new authentication controller instance.
@@ -57,6 +62,25 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
+	
+	
+	public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+		if($request->isRestaurant == "1"){
+			return redirect($this->redirectPath());
+		}else{
+			return redirect()->action('RegisterController@showregisterconfirm');
+		}
+    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -68,6 +92,7 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+			'isRestaurant' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -83,6 +108,7 @@ class AuthController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+			'isRestaurant' => $data['isRestaurant'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

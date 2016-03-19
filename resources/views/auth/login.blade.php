@@ -16,7 +16,7 @@ J3 Foods - Online Food Ordering
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                 <!-- WE NEED THIS ACTION TO BE WORKING-->
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/validcustomerlogin') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -70,9 +70,9 @@ J3 Foods - Online Food Ordering
                     </form>
 					
 					@if ($isRest)
-					<a href="{{ route('registerrestaurant') }}">Register Restaurant</a>
+					<a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register New Restaurant</a>
 					@else
-					<a href="{{ route('registercustomer') }}">Register Customer</a>
+					<a class="btn btn-primary" href="{{ route('registercustomer') }}">Register New Customer</a>
 					@endif
                 </div>
             </div>

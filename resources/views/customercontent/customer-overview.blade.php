@@ -24,8 +24,9 @@ J3 Foods - Online Food Ordering
 
       <div class="panel-body">
         <h3>For More Information Click on a Restaurant Below</h3>
-			@foreach ($restaurants as $rest)
-				<div class="row">
+			
+			<div class="row">
+				@foreach ($restaurants as $rest)
                   <div class="col-sm-3 text-center">
                       <a href="{{ route('customermenuoverviewlink'  ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
@@ -34,8 +35,9 @@ J3 Foods - Online Food Ordering
                           <a href="#">{{$rest->name}}</a>
                       </h5>
                   </div>
-			@endforeach
+				@endforeach
             </div>
+			
     </div>
   </div>
 </div>
