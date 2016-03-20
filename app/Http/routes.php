@@ -31,16 +31,14 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 
 Route::group(['middleware' => ['web']], function () {
 	
-
-
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', 'MasterController@showhome');
+	
 	Route::get('/dbtest', [
     'uses'=>'CustomerController@showrestaurant',
     'as'=>'dbtest'
     ]);
-	
 
 	//Home
 	Route::get('/', [
@@ -55,7 +53,18 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Login pages
-	Route::get('/customerlogin',[
+	
+	Route::get('/loginRest', [
+    'uses'=>'LoginController@showrestaurantlogin',
+    'as'=>'loginrest'
+    ]);
+	
+	Route::get('/loginCust', [
+    'uses'=>'LoginController@showcustomerlogin',
+    'as'=>'logincust'
+    ]);
+	
+	/*Route::get('/customerlogin',[
     'uses'=>'LoginController@showcustomerlogin',
     'as'=>'customerloginlink'
     ]);
@@ -63,33 +72,44 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/restaurantlogin',[
     'uses'=>'LoginController@showrestaurantlogin',
     'as'=>'restaurantloginlink'
-    ]);
+    ]);*/
 	
 	Route::get('/password/reset',[
      'uses'=>'MasterController@passwordreset',
      'as'=>'passwordreset'
      ]);
 	 
+	 /*
 	 Route::post('/restaurantlogin',[
          'uses'=>'RestaurantController@restaurantlogin',
          'as'=>'restaurantlogin'
-         ]);
+         ]);*/
 	
 	
 	//Register Pages
-    Route::get('/register/{user?}',[
+   /* Route::get('/register/{user?}',[
+    'uses'=>'RegisterController@register',
+    'as'=>'registerlink'
+	]);*/
+	
+	Route::get('/register',[
     'uses'=>'RegisterController@register',
     'as'=>'registerlink'
 	]);
 
     Route::get('/customerregister',[
     'uses'=>'RegisterController@showcustomerregister',
-    'as'=>'customerregisterlink'
+    'as'=>'registercustomer'
     ]);
 	
 	Route::get('/restaurantregister',[
         'uses'=>'RegisterController@showrestaurantregister',
-        'as'=>'restaurantregisterlink'
+        'as'=>'registerrestaurant'
+        ]);
+		
+		Route::get('/restaurantregisterinfo',[
+        'uses'=>'RegisterController@showrestaurantregisterinfo',
+        'as'=>'registerrestaurantinfo'
         ]);
 		
 		

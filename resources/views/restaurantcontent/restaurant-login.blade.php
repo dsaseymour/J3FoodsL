@@ -25,7 +25,7 @@ J3 Foods - Online Food Ordering
 
               <div id="forgotpass"><a href="{{ route('passwordreset') }}">Forgot Password?</a> </div>
               <div id="loginsign-up">New to J3Foods?
-                  <a href="{{ route('restaurantregisterlink'  ) }}">Sign up</a>
+                  <a href="{{ route('registerinfo'  ) }}">Sign up</a>
               </div>
 
 

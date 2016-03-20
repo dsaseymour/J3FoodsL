@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.master')
+@section('title')
+J3 Foods - Online Food Ordering
+@endsection
+
+@section('navigation')
+@include('includes.topbar')
+@endsection
+
 
 @section('content')
 <div class="container">
@@ -66,12 +74,26 @@
                                 @endif
                             </div>
                         </div>
+						<div class="form-group">
+                            <label class="col-md-4 control-label">Are you a restaurant</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="isRestaurant" value="{{ old('isRestaurant') }}">
+
+                                
+                   
+                               
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-user"></i>Register
                                 </button>
+								@if ($isRest)
+								<a href="{{ route('registerrestaurantinfo'  ) }}">Continue</a>
+								@endif
                             </div>
                         </div>
                     </form>

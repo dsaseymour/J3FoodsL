@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.master')
+@section('title')
+J3 Foods - Online Food Ordering
+@endsection
+
+@section('navigation')
+@include('includes.topbar')
+@endsection
+
 
 @section('content')
 <div class="container">
@@ -8,7 +16,7 @@
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                 <!-- WE NEED THIS ACTION TO BE WORKING-->
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/validcustomerlogin') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -54,11 +62,18 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Login
                                 </button>
+								
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
                     </form>
+					
+					@if ($isRest)
+					<a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register New Restaurant</a>
+					@else
+					<a class="btn btn-primary" href="{{ route('registercustomer') }}">Register New Customer</a>
+					@endif
                 </div>
             </div>
         </div>

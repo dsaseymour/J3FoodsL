@@ -13,51 +13,24 @@ use DB;
 class CustomerController extends Controller
 {
 	
-     public function validatecustomerlogin(Request $request){
-      /*
-          $this->validate($request, [
-              'username'=>'required',
-              'password'=>'required',
-          ]);
-      */
-          //$restaurants = Restaurant::all();
-            
-               return redirect()->action('CustomerController@showcustomeroverview');
-          //return view('customercontent.customer-overview',compact('restaurants'));
-              
-    }
-		public function showrestaurant(){
-			
-			
-			
-			
-		}
-
+	
         public function __construct()
         {
-//            $this->middleware('auth');  
+            $this->middleware('auth');  
 
-        }
-
-
-        public function dummycreate(Request $request){
-             $customer = new Customer;
-             $user->username     = Input::get('username');
-             $user->password     = Hash::make(Input::get('password'));
-             $user->email        = Input::get('email');
-             $user->save();
-
-             return Response::make('User created! Hurray!');
         }
 		
-		public function showcustomeroverview(){
+	
+     public function validatecustomerlogin(Request $request){//Why does this redirect to the method directly below? I remeber it had somethign to do with the url 
+        return redirect()->action('CustomerController@showcustomeroverview');
+    }
+	
+	public function showcustomeroverview(){
 			
-			$restaurants = Restaurant::all();
-			
-			
-          return view('customercontent.customer-overview',compact('restaurants'));
+		$restaurants = Restaurant::all();
+        return view('customercontent.customer-overview',compact('restaurants'));
   }
-
+  
   public function showcustomermenuoverview(){
           return view('customercontent.customer-menuoverview');
   }
@@ -79,6 +52,22 @@ class CustomerController extends Controller
   }
 		
 		
+		
+		
+		/*
+		
+		Danny working on test database 
+		
+		*/
+        public function dummycreate(Request $request){
+             $customer = new Customer;
+             $user->username     = Input::get('username');
+             $user->password     = Hash::make(Input::get('password'));
+             $user->email        = Input::get('email');
+             $user->save();
+
+             return Response::make('User created! Hurray!');
+        }
 
         public function dummygetcustomer(){
              $customers=Customer::orderBy('created_at', 'asc')->get();
