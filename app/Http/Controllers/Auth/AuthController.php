@@ -76,7 +76,14 @@ class AuthController extends Controller
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
+		
+		
 		if($request->isRestaurant == "1"){
+			$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+			$idOfUser=  $results[0]->id;
+			DB::table('restaurant')->insert(['testing' => $request->testing, 'id' => $idOfUser ]);
+			
+			
             return redirect()->action('RegisterController@showrestaurantregisterinfo');	
 		}else{
 			return redirect($this->redirectPath());
@@ -97,7 +104,7 @@ class AuthController extends Controller
 		$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 	
 		
-			$newresults=  $results[0]->isRestaurant;
+		$newresults=  $results[0]->isRestaurant;
 		
 		
 		
