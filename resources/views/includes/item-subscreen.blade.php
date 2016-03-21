@@ -5,7 +5,8 @@
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-      <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
+    
+      <form action="" method="post" role="form">
         <div class="list-group">
                     <a href="#" class="list-group-item">
                       <h4 class="list-group-item-heading">Pizza Size</h4>

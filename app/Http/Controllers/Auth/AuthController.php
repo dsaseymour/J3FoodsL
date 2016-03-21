@@ -66,6 +66,12 @@ class AuthController extends Controller
 	
 	public function register(Request $request)
     {
+        //Check is it is a resatuarant first
+        if($request->isRestaurant == "1"){
+            $this->validate($request, [
+                'testing' => 'required|min:10'
+            ]);
+        }
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
@@ -76,9 +82,9 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 		if($request->isRestaurant == "1"){
-			return redirect($this->redirectPath());
+            return redirect()->action('RegisterController@showrestaurantregisterinfo');	
 		}else{
-			return redirect()->action('RegisterController@showregisterconfirm');
+			return redirect($this->redirectPath());
 		}
     }
 	

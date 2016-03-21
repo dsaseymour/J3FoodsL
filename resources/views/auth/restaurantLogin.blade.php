@@ -13,7 +13,7 @@ J3 Foods - Online Food Ordering
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Testin</div>
                 <div class="panel-body">
                 <!-- WE NEED THIS ACTION TO BE WORKING-->
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
@@ -70,7 +70,7 @@ J3 Foods - Online Food Ordering
                     </form>
 					
            
-                    <a class="btn btn-primary" href="{{ route('registercustomer') }}">Register</a>
+                    <a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register</a>
                 </div>
             </div>
         </div>

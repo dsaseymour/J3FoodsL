@@ -13,7 +13,7 @@ J3 Foods - Online Food Ordering
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Customer Register</div>
+                <div class="panel-heading">Restaurant Register</div>
                 <div class="panel-body">
                 <!--{{ url('/validcustomerlogin') }}-->
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
@@ -74,8 +74,19 @@ J3 Foods - Online Food Ordering
                                 @endif
                             </div>
                         </div>
-                        <!-- Automatically sets them to not a restaurant-->
-                        <input type="hidden" class="form-control" name="isRestaurant" value="0">
+						<div class="form-group">
+                            <label class="col-md-4 control-label">testing</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="testing" value="{{ old('testing') }}">
+
+                                
+                   
+                               
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" class="form-control" name="isRestaurant" value="1">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -88,6 +99,13 @@ J3 Foods - Online Food Ordering
                             </div>
                         </div>
                     </form>
+                     @if (count($errors))
+                        <ul>
+                        @foreach ($errors->all() as $error)
+                             <li>{{ $error }}</li>
+                         @endforeach
+                        </ul>
+                     @endif
                 </div>
             </div>
         </div>
