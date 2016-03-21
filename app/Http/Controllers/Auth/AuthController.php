@@ -81,7 +81,16 @@ class AuthController extends Controller
 		if($request->isRestaurant == "1"){
 			$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
 			$idOfUser=  $results[0]->id;
-			DB::table('restaurant')->insert(['testing' => $request->testing, 'id' => $idOfUser ]);
+			DB::table('restaurant')->
+			insert(['id' => $idOfUser,
+			'testing' => $request->testing,
+			'CompanyName' => $request->companyname,
+			'Address' => $request->address,
+			'Province' => $request->province,
+			'City' => $request->city,
+			'PostalCode' => $request->postalcode,
+			'PhoneNumber' => $request->phoneno,
+			]);
 			
 			
             return redirect()->action('RegisterController@showrestaurantregisterinfo');	
@@ -130,12 +139,19 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+		
         return Validator::make($data, [
             'name' => 'required|max:255',
 			'isRestaurant' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
 			'testing' => 'required|min:10',
+			'companyname' => 'required',
+			'address' => 'required',
+			'province' => 'required',
+			'city' => 'required',
+			'postalcode' => 'required | max:7 | min:6',
+			'phoneno' => 'required | max:13',
         ]);
     }
 
