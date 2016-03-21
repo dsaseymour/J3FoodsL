@@ -77,7 +77,7 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 		
-		
+		 
 		if($request->isRestaurant == "1"){
 			$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
 			$idOfUser=  $results[0]->id;
