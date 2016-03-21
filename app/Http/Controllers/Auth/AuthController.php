@@ -66,12 +66,7 @@ class AuthController extends Controller
 	
 	public function register(Request $request)
     {
-        //Check is it is a resatuarant first
-        if($request->isRestaurant == "1"){
-            $this->validate($request, [
-                'testing' => 'required|min:10'
-            ]);
-        }
+       
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
@@ -133,6 +128,7 @@ class AuthController extends Controller
 			'isRestaurant' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+			'testing' => 'required|min:10',
         ]);
     }
 
