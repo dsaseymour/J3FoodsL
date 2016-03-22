@@ -89,7 +89,7 @@ J3 Foods - Online Food Ordering
                                
                             </div>
                         </div>
-						<div class="form-group{{ $errors->has('companyname') ? ' has-error' : '' }}""  >
+						<div class="form-group{{ $errors->has('companyname') ? ' has-error' : '' }}"  >
                             <label class="col-md-4 control-label">Company Name</label>
 
                             <div class="col-md-6">
@@ -98,43 +98,74 @@ J3 Foods - Online Food Ordering
                                     <span class="help-block">
                                         <strong>{{ $errors->first('companyname') }}</strong>
                                     </span>
-                                @endif
-                                
-                   
-                               
+                                @endif  
                             </div>
                         </div>
 						
-						
-                   
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}"  >
+                            <label class="col-md-4 control-label">Address</label>
 
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif   
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('province') ? ' has-error' : '' }}"  >
+                            <label class="col-md-4 control-label">Province</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="province" value="{{ old('province') }}">
+                                @if ($errors->has('province'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('province') }}</strong>
+                                    </span>
+                                @endif 
+                            </div>
+                        </div>
+                   
+                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}"  >
+                            <label class="col-md-4 control-label">City</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="city" value="{{ old('city') }}">
+                                @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif 
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('postalcode') ? ' has-error' : '' }}"  >
+                            <label class="col-md-4 control-label">Postal Code</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="postalcode" value="{{ old('postalcode') }}">
+                                @if ($errors->has('postalcode'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('postalcode') }}</strong>
+                                    </span>
+                                @endif 
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('phoneno') ? ' has-error' : '' }}"  >
+                            <label class="col-md-4 control-label">Phone Number</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="phoneno" value="{{ old('phoneno') }}">
+                                @if ($errors->has('phoneno'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phoneno') }}</strong>
+                                    </span>
+                                @endif 
+                            </div>
+                        </div>
                 <div class="input-row row">
                     <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input type="text" name="address" id="address"  class="input-fieldformat form-control" placeholder="Street Address" value="{{old('address')}}"/>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="text" name="province" id="province" class="input-fieldformat form-control" placeholder="Province" value="{{old('province')}}"/>
-                            </div>
-
-                        </div>
-                        <div class="input-row row">
-                            <div class="col-sm-4">
-                                <input type="text" name="city" id="city"  class="input-fieldformat form-control" placeholder="City" value="{{old('city')}}"/>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="text" name="postalcode" id="postalcode"  class="input-fieldformat form-control" placeholder="Postal/ZipCode" value="{{old('postalcode')}}"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="input-row row" >
-                    <div class="col-sm-6">
-                        <input type="tel" name="phoneno" id="phoneno" class="input-fieldformat form-control"  placeholder="Phone Number" value="{{old('phonenumber')}}"/>
                     </div>
                 </div>
 
