@@ -74,17 +74,70 @@ J3 Foods - Online Food Ordering
                                 @endif
                             </div>
                         </div>
-						<div class="form-group">
+						<div class="form-group{{ $errors->has('testing') ? ' has-error' : '' }}""  >
                             <label class="col-md-4 control-label">testing</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="testing" value="{{ old('testing') }}">
-
+								@if ($errors->has('testing'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('testing') }}</strong>
+                                    </span>
+                                @endif
                                 
                    
                                
                             </div>
                         </div>
+						<div class="form-group{{ $errors->has('companyname') ? ' has-error' : '' }}""  >
+                            <label class="col-md-4 control-label">Company Name</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="companyname" value="{{ old('companyname') }}">
+								@if ($errors->has('companyname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('companyname') }}</strong>
+                                    </span>
+                                @endif
+                                
+                   
+                               
+                            </div>
+                        </div>
+						
+						
+                   
+
+                <div class="input-row row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="text" name="address" id="address"  class="input-fieldformat form-control" placeholder="Street Address" value="{{old('address')}}"/>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <input type="text" name="province" id="province" class="input-fieldformat form-control" placeholder="Province" value="{{old('province')}}"/>
+                            </div>
+
+                        </div>
+                        <div class="input-row row">
+                            <div class="col-sm-4">
+                                <input type="text" name="city" id="city"  class="input-fieldformat form-control" placeholder="City" value="{{old('city')}}"/>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <input type="text" name="postalcode" id="postalcode"  class="input-fieldformat form-control" placeholder="Postal/ZipCode" value="{{old('postalcode')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-row row" >
+                    <div class="col-sm-6">
+                        <input type="tel" name="phoneno" id="phoneno" class="input-fieldformat form-control"  placeholder="Phone Number" value="{{old('phonenumber')}}"/>
+                    </div>
+                </div>
+
                         
                         <input type="hidden" class="form-control" name="isRestaurant" value="1">
                         <div class="form-group">
@@ -99,13 +152,6 @@ J3 Foods - Online Food Ordering
                             </div>
                         </div>
                     </form>
-                     @if (count($errors))
-                        <ul>
-                        @foreach ($errors->all() as $error)
-                             <li>{{ $error }}</li>
-                         @endforeach
-                        </ul>
-                     @endif
                 </div>
             </div>
         </div>
