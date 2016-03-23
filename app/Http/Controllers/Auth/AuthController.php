@@ -83,7 +83,6 @@ class AuthController extends Controller
 			$idOfUser=  $results[0]->id;
 			DB::table('restaurant')->
 			insert(['id' => $idOfUser,
-			'testing' => $request->testing,
 			'CompanyName' => $request->companyname,
 			'Address' => $request->address,
 			'Province' => $request->province,
@@ -93,7 +92,7 @@ class AuthController extends Controller
 			]);
 			
 			
-            return redirect()->action('RegisterController@showrestaurantregisterinfo');	
+            return redirect()->action('RestaurantController@showrestaurantoverview');	
 		}else{
 			return redirect($this->redirectPath());
 		}
@@ -139,20 +138,27 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-		
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-			'isRestaurant' => 'required',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-			'testing' => 'required|min:10',
-			'companyname' => 'required',
-			'address' => 'required',
-			'province' => 'required',
-			'city' => 'required',
-			'postalcode' => 'required | max:7 | min:6',
-			'phoneno' => 'required | max:13',
-        ]);
+		if ($data['isRestaurant'] == 1){
+            return Validator::make($data, [
+                'name' => 'required|max:255',
+                'isRestaurant' => 'required',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+                'companyname' => 'required',
+                'address' => 'required',
+                'province' => 'required',
+                'city' => 'required',
+                'postalcode' => 'required | max:7 | min:6',
+                'phoneno' => 'required | max:13',
+            ]);
+        } else {
+            return Validator::make($data, [
+                'name' => 'required|max:255',
+                'isRestaurant' => 'required',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ]);
+        }
     }
 
     /**

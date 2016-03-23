@@ -74,21 +74,6 @@ J3 Foods - Online Food Ordering
                                 @endif
                             </div>
                         </div>
-						<div class="form-group{{ $errors->has('testing') ? ' has-error' : '' }}""  >
-                            <label class="col-md-4 control-label">testing</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="testing" value="{{ old('testing') }}">
-								@if ($errors->has('testing'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('testing') }}</strong>
-                                    </span>
-                                @endif
-                                
-                   
-                               
-                            </div>
-                        </div>
 						<div class="form-group{{ $errors->has('companyname') ? ' has-error' : '' }}"  >
                             <label class="col-md-4 control-label">Company Name</label>
 
