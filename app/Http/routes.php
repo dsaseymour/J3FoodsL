@@ -125,8 +125,8 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customeroverviewlink',
     ]);
 
-    Route::get('/customermenuoverview',[
-    'uses'=>'CustomerController@showcustomermenuoverview',
+    Route::get('/menu/{restaurant}',[
+    'uses'=>'CustomerController@showcustomermenu',
     'as'=>'customermenuoverviewlink'
     ]);
 

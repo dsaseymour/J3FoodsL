@@ -28,7 +28,7 @@ J3 Foods - Online Food Ordering
 			<div class="row">
 				@foreach ($restaurants as $rest)
                   <div class="col-sm-3 text-center">
-                      <a href="{{ route('customermenuoverviewlink'  ) }}">
+                      <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
