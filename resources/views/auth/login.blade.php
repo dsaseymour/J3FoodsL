@@ -49,16 +49,6 @@ J3 Foods - Online Food Ordering
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Login
                                 </button>
@@ -67,10 +57,19 @@ J3 Foods - Online Food Ordering
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Remember Me
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </form>
 					
-           
-                    <a class="btn btn-primary" href="{{ route('registercustomer') }}">Register</a>
+                    <a class="btn btn-primary col-md-offset-4" href="{{ route('registercustomer') }}">Register As Customer</a>
+                    <a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register a Restaurant</a>
                 </div>
             </div>
         </div>

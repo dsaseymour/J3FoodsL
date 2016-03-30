@@ -41,23 +41,6 @@ class AuthController extends Controller
      * @return void
      */
 
-    /*public function validatecustomerlogin(Request $request){
-          $this->validate($request, [
-              'username'=>'required',
-              'password'=>'required',
-          ]);
-          
-          //$restaurants = Restaurant::all();
-            
-               return redirect()->action('CustomerController@showcustomeroverview');
-          //return view('customercontent.customer-overview',compact('restaurants'));
-              
-  }
-  
-   public function showforgotpassword(){
-          return view('login.forgottenpassword');
-  }
-  */
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
@@ -77,58 +60,28 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 		
-		 
-		if($request->isRestaurant == "1"){
-			$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
-			$idOfUser=  $results[0]->id;
-			DB::table('restaurant')->
-			insert(['id' => $idOfUser,
-			'CompanyName' => $request->companyname,
-			'Address' => $request->address,
-			'Province' => $request->province,
-			'City' => $request->city,
-			'PostalCode' => $request->postalcode,
-			'PhoneNumber' => $request->phoneno,
-			]);
-			
-			
+    		if($request->isRestaurant == "1"){
+            //Register a restaurant with the required fields
+    		    $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+    		    $idOfUser=  $results[0]->id;
+    		    DB::table('restaurant')->
+    		    insert(['id' => $idOfUser,
+    		      'CompanyName' => $request->companyname,
+    		      'Address' => $request->address,
+    		      'Province' => $request->province,
+    		      'City' => $request->city,
+    		      'PostalCode' => $request->postalcode,
+    		      'PhoneNumber' => $request->phoneno,
+    		    ]);
             return redirect()->action('RestaurantController@showrestaurantoverview');	
-		}else{
-			return redirect($this->redirectPath());
-		}
+    		} else{
+            //register a customer, linked by an id.
+            $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+            $idOfUser=  $results[0]->id;
+            DB::table('customer')->insert(['id' => $idOfUser]);
+    		    return redirect($this->redirectPath());
+    		}
     }
-	
-	protected function handleUserWasAuthenticated(Request $request, $throttles)
-    {
-		
-        if ($throttles) {
-            $this->clearLoginAttempts($request);
-        }
-
-        if (method_exists($this, 'authenticated')) {
-            return $this->authenticated($request, Auth::guard($this->getGuard())->user());
-        }
-
-		$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
-	
-		
-		$newresults=  $results[0]->isRestaurant;
-		
-		
-		
-		if($newresults== '1'){
-			return redirect()->action('RestaurantController@showrestaurantoverview');
-		}else{
-			return redirect()->intended($this->redirectPath());
-		}
-    }
-	
-	protected function getCredentials(Request $request)
-    {
-        return $request->only($this->loginUsername(), 'password');
-    }
-	
-	
 
     /**
      * Get a validator for an incoming registration request.
