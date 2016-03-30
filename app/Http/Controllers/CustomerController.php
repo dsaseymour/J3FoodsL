@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Http\Requests;
 use App\Customer;
+use App\User;
 use DB;
 use Validator;
-use App\User;
 
 class CustomerController extends Controller
 {
@@ -92,9 +92,10 @@ class CustomerController extends Controller
         return view('customercontent.customer-overview',compact('restaurants'));
   }
   
-  
-  public function showcustomermenuoverview(){
-          return view('customercontent.customer-menuoverview');
+
+  public function showcustomermenu(User $restaurant){
+		$items = $restaurant->menu;
+          return view('customercontent.customer-menuoverview', compact("items"));
   }
 
   public function showcustomerconfirmation(){
