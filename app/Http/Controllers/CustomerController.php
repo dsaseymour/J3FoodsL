@@ -10,7 +10,6 @@ use App\Customer;
 use App\User;
 use DB;
 use Validator;
-use App\User;
 
 class CustomerController extends Controller
 {
