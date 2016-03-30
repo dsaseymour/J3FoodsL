@@ -27,4 +27,6 @@ class User extends Authenticatable
 	public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');
 	}
+	
+	
 }
