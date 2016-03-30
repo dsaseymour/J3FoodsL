@@ -115,6 +115,11 @@ Route::group(['middleware' => ['web']], function () {
 		
 		
 	//Customer pages
+	Route::post('/customerupdateinfo',[
+    'uses'=>'CustomerController@updateinfo',
+    'as'=>'customerupdateinfo',
+    ]);
+	
     Route::get('/customeroverview',[
     'uses'=>'CustomerController@showcustomeroverview',
     'as'=>'customeroverviewlink',
