@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Customer;
 use DB;
 use Validator;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -26,7 +27,7 @@ class CustomerController extends Controller
 	public function updateinfo(Request $request){
 		
 		$validator = $this->validatecustomerupdate($request->all());
-
+		
         if ($validator->fails()) {
             $this->throwValidationException(
                 $request, $validator
@@ -48,35 +49,34 @@ class CustomerController extends Controller
             $id = \Auth::user()->id;
         }
 		
-		$alldata = $request->all();
-		$table = 'users';
-		$count = 0;
+		$updateUser = User::find($id);
+		$updateUser->name = $request->name;
+		$updateUser->email = $request->email;
+		$updateUser->save();
 		
-		foreach ($alldata as $key => $value){
-			if($count == 0){
-				$count = $count + 1 ;
-			}else{
-				if($count == 3){ //need to update customer table with other info
-					$table = 'customer';
-				}
-				if($value != '' || $value != null){
-					$query = DB::table($table)
-						->where('id', $id)
-						->update([$key => $value]);
-				}
-				$count = $count+1;
-
-			}
-		}
+		
+		$updateCustomer = Customer::find($id);
+		$updateCustomer->phoneno = $request->phoneno;
+		$updateCustomer->save();
 	}
 	
 	protected function validatecustomerupdate(array $data)
     {
+		if(\Auth::check()) {
+            $email = \Auth::user()->email;
+        }
 		
-            return Validator::make($data, [
+		if($data['email'] != $email){	//need to check if they didnt change email
+			return Validator::make($data, [
                 'email' => 'email|max:255|unique:users',
 				'phoneno' => 'max:13',
             ]);
+		}else{
+			return Validator::make($data, [
+				'phoneno' => 'max:13',
+            ]);
+		}
+            
        
     }
 		
@@ -110,7 +110,14 @@ class CustomerController extends Controller
   }
 
   public function showcustomerprofile(){
-          return view('customercontent.customer-profile');
+	  
+	  if(\Auth::check()) {
+            $id = \Auth::user()->id;
+       }
+		$currentUser = User::where('id',$id)->first();
+		$currentCustomer = Customer::where('id',$id)->first();
+
+        return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
 		
 		
