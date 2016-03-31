@@ -31,15 +31,14 @@ public function confirm($confirmation_code){
   $user = User::whereConfirmationCode($confirmation_code)->first();
   if(!$confirmation_code)
         {
-            throw new InvalidConfirmationCodeException;
+          //  throw new InvalidConfirmationCodeException;
         }
-  if($user->isEmpty()){
-    throw new UserNotFoundException;
+  if(!$user){
+      //throw new UserNotFoundException;
   }
   $user->confirmed = 1;
   $user->confirmation_code = null;
   $user->save();
-  Flash::message('You have successfully verified your account.');
   if($user->isRestaurant==1){return Redirect::route('loginrest');}
   return Redirect::route('logincust');
 }

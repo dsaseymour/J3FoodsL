@@ -166,12 +166,13 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
 			      'isRestaurant' => $data['isRestaurant'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'confirmation_code'=>$this->sendEmailConfirmationTo($data['email']),
+            'confirmation_code'=>($this->sendEmailConfirmationTo($data['email'])),
         ]);
     }
 }
