@@ -9,18 +9,23 @@ use App\Http\Requests;
 class RestaurantController extends Controller
 {
 
-    public function __construct()
-    {
+  public function __construct(){
        $this->middleware('auth');
+  }
 
-    }
+  public function showsethours(){
+        return view('restaurantcontent.restaurant-sethours');
+  }
 
-    public function restaurantlogin(Request $request){
+  public function storehours(Request $request){
+        return redirect()->action('RestaurantController@showrestaurantoverview');
+  }
 
+  public function restaurantlogin(Request $request){
         return view('restaurantcontent.restaurant-login');
-    }
+  }
 
-     public function showrestauranthistory(){
+  public function showrestauranthistory(){
           return view('restaurantcontent.restaurant-history');
   }
 
