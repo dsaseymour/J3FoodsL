@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 use DB;
 use App\User;
-use App\Customer;
-use App\Restaurant;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -54,34 +52,13 @@ class AuthController extends Controller
 
         $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {//validate login
+        if ($validator->fails()) {
             $this->throwValidationException(
                 $request, $validator
             );
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
-		$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
-		$idOfUser=  $results[0]->id;
-		if($request->isRestaurant == "1"){//Register a restaurant with the required fields
-			$restaurant = new Restaurant;
-			$restaurant->id = $idOfUser;
-			$restaurant->companyname = $request->companyname;
-			$restaurant->address = $request->address;
-			$restaurant->province = $request->province;
-			$restaurant->city = $request->city;
-			$restaurant->postalcode = $request->postalcode;
-			$restaurant->phoneno = $request->phoneno;
-			$restaurant->save();
-			return redirect()->action('RestaurantController@showrestaurantoverview');
-		} else{ //register a customer, linked by an id.
-			$customer = new Customer;
-			$customer->id = $idOfUser;
-			$customer->phoneno = "";
-			$customer->save();
-			return redirect($this->redirectPath());
-		}
-
 
     		if($request->isRestaurant == "1"){
             //Register a restaurant with the required fields
@@ -126,12 +103,10 @@ class AuthController extends Controller
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
+
         if (method_exists($this, 'authenticated')) {
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
-		$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
-		$newresults=  $results[0]->isRestaurant;
-		if($newresults== '1'){
 
 			$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 
@@ -142,9 +117,9 @@ class AuthController extends Controller
 
 			if($newresults== '1'){
 			return redirect()->action('RestaurantController@showrestaurantoverview');
-		}else{
+			}else{
 			return redirect()->intended($this->redirectPath());
-		}
+			}
     }
 
  protected function getCredentials(Request $request)
