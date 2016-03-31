@@ -90,7 +90,8 @@ class CustomerController extends Controller
 			
 		//$restaurants = Restaurant::all();
 		$restaurants = User::where('isRestaurant',1)->get();
-        return view('customercontent.customer-overview',compact('restaurants'));
+		$restaurantInfo = Restaurant::all();
+        return view('customercontent.customer-overview',compact('restaurants','restaurantInfo'));
   }
   
 
