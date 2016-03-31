@@ -7,47 +7,88 @@ J3 Foods - Online Food Ordering
 @include('includes.customer-topbar')
 @endsection
 
+@section("styles")
+	<style>
+		.menu-item{
+			position: relative;
+			display: inline-block;
+		}
+	
+		.menu-item img{
+			width: 250px;
+			height: 150px;
+		}
+		
+		.menu-item .name {
+			margin-top: 0px;
+			margin-bottom: 0px;
+			color: white;
+			background: rgb(75, 75, 75);
+			padding: 4px;
+		}
+		
+		.menu-item .price {
+			margin-top: 0px;
+			color: white;
+			background: rgb(120, 120, 120);
+			padding: 4px;
+		}
+	</style>
+@endsection
+
 
 @section('content')
 <div class="container">
-  <div id="restaurant-hdrcontainer" >
-  <div class="row">
-              <div id="rhdr-left" class="col-sm-3">
-              <img src="https://placehold.it/300x150" />
-              </div>
-              <div id="rhdr-center" class="col-sm-6 text-center">
-                                      <div id="avgrating">
-                                                  <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-                                                  <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
-                                      </div>
-              </div>
-              <div id="rhdr-right" class="col-sm-3">
-                        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
-                                      <div id="rhdr-info">
-                                      <p>
-                                      <span class="glyphicon glyphicon-map-marker"></span> Tim Street
-                                      </p>
+	<div id="restaurant-hdrcontainer" >
+		<div class="row">
+			<div id="rhdr-left" class="col-sm-3">
+				<img src="../../images/logoplaceholder.PNG" />
+			</div>
+			<div id="rhdr-center" class="col-sm-6 text-center">
+				<div id="avgrating">
+					<span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
+					<span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+				</div>
+			</div>
+			<div id="rhdr-right" class="col-sm-3">
+				<a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
+			<div id="rhdr-info">
+				<p>
+				<span class="glyphicon glyphicon-map-marker"></span> 
+					<a href="http://maps.google.com/?q=
+						{{{ $restaurantInfo->address or '' }}},
+						{{{ $restaurantInfo->city or '' }}},
+						{{$restaurantInfo->province}}">
+						{{{ $restaurantInfo->address or 'N/A' }}}
+					</a>
+				</p>
 
-                                      <p>
-                                                  <span class="glyphicon glyphicon-earphone"></span> 905-356-6899
-                                      </p>
+				<p>
+				<span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+				</p>
 
-                                      <p>
-                                      <span class="glyphicon glyphicon-envelope"></span> burgergrill@gmail.com
-                                      </p>
+				<p>
+				<span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
+				</p>
 
-                                      <p>
-                                                  <span class="glyphicon glyphicon-globe"></span> www.burgergrill.com
-                                      </p>
-                                      </div>
+			</div>
+			</div>
+	</div>
+</div>
 
-
-              </div>
-  </div>
-  </div>
   <hr />
 
-
+<div id="menu-test-contrainer" class="row">
+	@foreach ($items as $item)
+		<div class="col-sm-4 menu-items">
+		<div class="menu-item">
+			<img src="{{$item->image}}"/>
+			<h3 class="name">{{$item->name}}</h2>
+			<h4 class="price">${{$item->price}}</h2>
+		</div>
+	</div>
+	@endforeach
+</div>
 
 
   <div id="menu-specials-container" class="row">
@@ -270,7 +311,51 @@ J3 Foods - Online Food Ordering
 
   <!-- Modal -->
   <div id="item-subscreen" class="modal fade" role="dialog">
-    @include('includes.item-subscreen')
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
+            <div class="list-group">
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Size</h4>
+                          <label for="pizzasize" class="sr-only">Pizza Sizes</label>
+                          <select class="form-control" id="pizzasize">
+                            <option>Small</option>
+                            <option>Medium</option>
+                            <option>Large</option>
+                            <option>Extra Large</option>
+                          </select>
+                        </a>
+
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Sauces</h4>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
+                        </a>
+
+                        <a href="#" class="list-group-item">
+                          <h4 class="list-group-item-heading">Pizza Toppings</h4>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>
+                          <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
+                        </a>
+            </div>
+          <input type="hidden" value="{{Session::token()}}" name="_token" />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class = "btn-group btn-group-lg">
+            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Add to Shopping Cart</button></a>
+            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Return</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
