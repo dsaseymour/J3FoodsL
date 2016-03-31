@@ -36,7 +36,6 @@ J3 Foods - Online Food Ordering
                       </a>
                       <h5>
                           <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$rest->name}}</a>
-<<<<<<< HEAD
 						  <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
               <!--if this userfavourites has restraunt-->
               @if ($userfavs->contains('restaurant_id',$rest->id))
@@ -45,11 +44,6 @@ J3 Foods - Online Food Ordering
               <span class="glyphicon glyphicon-star-empty"></span> 
               @endif
               </a>
-=======
-						  <a class= "btn btn-default" href="#"> <span class="glyphicon glyphicon-star-empty"></span> </a>
-						  <!-- use <span class="glyphicon glyphicon-star"> when the user has it favourited, might be some if statement to determine, like if favourited then use this glyphicaon
-						  i guess we need to also find out a way to do it in real time!-->
->>>>>>> refs/remotes/origin/master
                       </h5>
                   </div>
 				@endforeach
