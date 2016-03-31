@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Mail;
 use DB;
 use App\User;
 use App\Customer;
@@ -47,11 +47,11 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
-	
-	
+
+
 	public function register(Request $request)
     {
-       
+
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {//validate login
@@ -61,6 +61,7 @@ class AuthController extends Controller
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
+<<<<<<< Updated upstream
 		$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
 		$idOfUser=  $results[0]->id;
 		if($request->isRestaurant == "1"){//Register a restaurant with the required fields
@@ -81,30 +82,76 @@ class AuthController extends Controller
 			$customer->save();
 			return redirect($this->redirectPath());
 		}
+=======
+
+    		if($request->isRestaurant == "1"){
+            //Register a restaurant with the required fields
+    		    $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+    		    $idOfUser=  $results[0]->id;
+    		    DB::table('restaurant')->
+    		    insert(['id' => $idOfUser,
+    		      'CompanyName' => $request->companyname,
+    		      'Address' => $request->address,
+    		      'Province' => $request->province,
+    		      'City' => $request->city,
+    		      'PostalCode' => $request->postalcode,
+    		      'PhoneNumber' => $request->phoneno,
+    		    ]);
+
+            return redirect()->action('RestaurantController@showrestaurantoverview');
+    		} else{
+            //register a customer, linked by an id.
+            $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+            $idOfUser=  $results[0]->id;
+            DB::table('customer')->insert(['id' => $idOfUser]);
+    		    return redirect($this->redirectPath());
+    		}
+>>>>>>> Stashed changes
     }
-	
-	
+
+    public function sendEmailConfirmationTo($email){
+        $confirmation_code=str_random(30);
+        $data=['confirmation_code'=>$confirmation_code];
+        Mail::send('email.registrationconfirmation',$data, function($message) use ($email){
+        $message->to($email)->subject('Verify your email address');
+        });
+        return $confirmation_code;
+    }
+
+
 	/**
 		Handles sending the user to different pages depending on if they are a customer or a restaurant
 	*/
 	protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
-  
+
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
         if (method_exists($this, 'authenticated')) {
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
+<<<<<<< Updated upstream
 		$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 		$newresults=  $results[0]->isRestaurant;
 		if($newresults== '1'){
+=======
+
+			$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
+
+
+			$newresults=  $results[0]->isRestaurant;
+
+
+
+			if($newresults== '1'){
+>>>>>>> Stashed changes
 			return redirect()->action('RestaurantController@showrestaurantoverview');
 		}else{
 			return redirect()->intended($this->redirectPath());
 		}
     }
- 
+
  protected function getCredentials(Request $request)
     {
         return $request->only($this->loginUsername(), 'password');
@@ -154,6 +201,7 @@ class AuthController extends Controller
 			      'isRestaurant' => $data['isRestaurant'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code'=>$this->sendEmailConfirmationTo($data['email']),
         ]);
     }
 }
