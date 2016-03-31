@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Http\Requests;
 use App\Customer;
+use App\CustomerFavourites;
 use App\User;
 use DB;
 use Validator;
@@ -121,6 +122,20 @@ class CustomerController extends Controller
         return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
 		
+  //Add restaurant to favourites
+  public function addcustomerfavourite(User $restaurant){
+  	if(\Auth::check()) {
+        $cust_id = \Auth::user()->id;
+    }
+  	$rest_id = $restaurant->id;
+
+  	$addfavourite = new CustomerFavourites;
+  	$addfavourite->restaurant_id=$rest_id;
+  	$addfavourite->customer_id=$cust_id;
+  	$addfavourite->save();
+
+  	return redirect()->action('CustomerController@showcustomeroverview');
+  }
 		
 		
 		

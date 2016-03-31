@@ -27,4 +27,8 @@ class User extends Authenticatable
 	public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');
 	}
+
+    public function favourites(){
+        return $this->hasMany('App\CustomerFavourites', 'customer_id');
+    }
 }
