@@ -89,16 +89,16 @@ class CustomerController extends Controller
   public function showcustomeroverview(){
 			
 		//$restaurants = Restaurant::all();
-		$restaurants = User::where('isRestaurant',1)->get();
+		$restaurants = Restaurant::get();
         return view('customercontent.customer-overview',compact('restaurants'));
   }
   
 
-  public function showcustomermenu(User $restaurant){
+  public function showcustomermenu(Restaurant $restaurant){
 		$items = $restaurant->menu;
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();
-        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo"));
+        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo","categories"));
 
   }
 

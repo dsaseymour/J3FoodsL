@@ -9,12 +9,16 @@ J3 Foods - Online Food Ordering
 
 @section("styles")
 	<style>
-		.menu-item{
+    .menu-items {
+      display: block;
+    }
+
+		.menu-item {
 			position: relative;
 			display: inline-block;
 		}
 	
-		.menu-item img{
+		.menu-item img {
 			width: 250px;
 			height: 150px;
 		}
@@ -33,6 +37,19 @@ J3 Foods - Online Food Ordering
 			background: rgb(120, 120, 120);
 			padding: 4px;
 		}
+
+    .menu-category {
+      display: block;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: rgb(180, 180, 180);
+    }
+
+    .new-price {
+      padding-left: 8px;
+    }
 	</style>
 @endsection
 
@@ -73,235 +90,47 @@ J3 Foods - Online Food Ordering
   </div>
   <hr />
 
-<div id="menu-test-contrainer" class="row">
-	@foreach ($items as $item)
-		<div class="col-sm-4 menu-items">
-		<div class="menu-item">
-			<img src="{{$item->image}}"/>
-			<h3 class="name">{{$item->name}}</h2>
-			<h4 class="price">${{$item->price}}</h2>
-		</div>
-	</div>
-	@endforeach
-</div>
 
 
-  <div id="menu-specials-container" class="row">
-  <h1>Specials</h1>
-
-  <div class="row"> <!-- start of row -->
-    <div class="col-sm-4 menu-items">
-      <a data-toggle="modal" data-target="#item-subscreen">
-        <div class="card ">
-          <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-            <div class="row">
-              <div class="item-description col-sm-8">
-                <p class="card-text"> pizza
-                and chicken</p>
-              </div>
-              <div class="item-price col-sm-4">
-                <p class="card-text">$50.00</p>
-              </div>
-            </div>
-      </div>
-    </a>
-    </div>
-
-    <div class="col-sm-4 menu-items">
-      <a data-toggle="modal" data-target="#item-subscreen">
-        <div class="card ">
-          <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-            <div class="row">
-              <div class="item-description col-sm-8">
-                <p class="card-text"> pizza
-                and chicken</p>
-              </div>
-              <div class="item-price col-sm-4">
-                <p class="card-text">$50.00</p>
-              </div>
-            </div>
-      </div>
-    </a>
-    </div>
 
 
-    <div class="col-sm-4 menu-items">
-      <a data-toggle="modal" data-target="#item-subscreen">
-        <div class="card ">
-          <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-            <div class="row">
-              <div class="item-description col-sm-8">
-                <p class="card-text"> pizza
-                and chicken</p>
-              </div>
-              <div class="item-price col-sm-4">
-                <p class="card-text">$50.00</p>
-              </div>
-            </div>
-      </div>
-    </a>
-    </div>
-  </div> <!-- end of row -->
+  
 
-  </div>
-  <hr />
-
-  <div id="menu-appetizers-container" >
-    <h1>Appetizers</h1>
-  <div class="row"> <!-- start of row -->
-  <div class="col-sm-3 menu-items">
-    <a data-toggle="modal" data-target="#item-subscreen">
-      <div class="card ">
-        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-          <div class="row">
-            <div class="item-description col-sm-8">
-              <p class="card-text"> pizza
-              and chicken</p>
-            </div>
-            <div class="item-price col-sm-4">
-              <p class="card-text">$50.00</p>
-            </div>
-          </div>
-    </div>
-  </a>
-  </div>
-
-  <div class="col-sm-3 menu-items">
-    <a data-toggle="modal" data-target="#item-subscreen">
-      <div class="card ">
-        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-          <div class="row">
-            <div class="item-description col-sm-8">
-              <p class="card-text"> pizza
-              and chicken</p>
-            </div>
-            <div class="item-price col-sm-4">
-              <p class="card-text">$50.00</p>
-            </div>
-          </div>
-    </div>
-  </a>
-  </div>
-
-
-  <div class="col-sm-3 menu-items">
-    <a data-toggle="modal" data-target="#item-subscreen">
-      <div class="card ">
-        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-          <div class="row">
-            <div class="item-description col-sm-8">
-              <p class="card-text"> pizza
-              and chicken</p>
-            </div>
-            <div class="item-price col-sm-4">
-              <p class="card-text">$50.00</p>
-            </div>
-          </div>
-    </div>
-  </a>
-  </div>
-
-
-  <div class="col-sm-3 menu-items">
-    <a data-toggle="modal" data-target="#item-subscreen">
-      <div class="card ">
-        <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-          <div class="row">
-            <div class="item-description col-sm-8">
-              <p class="card-text"> pizza
-              and chicken</p>
-            </div>
-            <div class="item-price col-sm-4">
-              <p class="card-text">$50.00</p>
-            </div>
-          </div>
-    </div>
-  </a>
-  </div>
-
-  </div> <!-- end of row -->
-
-
-  </div>
-  <hr />
-
-  <div id="menu-mains-container" class="row">
-    <h1>Mains</h1>
-
-    <div class="row"> <!-- start of row -->
-      <div class="col-sm-3 menu-items">
-        <a data-toggle="modal" data-target="#item-subscreen">
-          <div class="card ">
-            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-              <div class="row">
-                <div class="item-description col-sm-8">
-                  <p class="card-text"> pizza
-                  and chicken</p>
-                </div>
-                <div class="item-price col-sm-4">
-                  <p class="card-text">$50.00</p>
-                </div>
-              </div>
+  <div class="menu-category">
+    <h1>Specials</h1>
+    @foreach ($restaurant->specials as $special)
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="{{$special->item->image}}"/>
+          <h3 class="name">{{$special->item->name}}</h3>
+          <h4 class="price"><span class="old-price">${{$special->item->price}}</span><span class="new-price">${{$special->spec_price}}</span></h4>
         </div>
-      </a>
       </div>
-
-      <div class="col-sm-3 menu-items">
-        <a data-toggle="modal" data-target="#item-subscreen">
-          <div class="card ">
-            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-              <div class="row">
-                <div class="item-description col-sm-8">
-                  <p class="card-text"> pizza
-                  and chicken</p>
-                </div>
-                <div class="item-price col-sm-4">
-                  <p class="card-text">$50.00</p>
-                </div>
-              </div>
-        </div>
-      </a>
-      </div>
-
-
-      <div class="col-sm-3 menu-items">
-        <a data-toggle="modal" data-target="#item-subscreen">
-          <div class="card ">
-            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-              <div class="row">
-                <div class="item-description col-sm-8">
-                  <p class="card-text"> pizza
-                  and chicken</p>
-                </div>
-                <div class="item-price col-sm-4">
-                  <p class="card-text">$50.00</p>
-                </div>
-              </div>
-        </div>
-      </a>
-      </div>
-
-
-      <div class="col-sm-3 menu-items">
-        <a data-toggle="modal" data-target="#item-subscreen">
-          <div class="card ">
-            <img class="card-img-top center-block" src="http://placehold.it/140x100" alt="Card image caption">
-              <div class="row">
-                <div class="item-description col-sm-8">
-                  <p class="card-text"> pizza
-                  and chicken</p>
-                </div>
-                <div class="item-price col-sm-4">
-                  <p class="card-text">$50.00</p>
-                </div>
-              </div>
-        </div>
-      </a>
-      </div>
-
-    </div> <!-- end of row -->
+    @endforeach
   </div>
-  <hr />
+  <hr/>
+
+
+
+  @foreach($restaurant->categories as $category)
+    <div class="menu-category">
+    <h1>{{$category->category_name}}</h1>
+    @foreach ($category->items as $item)
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="{{$item->image}}"/>
+          <h3 class="name">{{$item->name}}</h3>
+          @if($item->spec_id != NULL)
+            <h4 class="price"><span class="old-price">${{$item->price}}</span><span class="new-price">${{$item->special->spec_price}}</span></h4>
+          @else
+            <h4 class="price">${{$item->price}}</h4>
+          @endif
+        </div>
+      </div>
+    @endforeach
+    </div>
+    <hr/>
+  @endforeach
 
 
   <!-- Modal -->

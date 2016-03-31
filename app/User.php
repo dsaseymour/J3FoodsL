@@ -24,9 +24,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 	
-	public function menu(){
-		return $this->hasMany(Item::class, 'rest_id');
-	}
+	
 	
 	
 }
