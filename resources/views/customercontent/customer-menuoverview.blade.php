@@ -39,41 +39,43 @@ J3 Foods - Online Food Ordering
 
 @section('content')
 <div class="container">
-  <div id="restaurant-hdrcontainer" >
-  <div class="row">
-              <div id="rhdr-left" class="col-sm-3">
-              <img src="../../images/logoplaceholder.PNG" />
-              </div>
-              <div id="rhdr-center" class="col-sm-6 text-center">
-                                      <div id="avgrating">
-                                                  <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-                                                  <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
-                                      </div>
-              </div>
-              <div id="rhdr-right" class="col-sm-3">
-                        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
-                                      <div id="rhdr-info">
-                                      <p>
-                                      <span class="glyphicon glyphicon-map-marker"></span> Tim Street
-                                      </p>
+	<div id="restaurant-hdrcontainer" >
+		<div class="row">
+			<div id="rhdr-left" class="col-sm-3">
+				<img src="../../images/logoplaceholder.PNG" />
+			</div>
+			<div id="rhdr-center" class="col-sm-6 text-center">
+				<div id="avgrating">
+					<span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
+					<span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+				</div>
+			</div>
+			<div id="rhdr-right" class="col-sm-3">
+				<a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
+			<div id="rhdr-info">
+				<p>
+				<span class="glyphicon glyphicon-map-marker"></span> 
+					<a href="http://maps.google.com/?q=
+						{{{ $restaurantInfo->address or '' }}},
+						{{{ $restaurantInfo->city or '' }}},
+						{{$restaurantInfo->province}}">
+						{{{ $restaurantInfo->address or 'N/A' }}}
+					</a>
+				</p>
 
-                                      <p>
-                                                  <span class="glyphicon glyphicon-earphone"></span> 905-356-6899
-                                      </p>
+				<p>
+				<span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+				</p>
 
-                                      <p>
-                                      <span class="glyphicon glyphicon-envelope"></span> burgergrill@gmail.com
-                                      </p>
+				<p>
+				<span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
+				</p>
 
-                                      <p>
-                                                  <span class="glyphicon glyphicon-globe"></span> www.burgergrill.com
-                                      </p>
-                                      </div>
+			</div>
+			</div>
+	</div>
+</div>
 
-
-              </div>
-  </div>
-  </div>
   <hr />
 
 <div id="menu-test-contrainer" class="row">
