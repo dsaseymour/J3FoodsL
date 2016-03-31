@@ -98,15 +98,15 @@ J3 Foods - Online Food Ordering
 
   <div class="menu-category">
     <h1>Specials</h1>
+    <div class="menu-items">
     @foreach ($restaurant->specials as $special)
-      <div class="menu-items">
-        <div class="menu-item">
-          <img src="{{$special->item->image}}"/>
-          <h3 class="name">{{$special->item->name}}</h3>
-          <h4 class="price"><span class="old-price">${{$special->item->price}}</span><span class="new-price">${{$special->spec_price}}</span></h4>
-        </div>
+      <div class="menu-item">
+        <img src="{{$special->item->image}}"/>
+        <h3 class="name">{{$special->item->name}}</h3>
+        <h4 class="price"><span class="old-price">${{$special->item->price}}</span><span class="new-price">${{$special->spec_price}}</span></h4>
       </div>
     @endforeach
+    </div>
   </div>
   <hr/>
 
@@ -114,9 +114,9 @@ J3 Foods - Online Food Ordering
 
   @foreach($restaurant->categories as $category)
     <div class="menu-category">
-    <h1>{{$category->category_name}}</h1>
-    @foreach ($category->items as $item)
+      <h1>{{$category->category_name}}</h1>
       <div class="menu-items">
+      @foreach ($category->items as $item)
         <div class="menu-item">
           <img src="{{$item->image}}"/>
           <h3 class="name">{{$item->name}}</h3>
@@ -126,8 +126,8 @@ J3 Foods - Online Food Ordering
             <h4 class="price">${{$item->price}}</h4>
           @endif
         </div>
+      @endforeach
       </div>
-    @endforeach
     </div>
     <hr/>
   @endforeach
