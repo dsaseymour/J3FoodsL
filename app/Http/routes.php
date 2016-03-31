@@ -35,11 +35,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', 'MasterController@showhome');
 
-<<<<<<< Updated upstream
-    Route::get('/sethours', 'RestaurantController@showsethours');
-	
-=======
->>>>>>> Stashed changes
 	Route::get('/dbtest', [
     'uses'=>'CustomerController@showrestaurant',
     'as'=>'dbtest'
@@ -52,16 +47,14 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Login pressed
+    /*
 	Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
-
+*/
 	//Login pages
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	Route::get('/loginRest', [
     'uses'=>'LoginController@showrestaurantlogin',
     'as'=>'loginrest'
@@ -72,13 +65,6 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'logincust'
     ]);
 
-<<<<<<< Updated upstream
-    Route::get('/password/reset',[
-    'uses'=>'MasterController@passwordreset',
-    'as'=>'passwordreset'
-    ]);
-	
-=======
 	/*Route::get('/customerlogin',[
     'uses'=>'LoginController@showcustomerlogin',
     'as'=>'customerloginlink'
@@ -107,7 +93,6 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'registerlink'
 	]);*/
 
->>>>>>> Stashed changes
 	Route::get('/register',[
     'uses'=>'RegisterController@register',
     'as'=>'registerlink'
@@ -119,17 +104,6 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	Route::get('/restaurantregister',[
-<<<<<<< Updated upstream
-    'uses'=>'RegisterController@showrestaurantregister',
-    'as'=>'registerrestaurant'
-    ]);
-		
-	Route::get('/restaurantregisterinfo',[
-    'uses'=>'RegisterController@showrestaurantregisterinfo',
-    'as'=>'registerrestaurantinfo'
-    ]);	
-		
-=======
         'uses'=>'RegisterController@showrestaurantregister',
         'as'=>'registerrestaurant'
         ]);
@@ -140,7 +114,6 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
 
->>>>>>> Stashed changes
 	//Customer pages
 	Route::post('/customerupdateinfo',[
     'uses'=>'CustomerController@updateinfo',
@@ -152,8 +125,8 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customeroverviewlink',
     ]);
 
-    Route::get('/menu/{restaurant}',[
-    'uses'=>'CustomerController@showcustomermenu',
+    Route::get('/customermenuoverview',[
+    'uses'=>'CustomerController@showcustomermenuoverview',
     'as'=>'customermenuoverviewlink'
     ]);
 
@@ -178,11 +151,6 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Restuarant pages
-    Route::post('/sethours',[
-    'uses'=>'RestaurantController@storehours',
-    'as'=>'restaurantsethours',
-    ]);
-
     Route::get('/restauranthistory',[
     'uses'=>'RestaurantController@showrestauranthistory',
     'as'=>'restauranthistorylink'
@@ -236,36 +204,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/forgotpassword',[
     'uses'=>'AuthController@showforgotpassword',
     'as'=>'forgotpasswordlink'
-<<<<<<< Updated upstream
-
-    //DEBUGGIN
-
-        /*Route::get('/customerlogin',[
-    'uses'=>'LoginController@showcustomerlogin',
-    'as'=>'customerloginlink'
-    ]);
-    
-    Route::get('/restaurantlogin',[
-    'uses'=>'LoginController@showrestaurantlogin',
-    'as'=>'restaurantloginlink'
-    ]);*/
-     
-     /*
-     Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-    
-    
-    //Register Pages
-   /* Route::get('/register/{user?}',[
-    'uses'=>'RegisterController@register',
-    'as'=>'registerlink'
-    ]);*/
-
-    ]);
-});
-=======
     ]);
 
 
@@ -294,4 +232,3 @@ Route::post('/customerregister',[
 //DEBUGGING
 
 	//Route::get('/login/{user}', 'AuthController@login');
->>>>>>> Stashed changes

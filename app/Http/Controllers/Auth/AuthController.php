@@ -61,7 +61,6 @@ class AuthController extends Controller
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
-<<<<<<< Updated upstream
 		$results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
 		$idOfUser=  $results[0]->id;
 		if($request->isRestaurant == "1"){//Register a restaurant with the required fields
@@ -72,9 +71,9 @@ class AuthController extends Controller
 			$restaurant->province = $request->province;
 			$restaurant->city = $request->city;
 			$restaurant->postalcode = $request->postalcode;
-			$restaurant->phoneno = $request->phoneno;			
+			$restaurant->phoneno = $request->phoneno;
 			$restaurant->save();
-			return redirect()->action('RestaurantController@showrestaurantoverview');	
+			return redirect()->action('RestaurantController@showrestaurantoverview');
 		} else{ //register a customer, linked by an id.
 			$customer = new Customer;
 			$customer->id = $idOfUser;
@@ -82,7 +81,7 @@ class AuthController extends Controller
 			$customer->save();
 			return redirect($this->redirectPath());
 		}
-=======
+
 
     		if($request->isRestaurant == "1"){
             //Register a restaurant with the required fields
@@ -106,7 +105,6 @@ class AuthController extends Controller
             DB::table('customer')->insert(['id' => $idOfUser]);
     		    return redirect($this->redirectPath());
     		}
->>>>>>> Stashed changes
     }
 
     public function sendEmailConfirmationTo($email){
@@ -131,11 +129,9 @@ class AuthController extends Controller
         if (method_exists($this, 'authenticated')) {
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
-<<<<<<< Updated upstream
 		$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 		$newresults=  $results[0]->isRestaurant;
 		if($newresults== '1'){
-=======
 
 			$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 
@@ -145,7 +141,6 @@ class AuthController extends Controller
 
 
 			if($newresults== '1'){
->>>>>>> Stashed changes
 			return redirect()->action('RestaurantController@showrestaurantoverview');
 		}else{
 			return redirect()->intended($this->redirectPath());
