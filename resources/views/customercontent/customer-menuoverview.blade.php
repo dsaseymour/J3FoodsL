@@ -54,20 +54,17 @@ J3 Foods - Online Food Ordering
                         <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
                                       <div id="rhdr-info">
                                       <p>
-                                      <span class="glyphicon glyphicon-map-marker"></span> Tim Street
+                                      <span class="glyphicon glyphicon-map-marker"></span> {{$restaurantInfo->address}}
                                       </p>
 
                                       <p>
-                                                  <span class="glyphicon glyphicon-earphone"></span> 905-356-6899
+                                                  <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
                                       </p>
 
                                       <p>
-                                      <span class="glyphicon glyphicon-envelope"></span> burgergrill@gmail.com
+                                      <span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
                                       </p>
 
-                                      <p>
-                                                  <span class="glyphicon glyphicon-globe"></span> www.burgergrill.com
-                                      </p>
                                       </div>
 
 

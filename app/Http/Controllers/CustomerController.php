@@ -12,6 +12,7 @@ use App\User;
 use DB;
 use Validator;
 
+
 class CustomerController extends Controller
 {
 	
@@ -89,14 +90,17 @@ class CustomerController extends Controller
   public function showcustomeroverview(){
 			
 		//$restaurants = Restaurant::all();
-		$restaurants = Restaurant::where('isRestaurant',1)->get();
+		$restaurants = User::where('isRestaurant',1)->get();
         return view('customercontent.customer-overview',compact('restaurants'));
   }
   
 
   public function showcustomermenu(User $restaurant){
 		$items = $restaurant->menu;
-          return view('customercontent.customer-menuoverview', compact("items"));
+		$id = $restaurant->id;
+		$restaurantInfo = Restaurant::where('id',$id)->first();
+        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo"));
+
   }
 
   public function showcustomerconfirmation(){

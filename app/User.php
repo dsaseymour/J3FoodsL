@@ -27,8 +27,13 @@ class User extends Authenticatable
 	public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');
 	}
+<<<<<<< HEAD
 
     public function favourites(){
         return $this->hasMany('App\CustomerFavourites', 'customer_id');
     }
+=======
+	
+	
+>>>>>>> refs/remotes/origin/master
 }
