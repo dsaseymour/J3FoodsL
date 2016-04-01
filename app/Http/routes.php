@@ -162,6 +162,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'addtofavourites'
     ]);
 
+    Route::get('/removefromfavourites/{restaurant}',[
+    'uses'=>'CustomerController@deletecustomerfavourite',
+    'as'=>'removefromfavourites'
+    ]);
+
 	//Restuarant pages
 
     Route::post('/sethours',[

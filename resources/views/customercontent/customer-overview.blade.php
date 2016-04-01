@@ -36,11 +36,12 @@ J3 Foods - Online Food Ordering
                       </a>
                       <h5>
                           <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$rest->companyname}}</a>
-						  <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
               <!--if this userfavourites has restraunt-->
               @if ($userfavs->contains('restaurant_id',$rest->id))
+              <a class= "btn btn-default" href="{{ route('removefromfavourites', ['restaurant' => $rest->id] ) }}">
               <span class="glyphicon glyphicon-star"></span>
               @else
+              <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
               <span class="glyphicon glyphicon-star-empty"></span> 
               @endif
               </a>
