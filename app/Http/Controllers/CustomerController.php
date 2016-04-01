@@ -41,12 +41,7 @@ class CustomerController extends Controller
 
 	/**
 		Updates the database with the updated info of the customer
-<<<<<<< HEAD
 
-		**ONLY ADD NEW FEILDS BELOW , NOTHING ABOVE EMAIL/NAME
-
-=======
->>>>>>> master
 	*/
 	protected function updateDatabaseWithNewInfo(Request $request){
 
