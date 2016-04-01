@@ -30,25 +30,12 @@ class RegisterController extends Controller
   }
 
 public function confirm($confirmation_code){
-
-  $user = User::where('email','dannyseymour1990@gmail.com')->first();
-  var_dump($confirmation_code);
-  var_dump($user->confirmation_code);
-
-  var_dump(User::where('confirmation_code',$confirmation_code)->first());
-
-
-
   $user = User::where('confirmation_code',$confirmation_code)->first();
   if(!$confirmation_code)
         {
-  //        return Redirect::to('http://www.cnn.com');
-
           //  throw new InvalidConfirmationCodeException;
         }
   if(!$user){
-  //  return Redirect::to('http://www.cnn.com');
-
       //throw new UserNotFoundException;
   }
   $user->confirmed = 1;
