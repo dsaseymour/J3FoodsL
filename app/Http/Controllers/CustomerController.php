@@ -127,8 +127,7 @@ class CustomerController extends Controller
   }
 
 	public function orderconfirmandnotify(){
-
-
+      // fire event
 	}
 
 
