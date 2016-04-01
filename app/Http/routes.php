@@ -132,6 +132,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'restaurantsethours',
     ]);
 
+    Route::post('/restaurantprofile',[
+    'uses'=>'RestaurantController@updateinfo',
+    'as'=>'restaurantupdateinfo',
+    ]);
+
     Route::get('/restauranthistory',[
     'uses'=>'RestaurantController@showrestauranthistory',
     'as'=>'restauranthistorylink'

@@ -12,10 +12,10 @@ J3 Foods - Online Food Ordering
          <div class="col-md-5 panel panel-default col-centered " id="login-panel">
             <div class="panel-header text-center">
                <h1>Hours of Operations</h1>
-               <hr />
+               <hr/>
             </div>
             <div class="panel-body ">
-               <form id="restaurant-signup-form" action="{{route('restaurantsethours')}}" accept-charset="utf-8" method="POST" role="form" >
+               <form id="restaurant-signup-form" action="" accept-charset="utf-8" method="POST" role="form" >
                   {{ csrf_field() }}
                   <div class="input-row row" >
                      <div class="table-responsive">
@@ -46,48 +46,27 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Monday
+                                    <input name="mon" value="mon" type="hidden"/>
                                  </td>
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-misclosed" />
+                                    <input name="mon_open" type="checkbox" value="1" class="form-control" id="ghours-misclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="mon_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="mon_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="mon_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="mon_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -97,46 +76,24 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-tisclosed" />
+                                    <input name="tue" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="tue_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="tue_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="tue_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="tue_close_XM" class="form-control">
+                                       <option value="0">PM</option>
+                                       <option value="12">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -146,46 +103,24 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-wisclosed" />
+                                    <input name="wed" type="checkbox" class="form-control" id="ghours-wisclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="wed_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="wed_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="wed_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="wed_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -195,46 +130,23 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-risclosed" />
+                                    <input name="thur" type="checkbox" class="form-control" id="ghours-risclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="thur_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
-                                    </select>
-                                 </td>
+                                    <select name="thur_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
+                                    </select>                                 </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="thur_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="thur_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -244,46 +156,24 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-fisclosed" />
+                                    <input name="fri" type="checkbox" class="form-control" id="ghours-fisclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="fri_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="fri_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                     <select name="fri_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="fri_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -293,46 +183,24 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-satisclosed" />
+                                    <input name="sat" type="checkbox" class="form-control" id="ghours-satisclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="sat_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="sat_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="sat_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="sat_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
@@ -342,53 +210,31 @@ J3 Foods - Online Food Ordering
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input type="checkbox" class="form-control" id="ghours-sunisclosed" />
+                                    <input name="sun" type="checkbox" class="form-control" id="ghours-sunisclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="sun_open_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="am">AM</option>
-                                       <option value="pm">PM</option>
+                                    <select name="sun_open_XM" class="form-control">
+                                       <option value="0">AM</option>
+                                       <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select class="form-control">
-                                       <option value="1:00">1:00</option>
-                                       <option value="2:00">2:00</option>
-                                       <option value="3:00">3:00</option>
-                                       <option value="4:00">4:00</option>
-                                       <option value="5:00">5:00</option>
-                                       <option value="6:00">6:00</option>
-                                       <option value="7:00">7:00</option>
-                                       <option value="8:00">8:00</option>
-                                       <option value="9:00">9:00</option>
-                                       <option value="10:00">10:00</option>
-                                       <option value="11:00">11:00</option>
-                                       <option value="12:00">12:00</option>
+                                    <select name="sun_close_time" class="form-control">
+                                       @include('includes.time-dropdown')
                                     </select>
-                                    <select class="form-control">
-                                       <option value="pm">PM</option>
-                                       <option value="am">AM</option>
+                                    <select name="sun_close_XM" class="form-control">
+                                       <option value="12">PM</option>
+                                       <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
                            </tbody>
                            <!-- table body end-->
                         </table>
-                        <input type="submit" class="btn btn-primary " name="sethours" id="sethours" value="Set Hours">
+                        <input type="submit" class="btn btn-primary pull-right" name="sethours" id="sethours" value="Set Hours">
                      </div>
                      <!-- End table container -->
                   </div>

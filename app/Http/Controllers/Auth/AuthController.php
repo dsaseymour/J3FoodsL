@@ -73,7 +73,7 @@ class AuthController extends Controller
 			$restaurant->postalcode = $request->postalcode;
 			$restaurant->phoneno = $request->phoneno;			
 			$restaurant->save();
-			return redirect()->action('RestaurantController@showrestaurantoverview');	
+			return redirect()->action('RestaurantController@showsethours');	
 		} else{ //register a customer, linked by an id.
 			$customer = new Customer;
 			$customer->id = $idOfUser;
@@ -89,7 +89,6 @@ class AuthController extends Controller
 	*/
 	protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
-  
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }

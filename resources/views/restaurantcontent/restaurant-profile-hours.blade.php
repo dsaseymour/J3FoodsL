@@ -23,191 +23,136 @@ J3 Foods - Online Food Ordering
       <form action="/" method="POST" role="form">
         <div class="input-row row" >
             <div class="table-responsive"><!-- Start table container -->
-              <table class="table table-condensed table-hover table-bordered">
-                  <h4>Hours of Operation</h4>
-                <thead>
-                  <tr>
-                    <th>
-                        Day
-                    </th> <!-- Day-->
-
-                    <th>
-                    Closed?
-                   </th><!-- Closed-->
-
-                    <th>
-                    Opening
-                    </th><!-- Open-->
-
-                    <th>
-
-                    </th>
-
-                    <th>
-                    Closing
-                   </th><!-- Closing-->
-                  </tr>
-                </thead>
-
-                <tbody> <!-- table body start-->
-
-                  <tr>
-                      <td>
-                          Monday
-                      </td> <!-- Day-->
-
-                      <td>
-                          <input type="checkbox" class="form-control" id="ghours-misclosed" />
-                     </td><!-- Closed-->
-
-                      <td>
-                      <input type="time" class="form-control" id="ghours-mopen" />
-                      </td><!-- Open-->
-
-                      <td>
-
-                      </td>
-
-                      <td>
-                          <input type="time" class="form-control" id="ghours-mopen" />
-                     </td><!-- Closing-->
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            Tuesday
-                        </td> <!-- Day-->
-
-                        <td>
-                            <input type="checkbox" class="form-control" id="ghours-tisclosed" />
-                       </td><!-- Closed-->
-
-                        <td>
-                            <input type="time" class="form-control" id="ghours-topen" />
-                        </td><!-- Open-->
-
-                        <td>
-
-                        </td>
-
-                        <td>
-                            <input type="time" class="form-control" id="ghours-tclose" />
-                       </td><!-- Closing-->
-                      </tr>
-
-                      <tr>
-                          <td>
-                              Wednesday
-                          </td> <!-- Day-->
-
-                          <td>
-                              <input type="checkbox" class="form-control" id="ghours-wisclosed" />
-                         </td><!-- Closed-->
-
-                          <td>
-                              <input type="time" class="form-control" id="ghours-wopen" />
-                          </td><!-- Open-->
-
-                          <td>
-
-                          </td>
-
-                          <td>
-                              <input type="time" class="form-control" id="ghours-wclose" />
-                         </td><!-- Closing-->
-                        </tr>
-
-                        <tr>
-                            <td>
-                                Thursday
-                            </td> <!-- Day-->
-
-                            <td>
-                                <input type="checkbox" class="form-control" id="ghours-risclosed" />
-                           </td><!-- Closed-->
-
-                            <td>
-                                <input type="time" class="form-control" id="ghours-ropen" />
-                            </td><!-- Open-->
-
-                            <td>
-
-                            </td>
-
-                            <td>
-                                <input type="time" class="form-control" id="ghours-rclose" />
-                           </td><!-- Closing-->
-                          </tr>
-
-                          <tr>
-                              <td>
-                                  Friday
-                              </td> <!-- Day-->
-
-                              <td>
-                                  <input type="checkbox" class="form-control" id="ghours-fisclosed" />
-                             </td><!-- Closed-->
-
-                              <td>
-                                  <input type="time" class="form-control" id="ghours-fopen" />
-                              </td><!-- Open-->
-
-                              <td>
-
-                              </td>
-
-                              <td>
-                                  <input type="time" class="form-control" id="ghours-fclose" />
-                             </td><!-- Closing-->
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    Saturday
-                                </td> <!-- Day-->
-                                <td>
-                                <input type="checkbox" class="form-control" id="ghours-satisclosed" />
-                               </td><!-- Closed-->
-
-                                <td>
-                                    <input type="time" class="form-control" id="ghours-satopen" />
-                                </td><!-- Open-->
-
-                                <td>
-
-                                </td>
-
-                                <td>
-                                    <input type="time" class="form-control" id="ghours-satclose" />
-                               </td><!-- Closing-->
-                              </tr>
-
-
+                        <table class="table table-condensed table-hover table-bordered">
+                           <thead>
                               <tr>
-                                  <td>
-                                      Sunday
-                                  </td> <!-- Day-->
-
-                                  <td>
-                                      <input type="checkbox" class="form-control" id="ghours-sunisclosed" />
-                                 </td><!-- Closed-->
-
-                                  <td>
-                                      <input type="time" class="form-control" id="ghours-sunopen" />
-                                  </td><!-- Open-->
-
-                                  <td>
-
-                                  </td>
-
-                                  <td>
-                                      <input type="time" class="form-control" id="ghours-sunclose" />
-                                 </td><!-- Closing-->
-                                </tr>
-
-              </tbody> <!-- table body end-->
-              </table>
+                                 <th>
+                                    Day
+                                 </th>
+                                 <!-- Day-->
+                                 <th>
+                                    Open
+                                 </th>
+                                 <!-- Closed-->
+                                 <th>
+                                    Opening Time
+                                 </th>
+                                 <!-- Open-->
+                                 <th>
+                                    Closing Time
+                                 </th>
+                                 <!-- Closing-->
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <!-- table body start-->
+                              <tr>
+                                 <td>
+                                    Monday
+                                 </td>
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-misclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Tuesday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-tisclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Wednesday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-wisclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Thursday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-risclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Friday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-fisclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Saturday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-satisclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    Sunday
+                                 </td>
+                                 <!-- Day-->
+                                 <td>
+                                    <input type="checkbox" class="form-control" id="ghours-sunisclosed" />
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                                 <td class="form-inline">
+                                    @include('includes.time-dropdown')
+                                 </td>
+                              </tr>
+                           </tbody>
+                           <!-- table body end-->
+                        </table>
             </div><!-- End table container -->
 
         </div>
