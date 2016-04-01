@@ -24,9 +24,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-	public function menu(){
+	
+	/*public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');
-	}
+	}*/
 
-
+    public function favourites(){
+        return $this->hasMany('App\CustomerFavourites', 'customer_id');
+    }
 }

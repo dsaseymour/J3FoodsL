@@ -156,7 +156,23 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customerprofilelink'
     ]);
 
+    Route::get('/addtofavourites/{restaurant}',[
+    'uses'=>'CustomerController@addcustomerfavourite',
+    'as'=>'addtofavourites'
+    ]);
+
 	//Restuarant pages
+
+    Route::post('/sethours',[
+    'uses'=>'RestaurantController@storehours',
+    'as'=>'restaurantsethours',
+    ]);
+
+    Route::post('/restaurantprofile',[
+    'uses'=>'RestaurantController@updateinfo',
+    'as'=>'restaurantupdateinfo',
+    ]);
+
     Route::get('/restauranthistory',[
     'uses'=>'RestaurantController@showrestauranthistory',
     'as'=>'restauranthistorylink'

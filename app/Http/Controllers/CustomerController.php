@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Http\Requests;
 use App\Customer;
+use App\CustomerFavourites;
 use App\User;
 use DB;
 use Validator;
@@ -40,9 +41,12 @@ class CustomerController extends Controller
 
 	/**
 		Updates the database with the updated info of the customer
+<<<<<<< HEAD
 
 		**ONLY ADD NEW FEILDS BELOW , NOTHING ABOVE EMAIL/NAME
 
+=======
+>>>>>>> master
 	*/
 	protected function updateDatabaseWithNewInfo(Request $request){
 
@@ -53,6 +57,7 @@ class CustomerController extends Controller
 		$updateUser = User::find($id);
 		$updateUser->name = $request->name;
 		$updateUser->email = $request->email;
+		$updateUser->address = $request->address;
 		$updateUser->save();
 
 
@@ -71,6 +76,7 @@ class CustomerController extends Controller
 			return Validator::make($data, [
                 'email' => 'email|max:255|unique:users',
 				'phoneno' => 'max:13',
+				'address' => 'max:60',
             ]);
 		}else{
 			return Validator::make($data, [
@@ -89,17 +95,17 @@ class CustomerController extends Controller
   public function showcustomeroverview(){
 
 		//$restaurants = Restaurant::all();
-		$restaurants = User::where('isRestaurant',1)->get();
-		$restaurantInfo = Restaurant::all();
-        return view('customercontent.customer-overview',compact('restaurants','restaurantInfo'));
+		$restaurants = Restaurant::get();
+
+        return view('customercontent.customer-overview',compact('restaurants'));
   }
 
 
-  public function showcustomermenu(User $restaurant){
+  public function showcustomermenu(Restaurant $restaurant){
 		$items = $restaurant->menu;
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();
-        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo"));
+        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo","categories"));
 
   }
 
@@ -125,10 +131,24 @@ class CustomerController extends Controller
 
         return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
+		
+  //Add restaurant to favourites
+  public function addcustomerfavourite(User $restaurant){
+  	if(\Auth::check()) {
+        $cust_id = \Auth::user()->id;
+    }
+  	$rest_id = $restaurant->id;
 
-	public function orderconfirmandnotify(){
-      // fire event
-	}
+  	$addfavourite = new CustomerFavourites;
+  	$addfavourite->restaurant_id=$rest_id;
+  	$addfavourite->customer_id=$cust_id;
+  	$addfavourite->save();
+
+  	return redirect()->action('CustomerController@showcustomeroverview');
+  }
+		
+		
+	
 
 
 

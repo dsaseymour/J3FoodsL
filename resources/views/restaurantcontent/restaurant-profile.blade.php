@@ -17,34 +17,75 @@ J3 Foods - Online Food Ordering
           @include('includes.restaurant-profilecontentbar')
         </div>
   <div class="panel-body">
+    <!-- Do I need something in the action? Seems to update the db without it-->
     <form id="restaurant-signup-form" action="" accept-charset="utf-8" method="POST" role="form" >
-        <div class="input-row row" >
-          <input type="text" name="companyname" id="companyname" class="input-fieldformat form-control"  placeholder="Company Name" />
+        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" >
+          <input type="text" name="email" class="input-fieldformat form-control"  value="{{$currentUser->email}}" />
+          @if ($errors->has('email'))
+            <span class="help-block">
+                <strong>{{ $errors->first('email') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-          <input type="text" name="streetaddress" id="streetaddress"  class="input-fieldformat form-control" placeholder="Street Address"/>
+        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}" >
+          <input type="text" name="name" class="input-fieldformat form-control"  value="{{$currentUser->name}}" />
+          @if ($errors->has('name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('name') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-          <input type="text" name="province" id="province" class="input-fieldformat form-control" placeholder="State/Province"/>
+        <div class="form-group{{ $errors->has('companyname') ? ' has-error' : '' }}" >
+          <input type="text" name="companyname" class="input-fieldformat form-control"  value="{{$currentRestaurant->companyname}}" />
+          @if ($errors->has('companyname'))
+            <span class="help-block">
+                <strong>{{ $errors->first('companyname') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-          <input type="text" name="country" id="country"  class="input-fieldformat form-control" placeholder="Country"/>
+        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}" >
+          <input type="text" name="address"  class="input-fieldformat form-control" value="{{$currentRestaurant->address}}"/>
+          @if ($errors->has('address'))
+            <span class="help-block">
+                <strong>{{ $errors->first('address') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-          <input type="text" name="city" id="city"  class="input-fieldformat form-control" placeholder="City"/>
+        <div class="form-group{{ $errors->has('province') ? ' has-error' : '' }}" >
+          <input type="text" name="province" class="input-fieldformat form-control" value="{{$currentRestaurant->province}}"/>
+          @if ($errors->has('province'))
+            <span class="help-block">
+                <strong>{{ $errors->first('province') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-          <input type="text" name="zipcode" id="zipcode"  class="input-fieldformat form-control" placeholder="Postal/ZipCode"/>
+        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}" >
+          <input type="text" name="city"  class="input-fieldformat form-control" value="{{$currentRestaurant->city}}"/>
+          @if ($errors->has('city'))
+            <span class="help-block">
+                <strong>{{ $errors->first('city') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-                <input type="tel" name="phoneno" id="phoneno" class="input-fieldformat form-control"  placeholder="Phone Number"/>
+        <div class="form-group{{ $errors->has('postalcode') ? ' has-error' : '' }}" >
+          <input type="text" name="postalcode"  class="input-fieldformat form-control" value="{{$currentRestaurant->postalcode}}"/>
+          @if ($errors->has('postalcode'))
+            <span class="help-block">
+                <strong>{{ $errors->first('postalcode') }}</strong>
+            </span>
+          @endif
         </div>
-        <div class="input-row row" >
-                <input type="email" name="email" id="email" class="input-fieldformat form-control"  placeholder="Email Address"/>
+        <div class="form-group{{ $errors->has('phoneno') ? ' has-error' : '' }}" >
+          <input type="tel" name="phoneno" class="input-fieldformat form-control"  value="{{$currentRestaurant->phoneno}}"/>
+          @if ($errors->has('phoneno'))
+            <span class="help-block">
+                <strong>{{ $errors->first('phoneno') }}</strong>
+            </span>
+          @endif
         </div>
 
         <div class="input-row row text-right" >
-          <button type='submit'  class="btn  btn-primary   " />Save Changes</button>
+          <button type='submit' class="btn  btn-primary"/>Save Changes</button>
         </div>
         </div><!-- panel body container -->
 
