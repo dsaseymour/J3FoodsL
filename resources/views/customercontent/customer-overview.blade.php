@@ -35,7 +35,7 @@ J3 Foods - Online Food Ordering
                           <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                       </a>
                       <h5>
-                          <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$rest->name}}</a>
+                          <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$rest->companyname}}</a>
 						  <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
               <!--if this userfavourites has restraunt-->
               @if ($userfavs->contains('restaurant_id',$rest->id))
