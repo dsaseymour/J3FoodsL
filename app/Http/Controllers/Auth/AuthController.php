@@ -79,7 +79,7 @@ class AuthController extends Controller
 			$customer->id = $idOfUser;
 			$customer->phoneno = "";
 			$customer->save();
-			return redirect($this->redirectPath());
+			return redirect()->action('CustomerController@showcustomerprofile');
 		}
     }
 	

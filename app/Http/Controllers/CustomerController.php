@@ -40,9 +40,6 @@ class CustomerController extends Controller
 	
 	/**
 		Updates the database with the updated info of the customer
-		
-		**ONLY ADD NEW FEILDS BELOW , NOTHING ABOVE EMAIL/NAME
-		
 	*/
 	protected function updateDatabaseWithNewInfo(Request $request){
 		
@@ -53,6 +50,7 @@ class CustomerController extends Controller
 		$updateUser = User::find($id);
 		$updateUser->name = $request->name;
 		$updateUser->email = $request->email;
+		$updateUser->address = $request->address;
 		$updateUser->save();
 		
 		
@@ -71,6 +69,7 @@ class CustomerController extends Controller
 			return Validator::make($data, [
                 'email' => 'email|max:255|unique:users',
 				'phoneno' => 'max:13',
+				'address' => 'max:60',
             ]);
 		}else{
 			return Validator::make($data, [
