@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','isRestaurant', 'email', 'password',
+        'name','isRestaurant', 'email', 'password','confirmation_code',
     ];
 
     /**
@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 	
 	/*public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');

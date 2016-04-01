@@ -156,4 +156,5 @@ class RestaurantController extends Controller
   public function showrestaurantprofilehours(){
           return view('restaurantcontent.restaurant-profile-hours');
   }
+
 }
