@@ -147,16 +147,14 @@ class CustomerController extends Controller
   }
 		
 	//Remove restaurant from favourites
-	public function addcustomerfavourite(User $restaurant){
+	public function deletecustomerfavourite(User $restaurant){
     if(\Auth::check()) {
       $cust_id = \Auth::user()->id;
     }
     $rest_id = $restaurant->id;
 
-    $addfavourite = new CustomerFavourites;
-    $addfavourite->restaurant_id=$rest_id;
-    $addfavourite->customer_id=$cust_id;
-    $addfavourite->save();
+    $deletefavourite = CustomerFavourites::where('customer_id',$cust_id)->where('restaurant_id',$rest_id);
+    $deletefavourite->delete();
 
     return redirect()->action('CustomerController@showcustomeroverview');
   }
