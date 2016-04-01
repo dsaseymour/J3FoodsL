@@ -30,13 +30,12 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 
 
 Route::group(['middleware' => ['web']], function () {
-	
-    Route::auth();
 
+    Route::auth();
+    
+    Route::get('/sethours', 'RestaurantController@showsethours');
     Route::get('/home', 'MasterController@showhome');
 
-    Route::get('/sethours', 'RestaurantController@showsethours');
-	
 	Route::get('/dbtest', [
     'uses'=>'CustomerController@showrestaurant',
     'as'=>'dbtest'
@@ -47,29 +46,54 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'MasterController@showhome',
     'as'=>'homelink'
     ]);
-	
+
 	//Login pressed
+    /*
 	Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
-
+*/
 	//Login pages
+
 	Route::get('/loginRest', [
     'uses'=>'LoginController@showrestaurantlogin',
     'as'=>'loginrest'
     ]);
-	
+
 	Route::get('/loginCust', [
     'uses'=>'LoginController@showcustomerlogin',
     'as'=>'logincust'
     ]);
 
-    Route::get('/password/reset',[
-    'uses'=>'MasterController@passwordreset',
-    'as'=>'passwordreset'
+	/*Route::get('/customerlogin',[
+    'uses'=>'LoginController@showcustomerlogin',
+    'as'=>'customerloginlink'
     ]);
-	
+
+	Route::get('/restaurantlogin',[
+    'uses'=>'LoginController@showrestaurantlogin',
+    'as'=>'restaurantloginlink'
+    ]);*/
+
+	Route::get('/password/reset',[
+     'uses'=>'MasterController@passwordreset',
+     'as'=>'passwordreset'
+     ]);
+
+	 /*
+	 Route::post('/restaurantlogin',[
+         'uses'=>'RestaurantController@restaurantlogin',
+         'as'=>'restaurantlogin'
+         ]);*/
+
+
+	//Register Pages
+   /* Route::get('/register/{user?}',[
+    'uses'=>'RegisterController@register',
+    'as'=>'registerlink'
+	]);*/
+
 	Route::get('/register',[
     'uses'=>'RegisterController@register',
     'as'=>'registerlink'
@@ -79,30 +103,37 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'RegisterController@showcustomerregister',
     'as'=>'registercustomer'
     ]);
-	
+
 	Route::get('/restaurantregister',[
-    'uses'=>'RegisterController@showrestaurantregister',
-    'as'=>'registerrestaurant'
-    ]);
-		
-	Route::get('/restaurantregisterinfo',[
-    'uses'=>'RegisterController@showrestaurantregisterinfo',
-    'as'=>'registerrestaurantinfo'
-    ]);	
-		
+        'uses'=>'RegisterController@showrestaurantregister',
+        'as'=>'registerrestaurant'
+        ]);
+
+		Route::get('/restaurantregisterinfo',[
+        'uses'=>'RegisterController@showrestaurantregisterinfo',
+        'as'=>'registerrestaurantinfo'
+        ]);
+
+
 	//Customer pages
 	Route::post('/customerupdateinfo',[
     'uses'=>'CustomerController@updateinfo',
     'as'=>'customerupdateinfo',
     ]);
-	
+
     Route::get('/customeroverview',[
     'uses'=>'CustomerController@showcustomeroverview',
     'as'=>'customeroverviewlink',
     ]);
 
-    Route::get('/menu/{restaurant}',[
-    'uses'=>'CustomerController@showcustomermenu',
+    Route::get('/order/confirmed',[
+    'uses'=>'CustomerController@orderconfirmandnotify',
+    'as'=>'orderconfirmlink',
+    ]);
+
+
+    Route::get('/customermenuoverview',[
+    'uses'=>'CustomerController@showcustomermenuoverview',
     'as'=>'customermenuoverviewlink'
     ]);
 
@@ -132,6 +163,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Restuarant pages
+
     Route::post('/sethours',[
     'uses'=>'RestaurantController@storehours',
     'as'=>'restaurantsethours',
@@ -187,34 +219,39 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'registerconfirmlink'
     ]);
 
+	 Route::get('register/verify/{confirmationCode}', [
+      'uses' => 'RegisterController@confirm',
+	     'as' => 'confirmation_path'
+	 ]);
+
     Route::get('/forgotpassword',[
     'uses'=>'AuthController@showforgotpassword',
     'as'=>'forgotpasswordlink'
-
-    //DEBUGGIN
-
-        /*Route::get('/customerlogin',[
-    'uses'=>'LoginController@showcustomerlogin',
-    'as'=>'customerloginlink'
     ]);
-    
-    Route::get('/restaurantlogin',[
-    'uses'=>'LoginController@showrestaurantlogin',
-    'as'=>'restaurantloginlink'
-    ]);*/
-     
-     /*
-     Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-    
-    
-    //Register Pages
-   /* Route::get('/register/{user?}',[
-    'uses'=>'RegisterController@register',
-    'as'=>'registerlink'
-    ]);*/
 
-    ]);
+
+
+
+//DEBUGGGING
+    /*
+Route::get('/test', function()
+{
+    return view('restaurantcontent.restaurant-profile-restrictions');
 });
+
+
+Route::get('/customer', 'CustomerController@index');
+//Route::post('/customer', 'CustomerController@store');
+Route::delete('/customer', 'CustomerController@destroy');
+
+
+Route::post('/customerregister',[
+'uses'=>'CustomerController@dummycreate',
+'as'=>'addCustomer'
+]);
+*/
+});
+
+//DEBUGGING
+
+	//Route::get('/login/{user}', 'AuthController@login');
