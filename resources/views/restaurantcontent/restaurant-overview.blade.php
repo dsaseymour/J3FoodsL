@@ -18,7 +18,7 @@ J3 Foods - Online Food Ordering
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
-          <h1>Orders
+          <h1>{{$restaurant->companyname}} Orders
             <span class="badge">10</span>
             <a class="btn btn-primary" >Close Restaurant</a>
           </h1>
