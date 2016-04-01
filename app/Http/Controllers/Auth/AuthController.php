@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 use DB;
 use App\User;
+use App\Customer;
+use App\Restaurant;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -100,10 +102,7 @@ class AuthController extends Controller
 	*/
 	protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
-<<<<<<< HEAD
 
-=======
->>>>>>> master
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
