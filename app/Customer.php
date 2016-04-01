@@ -13,13 +13,13 @@ class Customer extends Model
 	public $timestamps = false;
 
     //a customer has many restaurant favorites
-    public function favorites(){
-        return $this->hasMany('Restaurant');
+    public function favourites(){
+        return $this->hasMany('App\CustomerFavourites');
     }
 
     public function restaurant()
      {
-         return $this->belongsToMany('Restaurant');
+         return $this->belongsToMany('App\Restaurant');
      }
 
 }

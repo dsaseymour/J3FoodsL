@@ -9,6 +9,9 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
+
+{{-- */$userfavs = Auth::user()->favourites;/* --}}
+
 <div id="customer-overview-container" class="container ">
   <div class="row ">
 
@@ -26,22 +29,24 @@ J3 Foods - Online Food Ordering
         <h3>For More Information Click on a Restaurant Below</h3>
 			
 			<div class="row">
-				
-				@for($i=0; $i<count($restaurants) ; $i++)
-				  <?php $rest = $restaurants[$i]; $restInfo = $restaurantInfo[$i]?>
-			  
-				  <div class="col-sm-3 text-center">
-					  <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
-						  <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-					  </a>
-					  <h5>
-						  <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$restInfo->companyname}}</a>
-						  <a class= "btn btn-default" href="#"> <span class="glyphicon glyphicon-star-empty"></span> </a>
-						  <!-- use <span class="glyphicon glyphicon-star"> when the user has it favourited, might be some if statement to determine, like if favourited then use this glyphicaon
-						  i guess we need to also find out a way to do it in real time!-->
-					  </h5>
-				  </div>
-				@endfor
+				@foreach ($restaurants as $rest)
+                  <div class="col-sm-3 text-center">
+                      <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
+                          <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                      </a>
+                      <h5>
+                          <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">{{$rest->name}}</a>
+						  <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
+              <!--if this userfavourites has restraunt-->
+              @if ($userfavs->contains('restaurant_id',$rest->id))
+              <span class="glyphicon glyphicon-star"></span>
+              @else
+              <span class="glyphicon glyphicon-star-empty"></span> 
+              @endif
+              </a>
+                      </h5>
+                  </div>
+				@endforeach
             </div>
 			
     </div>
