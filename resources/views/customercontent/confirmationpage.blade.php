@@ -98,7 +98,7 @@ J3 Foods - Online Food Ordering
         <p>Order Successfully Processed</p>
       </div>
       <div class="modal-footer">
-        <a href="{{ route('customermenuoverviewlink'  ) }}"><button type="button" class="btn btn-default" >Return</button></a>
+        <a href="{{ route('orderconfirmlink'  ) }}"><button type="button" class="btn btn-default" >Return</button></a>
       </div>
     </div>
   </div>
