@@ -134,7 +134,7 @@ class CustomerController extends Controller
   //Add restaurant to favourites
   public function addcustomerfavourite(User $restaurant){
   	if(\Auth::check()) {
-        $cust_id = \Auth::user()->id;
+      $cust_id = \Auth::user()->id;
     }
   	$rest_id = $restaurant->id;
 
@@ -146,8 +146,18 @@ class CustomerController extends Controller
   	return redirect()->action('CustomerController@showcustomeroverview');
   }
 		
-		
-	
+	//Remove restaurant from favourites
+	public function deletecustomerfavourite(User $restaurant){
+    if(\Auth::check()) {
+      $cust_id = \Auth::user()->id;
+    }
+    $rest_id = $restaurant->id;
+
+    $deletefavourite = CustomerFavourites::where('customer_id',$cust_id)->where('restaurant_id',$rest_id);
+    $deletefavourite->delete();
+
+    return redirect()->action('CustomerController@showcustomeroverview');
+  }
 
 
 
