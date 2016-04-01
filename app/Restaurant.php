@@ -18,4 +18,15 @@ class Restaurant extends Model
      }
 
 
+    public function menu(){
+		return $this->hasMany(Item::class, 'rest_id');
+	}
+
+	public function categories(){
+		return $this->hasMany(Category::class, 'rest_id');
+	}
+
+	public function specials(){
+		return $this->hasMany(Special::class, 'rest_id');
+	}
 }
