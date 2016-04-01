@@ -22,6 +22,14 @@ class CustomerController extends Controller
     $this->middleware('auth');
   }
 
+  public function searchrestaurants(Request $request ){
+
+      $term = $request->term;
+      $restaurants =  Restaurant::where('companyname', 'LIKE', "%$term%")->get();
+      return view('customercontent.customer-overview',compact('restaurants'));
+
+  }
+
 
 	/**
 		Updates the user info with the data eneterd in the update user info page
@@ -88,18 +96,20 @@ class CustomerController extends Controller
   }
 
   public function showcustomeroverview(){
-
-		//$restaurants = Restaurant::all();
 		$restaurants = Restaurant::get();
+    return view('customercontent.customer-overview',compact('restaurants'));
+  }
 
-        return view('customercontent.customer-overview',compact('restaurants'));
+    public function sortrestaurantlistalphabetically(){
+    $restaurants = Restaurant::orderBy('companyname', 'desc')->get();
+    return view('customercontent.customer-overview',compact('restaurants'));
   }
 
 
   public function showcustomermenu(Restaurant $restaurant){
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();
-        return view('customercontent.customer-menuoverview', compact("restaurant","restaurantInfo"));
+    return view('customercontent.customer-menuoverview', compact("restaurant","restaurantInfo"));
 
   }
 
