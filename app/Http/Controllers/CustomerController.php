@@ -41,9 +41,6 @@ class CustomerController extends Controller
 	
 	/**
 		Updates the database with the updated info of the customer
-		
-		**ONLY ADD NEW FEILDS BELOW , NOTHING ABOVE EMAIL/NAME
-		
 	*/
 	protected function updateDatabaseWithNewInfo(Request $request){
 		
@@ -54,6 +51,7 @@ class CustomerController extends Controller
 		$updateUser = User::find($id);
 		$updateUser->name = $request->name;
 		$updateUser->email = $request->email;
+		$updateUser->address = $request->address;
 		$updateUser->save();
 		
 		
@@ -72,6 +70,7 @@ class CustomerController extends Controller
 			return Validator::make($data, [
                 'email' => 'email|max:255|unique:users',
 				'phoneno' => 'max:13',
+				'address' => 'max:60',
             ]);
 		}else{
 			return Validator::make($data, [
@@ -90,16 +89,16 @@ class CustomerController extends Controller
   public function showcustomeroverview(){
 			
 		//$restaurants = Restaurant::all();
-		$restaurants = User::where('isRestaurant',1)->get();
+		$restaurants = Restaurant::get();
         return view('customercontent.customer-overview',compact('restaurants'));
   }
   
 
-  public function showcustomermenu(User $restaurant){
+  public function showcustomermenu(Restaurant $restaurant){
 		$items = $restaurant->menu;
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();
-        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo"));
+        return view('customercontent.customer-menuoverview', compact("items","restaurant","restaurantInfo","categories"));
 
   }
 
@@ -140,32 +139,5 @@ class CustomerController extends Controller
 
   	return redirect()->action('CustomerController@showcustomeroverview');
   }
-		
-		
-		
-		/*
-		
-		Danny working on test database 
-		
-		*/
-        public function dummycreate(Request $request){
-             $customer = new Customer;
-             $user->username     = Input::get('username');
-             $user->password     = Hash::make(Input::get('password'));
-             $user->email        = Input::get('email');
-             $user->save();
-
-             return Response::make('User created! Hurray!');
-        }
-
-        public function dummygetcustomer(){
-             $customers=Customer::orderBy('created_at', 'asc')->get();
-
-             return viewcustomers('',[
-                        'viewcustomers' => $viewcustomers
-                ]);
-        }
-
-
 
 }

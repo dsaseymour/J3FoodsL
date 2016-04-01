@@ -1,0 +1,12 @@
+<option value="1:00:00">1:00</option>
+<option value="2:00:00">2:00</option>
+<option value="3:00:00">3:00</option>
+<option value="4:00:00">4:00</option>
+<option value="5:00:00">5:00</option>
+<option value="6:00:00">6:00</option>
+<option value="7:00:00">7:00</option>
+<option value="8:00:00">8:00</option>
+<option value="9:00:00">9:00</option>
+<option value="10:00:00">10:00</option>
+<option value="11:00:00">11:00</option>
+<option value="12:00:00">12:00</option>
