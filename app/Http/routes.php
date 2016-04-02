@@ -54,6 +54,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'validcustomerloginlink'
     ]);
 
+    Route::post('/searchrestaurants',[
+    'uses'=>'CustomerController@searchrestaurants',
+    'as'=>'searchrestaurants'
+    ]);
+
 	//Login pages
 
 	Route::get('/loginRest', [
@@ -126,6 +131,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customeroverviewlink',
     ]);
 
+    Route::get('/sortalphabetically',[
+    'uses'=>'CustomerController@sortrestaurantlistalphabetically',
+    'as'=>'sortalphabetically'
+    ]);
+
     Route::get('/order/confirmed',[
     'uses'=>'CustomerController@orderconfirmandnotify',
     'as'=>'orderconfirmlink',
@@ -135,6 +145,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/menu/{restaurant}',[
     'uses'=>'CustomerController@showcustomermenu',
     'as'=>'customermenuoverviewlink'
+    ]);
+
+    Route::get('/options/{item}',[
+    'uses'=>'CustomerController@itemOptions',
+    'as'=>'menuitemoptions'
     ]);
 
     Route::get('/customerconfirmation',[

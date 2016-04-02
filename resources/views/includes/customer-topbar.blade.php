@@ -16,28 +16,26 @@
       </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse-1">
-
-
-
           <ul class="nav navbar-nav navbar-right">
           <li>
-            <form class="navbar-form" role="search">
+            <form class="navbar-form" role="form" method="POST" action="{{ route('searchrestaurants') }}">
+            {!! csrf_field() !!}
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" name= "term" class="form-control" placeholder="Search">
               </div>
-              <button type="submit" class="btn btn-default">   <span class="glyphicon glyphicon-search"></span>  </button>
+             <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span>     
+            </button>
             </form>
           </li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span>Categories</span>
+            <span>Sort</span>
             <span class="caret"></span></a>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#">Chicken</a></li>
-              <li><a href="#">Pizza</a></li>
-              <li><a href="#">Pasta</a></li>
+              <li><a href="{{route('sortalphabetically')}}">Alphabetically</a></li>
             </ul>
           </li>
           <li>
