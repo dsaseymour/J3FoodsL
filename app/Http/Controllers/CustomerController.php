@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Restaurant;
+use App\Item;
 use App\Http\Requests;
 use App\Customer;
 use App\CustomerFavourites;
@@ -111,6 +112,15 @@ class CustomerController extends Controller
 		$restaurantInfo = Restaurant::where('id',$id)->first();
     return view('customercontent.customer-menuoverview', compact("restaurant","restaurantInfo"));
 
+  }
+
+  public function itemOptions(Item $item){
+    if($item->option_id != null){
+      $option = $item->option;
+      return view('customercontent.customer-item-options-form', compact("option"));
+    } else {
+      return null;
+    }
   }
 
   public function showcustomerconfirmation(){
