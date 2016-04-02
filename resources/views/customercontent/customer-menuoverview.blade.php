@@ -134,7 +134,7 @@ J3 Foods - Online Food Ordering
   <hr/>
 
   <?php
-    $sortMethod = $_GET["sort"];
+    $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "category";
   ?>
 
   @if($sortMethod == "alpha-asc" || $sortMethod == "alpha-des" || $sortMethod == "price-asc" || $sortMethod == "price-des")
@@ -254,7 +254,7 @@ J3 Foods - Online Food Ordering
     //On page load
     $(document).ready(function(){
       //Set sort box to correct selection based on URL parameters
-      $("#sort-by").val("<?php echo $_GET["sort"]?>");
+      $("#sort-by").val("<?php echo $sortMethod ?>;
       //If no valid sort was set, default to category
       if($("#sort-by").val() == null){
         $("#sort-by").val("category");
