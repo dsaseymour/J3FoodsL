@@ -27,7 +27,7 @@ J3 Foods - Online Food Ordering
 
 
   <div class="panel-body">
-      <form action="/" method="POST" role="form">
+      <form action="{{route('submitfeedback')}}" method="POST" role="form">
           <div class="form-group">
             <label for="comment">Rating:</label>
             <fieldset class="rating">

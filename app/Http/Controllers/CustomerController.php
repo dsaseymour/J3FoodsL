@@ -130,7 +130,7 @@ class CustomerController extends Controller
 
         return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
-		
+
   //Add restaurant to favourites
   public function addcustomerfavourite(User $restaurant){
   	if(\Auth::check()) {
@@ -145,7 +145,7 @@ class CustomerController extends Controller
 
   	return redirect()->action('CustomerController@showcustomeroverview');
   }
-		
+
 	//Remove restaurant from favourites
 	public function deletecustomerfavourite(User $restaurant){
     if(\Auth::check()) {
@@ -159,6 +159,24 @@ class CustomerController extends Controller
     return redirect()->action('CustomerController@showcustomeroverview');
   }
 
+
+public function addfeedback(Request $request){
+	if(\Auth::check()) {
+					$id = \Auth::user()->id;
+		 }
+	$currentUser = User::where('id',$id)->first();
+
+
+}
+
+public function showfeedbackpage(){
+	return view('rating.restaurantfeedback');
+}
+public function sendFeedbackRequestEmailTo($email){
+		Mail::send('email.ratingrequest',$data, function($message) use ($email){
+		$message->to($email)->subject('Will You Rate Your Experience At J3Foods?');
+		});
+}
 
 
 
