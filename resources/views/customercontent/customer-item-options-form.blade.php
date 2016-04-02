@@ -1,6 +1,16 @@
-<label for="item-option">{{$item->option->name}}</label>
-<select id="item-option" class="form-control">
-	@foreach($item->option->choices as $choice)
-		<option value="{{$choice->id}}">{{$choice->name}}</option>
+<label for="item-option">{{$option->name}}</label>
+@if($option->type == "combo")
+	<select name="item-option" class="form-control">
+		@foreach($option->choices as $choice)
+			<option value="{{$choice->id}}">{{$choice->name}}</option>
+		@endforeach
+	</select>
+@elseif($option->type == "check")
+	@foreach($option->choices as $choice)
+		<div class="checkbox">
+			<label><input type="checkbox" name="item-option" value="{{$choice->id}}"/>{{$choice->name}}</label>
+		</div>
 	@endforeach
-</select>
+@else
+	<textarea class="form-control" rows="3" name="item-option"></textarea>
+@endif

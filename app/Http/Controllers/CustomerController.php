@@ -110,7 +110,12 @@ class CustomerController extends Controller
   }
 
   public function itemOptions(Item $item){
-    return view('customercontent.customer-item-options-form', compact("item"));
+    if($item->option_id != null){
+      $option = $item->option;
+      return view('customercontent.customer-item-options-form', compact("option"));
+    } else {
+      return null;
+    }
   }
 
   public function showcustomerconfirmation(){

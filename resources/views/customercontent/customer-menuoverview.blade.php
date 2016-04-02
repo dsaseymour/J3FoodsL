@@ -226,6 +226,10 @@ J3 Foods - Online Food Ordering
         <div class="modal-body">
           <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
             <div id="item-option-group" class="form-group"></div>
+            <div id="item-quantity" class="form-group">
+              <label for="qty">Quantity</label>
+              <input type="number" name="qty" min="1" max="99" value="1" class="form-control"/>
+            </div>
           <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
@@ -266,8 +270,11 @@ J3 Foods - Online Food Ordering
       });
 
       $(".menu-item").click(function(e){
-        $.get('/options/1', function(response){
-          $("#item-option-group").html(response);
+        itemid = $(e.target).parent(".menu-item").data("itemid");
+        $.get('/options/'+itemid, function(response){
+          if(response != null){
+            $("#item-option-group").html(response);
+          }
           $("#item-options-modal").modal("show");
         });
       });
