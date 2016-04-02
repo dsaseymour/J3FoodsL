@@ -311,7 +311,7 @@ body {
   text-align: center;
   color: #2F3131;
   font-weight: 300;
-  margin: 0;
+  margin: 0 0 40px;
 }
 /* line 442, ../sass/style.scss */
 #login-container label {
@@ -356,6 +356,7 @@ body {
   background-image: none;
   border: 1px solid #a0b3b0;
   color: #2F3131;
+  border-radius: 0;
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
 }
@@ -659,8 +660,4 @@ td a {
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 30px;
-}
-.login-input {
-	margin-top: 8px;
-	border-radius: 4px;
 }
