@@ -18,10 +18,11 @@ J3 Foods - Online Food Ordering
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
-          <h1>Orders
-          <span class="badge">10</span>
-        </h1>
-         </div>
+          <h1>{{$restaurant->companyname}} Orders
+            <span class="badge">10</span>
+            <a class="btn btn-primary" >Close Restaurant</a>
+          </h1>
+        </div>
         <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-12 text-center">

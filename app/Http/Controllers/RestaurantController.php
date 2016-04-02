@@ -94,6 +94,7 @@ class RestaurantController extends Controller
     return view('restaurantcontent.restaurant-sethours');
   }
 
+
   public function storehours(Request $request){
     if(\Auth::check()) {
       $id = \Auth::user()->id;
@@ -136,7 +137,14 @@ class RestaurantController extends Controller
   }
 
   public function showrestaurantoverview(){
-          return view('restaurantcontent.restaurant-overview');
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+
+    $restaurant = Restaurant::where('id',$id)->first();
+
+
+    return view('restaurantcontent.restaurant-overview',compact('restaurant'));
   }
 
   public function showrestaurantprofile(){
