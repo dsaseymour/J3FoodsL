@@ -137,6 +137,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customermenuoverviewlink'
     ]);
 
+    Route::get('/options/{item}',[
+    'uses'=>'CustomerController@itemOptions',
+    'as'=>'menuitemoptions'
+    ]);
+
     Route::get('/customerconfirmation',[
     'uses'=>'CustomerController@showcustomerconfirmation',
     'as'=>'customerconfirmationlink'
