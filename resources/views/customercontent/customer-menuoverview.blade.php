@@ -254,7 +254,7 @@ J3 Foods - Online Food Ordering
     //On page load
     $(document).ready(function(){
       //Set sort box to correct selection based on URL parameters
-      $("#sort-by").val("<?php echo $sortMethod ?>;
+      $("#sort-by").val("<?php echo $sortMethod ?>");
       //If no valid sort was set, default to category
       if($("#sort-by").val() == null){
         $("#sort-by").val("category");
