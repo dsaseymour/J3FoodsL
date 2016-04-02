@@ -9,39 +9,32 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
+
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
   <h1>Confirmation Page</h1>
   <div class="list-group">
     <div class="list-group-item ">
-      <h4 class="list-group-item-heading">Order details</h4>
+      <h4 class="list-group-item-heading">Order Information</h4>
       <div class="table-responsive"><!-- Start table container -->
         <table class="table table-condensed table-bordered">
           <tbody>
             <tr>
-              <td>1x</td>
-              <td>Super Burger. Sauce Option: Garlic</td>
-              <td>$8.00</td>
+              <td>Quantity</td>
+              <td>Menu Item</td>
+              <td>Price</td>
             </tr>
-
+            {{-- */$totalprice=0;/* --}}
+            @foreach($order as $nextitem)
+            {{-- */$itemname = DB::table('items')->where('item_id',$nextitem->item_id)->first();/* --}}
+            {{-- */$totalprice = $totalprice + (($nextitem->quantity)*($itemname->price));/* --}}
             <tr>
-              <td>1x</td>
-              <td>Super Burger. Sauce Option: Garlic</td>
-              <td>$8.00</td>
+              <td>{{$nextitem->quantity}}</td>
+              <td>{{$itemname->name}}</td>
+              <td>${{$itemname->price}}</td>
             </tr>
-
-            <tr>
-              <td>1x</td>
-              <td>Super Burger. Sauce Option: Garlic</td>
-              <td>$8.00</td>
-            </tr>
-
-            <tr>
-              <td>1x</td>
-              <td>Super Burger. Sauce Option: Garlic</td>
-              <td>$8.00</td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div><!-- End table container -->
@@ -56,17 +49,17 @@ J3 Foods - Online Food Ordering
           <tbody>
             <tr>
               <td>Subtotal</td>
-              <td>$32</td>
+              <td>${{$totalprice}}</td>
             </tr>
 
             <tr>
               <td>Tax</td>
-              <td>$4</td>
+              <td>${{number_format($totalprice*0.13,2)}}</td>
             </tr>
 
             <tr>
               <td>Total Purchases</td>
-              <td>$36</td>
+              <td>${{number_format($totalprice*1.13,2)}}</td>
             </tr>
 
             <tr>
