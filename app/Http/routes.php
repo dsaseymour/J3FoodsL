@@ -32,7 +32,8 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
-
+    
+    Route::get('/sethours', 'RestaurantController@showsethours');
     Route::get('/home', 'MasterController@showhome');
 
 	Route::get('/dbtest', [
@@ -47,12 +48,12 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Login pressed
-    /*
+    
 	Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
-*/
+
 	//Login pages
 
 	Route::get('/loginRest', [
@@ -131,8 +132,8 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 
-    Route::get('/customermenuoverview',[
-    'uses'=>'CustomerController@showcustomermenuoverview',
+    Route::get('/menu/{restaurant}',[
+    'uses'=>'CustomerController@showcustomermenu',
     'as'=>'customermenuoverviewlink'
     ]);
 
@@ -159,6 +160,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/addtofavourites/{restaurant}',[
     'uses'=>'CustomerController@addcustomerfavourite',
     'as'=>'addtofavourites'
+    ]);
+
+    Route::get('/removefromfavourites/{restaurant}',[
+    'uses'=>'CustomerController@deletecustomerfavourite',
+    'as'=>'removefromfavourites'
     ]);
 
 	//Restuarant pages
