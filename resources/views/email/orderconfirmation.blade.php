@@ -1,4 +1,4 @@
-$order=$data['event']->order;
+$order=$event->order;
 
 <h1>Order Confirmation</h1>
 

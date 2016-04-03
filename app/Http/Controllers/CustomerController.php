@@ -196,6 +196,8 @@ $specialinstructions=$request['special_instructions'];
 					'specialinstructions' => $specialinstructions,
       ]);
 	Event::fire(new OrderWasSubmitted($orders));
+
+  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 }
 
 
