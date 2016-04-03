@@ -26,6 +26,19 @@ class OrderConfirmation
      */
     public function handle(OrderWasSubmitted $event)
     {
-        //
+        Mail::send('email.orderconfirmation',$data, function($message) use ($event){
+        $order=$event->order;
+        $user = User::find($order->customer_id);
+        $email=$user->email;
+        $message->to($email)->subject('Your Order has been processed');
+        });
+
+        Mail::later(7200,'email.ratingrequest',$data, function($message) use ($event){
+            $order=$event->order;
+            $user = User::find($order->customer_id);
+            $email=$user->email;
+		$message->to($email)->subject('Will You Rate Your Experience At J3Foods?');
+		});
+
     }
 }

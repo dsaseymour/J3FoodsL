@@ -11,6 +11,8 @@ use App\CustomerFavourites;
 use App\User;
 use DB;
 use Validator;
+use Event;
+use App\Events\OrderWasSubmitted;
 
 
 class CustomerController extends Controller
@@ -164,9 +166,12 @@ public function addfeedback(Request $request){
 	if(\Auth::check()) {
 					$id = \Auth::user()->id;
 		 }
-	$currentUser = User::where('id',$id)->first();
-
-
+	$currentUser = CustomerRatings::create([
+          'restaurant_id' => ,//need to add in the restaurant id
+          'customer_id' => $id,
+          'rating' => $request['rating'],
+          'comment' => $request['comment'],
+      ]);
 }
 
 public function showfeedbackpage(){
@@ -178,6 +183,20 @@ public function sendFeedbackRequestEmailTo($email){
 		});
 }
 
+public function createOrder(Request $request){
+if($request['special_instructions']){
+$specialinstructions=$request['special_instructions'];
+}else{$specialinstructions=NULL;}
+
+	$order=Orders::create([
+          'item_id' => $request['item_id'],
+					'restaurant_id' => $request['restaurant_id'],
+					'customer_id' => $request['customer_id'],
+					'quantity' => $request['quantity'],
+					'specialinstructions' => $specialinstructions,
+      ]);
+	Event::fire(new OrderWasSubmitted($orders));
+}
 
 
 }

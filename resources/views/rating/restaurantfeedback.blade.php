@@ -46,7 +46,7 @@ J3 Foods - Online Food Ordering
 
           <div class="form-group">
             <label for="comment">Comment:</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+            <textarea class="form-control" rows="5" name="comment"></textarea>
           </div>
 
 
