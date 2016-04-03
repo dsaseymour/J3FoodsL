@@ -184,6 +184,16 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Restuarant pages
 
+    Route::post('/additem',[
+    'uses'=>'RestaurantController@additemtomenu',
+    'as'=>'additem',
+    ]);
+
+    Route::post('/addcategory',[
+    'uses'=>'RestaurantController@addcategory',
+    'as'=>'addcategory',
+    ]);
+
     Route::post('/sethours',[
     'uses'=>'RestaurantController@storehours',
     'as'=>'restaurantsethours',
