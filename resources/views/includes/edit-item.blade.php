@@ -7,8 +7,8 @@
     <div class="modal-body">
       <form method="POST" role="form" action="{{ route('edititem' , ['item' => $item->item_id] ) }}">
         {!! csrf_field() !!}
-        <div class="list-group">
-        <label class="list-group-item-heading">Category</label>
+        <div >
+          <label class="list-group-item-heading">Category</label>
           <select class="form-control" name="category">
           @foreach ($restaurant->categories as $category)
             @if($item->category_id == $category->id)
@@ -24,6 +24,10 @@
           <input type="text" class="form-control" name="price" value="{{$item->price}}" >
           <label class="list-group-item-heading">Image</label>
           <input type="text" class="form-control" name="image" value="{{$item->image}}" >
+          <label class="list-group-item-heading">On special?</label>
+          <input type="checkbox" class="form-control" name="is_special" >
+          <label class="list-group-item-heading">Special Price</label>
+          <input type="text" class="form-control" name="special_price">
         </div>
       </div>
       <div class="modal-footer">

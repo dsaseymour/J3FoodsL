@@ -147,6 +147,9 @@ class RestaurantController extends Controller
     $updateItem->price = $request->price;
     $updateItem->name = $request->name;
     $updateItem->image = $request->image;
+
+
+   
     $updateItem->save();
     return redirect()->action('RestaurantController@showrestaurantmoverview');
 
