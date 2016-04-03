@@ -169,8 +169,8 @@ public function addfeedback(Request $request){
 	$currentUser = CustomerRatings::create([
           'restaurant_id' => ,//need to add in the restaurant id
           'customer_id' => $id,
-          'rating' => $request['rating'],
-          'comment' => $request['comment'],
+          'rating' => $request->rating,
+          'comment' => $request->comment,
       ]);
 }
 
@@ -184,15 +184,15 @@ public function sendFeedbackRequestEmailTo($email){
 }
 
 public function createOrder(Request $request){
-if($request['special_instructions']){
-$specialinstructions=$request['special_instructions'];
-}else{$specialinstructions=NULL;}
+if($request->special_instructions!=NULL){
+$specialinstructions=$request->special_instructions;
+}
 
 	$order=Orders::create([
-          'item_id' => $request['item_id'],
-					'restaurant_id' => $request['restaurant_id'],
-					'customer_id' => $request['customer_id'],
-					'quantity' => $request['quantity'],
+          'item_id' => $request->item_id,
+					'restaurant_id' => $request->restaurant_id,
+					'customer_id' => $request->customer_id,
+					'quantity' => $request->quantity,
 					'specialinstructions' => $specialinstructions,
       ]);
 	Event::fire(new OrderWasSubmitted($orders));
