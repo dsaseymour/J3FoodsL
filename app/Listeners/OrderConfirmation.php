@@ -8,7 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
 use Mail;
 
-
 class OrderConfirmation
 {
     /**
@@ -29,6 +28,7 @@ class OrderConfirmation
      */
     public function handle(OrderWasSubmitted $event)
     {
+        $data=compact("event");
         Mail::send('email.orderconfirmation',$data, function($message) use ($event){
         $order=$event->order;
         $user = User::find($order->customer_id);

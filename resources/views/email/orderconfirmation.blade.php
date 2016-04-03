@@ -1,4 +1,21 @@
+$order=$data['event']->order;
+
 <h1>Order Confirmation</h1>
+
+<!--
+$order->item_id;
+$order->restaurant_id;
+$order->customer_id;
+$order->quantity;
+$order->special_instructions
+
+
+
+
+-->
+
+
+
 <p>Order #: 42342345</p>
 <p>Name:</p>
 <p>Email:</p>
