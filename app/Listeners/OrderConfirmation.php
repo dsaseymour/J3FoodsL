@@ -5,6 +5,9 @@ namespace App\Listeners;
 use App\Events\OrderWasSubmitted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\User;
+use Mail;
+
 
 class OrderConfirmation
 {
