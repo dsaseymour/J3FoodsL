@@ -132,6 +132,26 @@ class RestaurantController extends Controller
 
   }
 
+  public function deleteitem(Item $item){
+
+    $item->delete();
+    return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+  }
+
+  public function edititem(Item $item, Request $request ){
+
+    
+    $updateItem = Item::find($item->item_id);
+    $updateItem->category_id = $request->category;
+    $updateItem->price = $request->price;
+    $updateItem->name = $request->name;
+    $updateItem->image = $request->image;
+    $updateItem->save();
+    return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+  }
+
   public function additemtomenu(Request $request){
 
     if(\Auth::check()) {
