@@ -39,7 +39,7 @@
             </ul>
           </li>
           <li>
-              <a href="#" >
+              <a href="{{route('customerconfirmationlink')}}" >
                   <span class="glyphicon glyphicon-shopping-cart"></span><?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
                    </a>
           </li>
