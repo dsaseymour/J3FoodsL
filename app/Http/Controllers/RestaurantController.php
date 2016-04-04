@@ -40,8 +40,6 @@ class RestaurantController extends Controller
   /**
     Updates the database with the updated info of the restaurant
     
-    **ONLY ADD NEW FEILDS BELOW , NOTHING ABOVE EMAIL/NAME
-    
   */
     protected function updateDatabaseWithNewInfo(Request $request){   
       if(\Auth::check()) {
@@ -91,6 +89,18 @@ class RestaurantController extends Controller
           'phoneno' => 'required | max:13',
           ]);      
       }
+    }
+
+    public function closerestaurant(Restaurant $restaurant){
+      $open_value = $restaurant->is_open;
+      if ($open_value == 0){
+        $restaurant->is_open = 1;
+      } else {
+        $restaurant->is_open = 0;
+      }
+      $restaurant->save();
+      return redirect()->action('RestaurantController@showrestaurantoverview');
+
     }
 
     public function showsethours(){
