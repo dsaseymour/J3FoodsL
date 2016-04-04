@@ -182,7 +182,7 @@ public function addfeedback(Request $request){
 					$id = \Auth::user()->id;
 		 }
 	$currentUser = CustomerRatings::create([
-          'restaurant_id' => ,//need to add in the restaurant id
+          'restaurant_id' => 3,//need to add in the restaurant id
           'customer_id' => $id,
           'rating' => $request->rating,
           'comment' => $request->comment,
@@ -193,17 +193,11 @@ public function showfeedbackpage(){
 	return view('rating.restaurantfeedback');
 }
 
-public function sendFeedbackRequestEmailTo($email){
-		Mail::send('email.ratingrequest',$data, function($message) use ($email){
-		$message->to($email)->subject('Will You Rate Your Experience At J3Foods?');
-		});
-}
 
 public function createOrder(Request $request){
 if($request->special_instructions!=NULL){
 $specialinstructions=$request->special_instructions;
 }
-
 	$order=Orders::create([
           'item_id' => $request->item_id,
 					'restaurant_id' => $request->restaurant_id,
@@ -212,7 +206,6 @@ $specialinstructions=$request->special_instructions;
 					'specialinstructions' => $specialinstructions,
       ]);
 	Event::fire(new OrderWasSubmitted($orders));
-
   return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 }
 

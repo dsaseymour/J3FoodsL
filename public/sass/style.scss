@@ -2,6 +2,22 @@
 @import 'variables.scss';
 
 
+
+#ratings-formbody{
+  border-style: solid;
+border-left:1px solid #ddd;;
+border-right:1px solid #ddd;;
+border-bottom:1px solid #ddd;;
+padding:15px;
+}
+
+#ratings-comments{
+  border-radius: 4px;
+  width:90%;
+  height: auto;
+}
+
+
 //================================================================================
 // STAR RATINGS BEGIN
 //================================================================================
@@ -15,7 +31,6 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 .rating {
   border: none;
-  float: left;
 }
 
 .rating > input { display: none; }
@@ -41,7 +56,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label { color: rgb(49, 116, 175);  } /* hover previous stars in list */
 
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
