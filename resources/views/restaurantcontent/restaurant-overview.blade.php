@@ -20,7 +20,15 @@ J3 Foods - Online Food Ordering
           <div class="panel-heading">
             <h1>{{$restaurant->companyname}} Orders
               <span class="badge">10</span>
-              <a class="btn btn-primary" >Close Restaurant</a>
+              @if ($restaurant->is_open == 1)
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+                <span class="glyphicon glyphicon-remove"></span> CLOSE
+              </a> 
+              @else
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+                <span class="glyphicon glyphicon-plus"></span> OPEN
+              </a> 
+              @endif
             </h1>
           </div>
           <div class="panel-body">

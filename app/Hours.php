@@ -8,9 +8,7 @@ class Hours extends Model
 {
     protected $table = 'hours';//this is the name of the table that this model is linked to if the table name is different change the value
 	public $timestamps = false;
-	//two primary keys
-	protected $primaryKey = 'rest_ID';
-	protected $fillable = ['day_ID','open','open_time','close_time'];
+	protected $fillable = ['rest_ID','day_ID','open','open_time','close_time'];
 
     public function restaurant() {
     	return $this->belongsTo('Restaurant');
