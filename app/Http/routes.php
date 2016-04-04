@@ -48,12 +48,17 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Login pressed
-    /*
+    
 	Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
     ]);
-*/
+
+    Route::post('/searchrestaurants',[
+    'uses'=>'CustomerController@searchrestaurants',
+    'as'=>'searchrestaurants'
+    ]);
+
 	//Login pages
 
 	Route::get('/loginRest', [
@@ -126,15 +131,25 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customeroverviewlink',
     ]);
 
+    Route::get('/sortalphabetically',[
+    'uses'=>'CustomerController@sortrestaurantlistalphabetically',
+    'as'=>'sortalphabetically'
+    ]);
+
     Route::get('/order/confirmed',[
     'uses'=>'CustomerController@orderconfirmandnotify',
     'as'=>'orderconfirmlink',
     ]);
 
 
-    Route::get('/customermenuoverview',[
-    'uses'=>'CustomerController@showcustomermenuoverview',
+    Route::get('/menu/{restaurant}',[
+    'uses'=>'CustomerController@showcustomermenu',
     'as'=>'customermenuoverviewlink'
+    ]);
+
+    Route::get('/options/{item}',[
+    'uses'=>'CustomerController@itemOptions',
+    'as'=>'menuitemoptions'
     ]);
 
     Route::get('/customerconfirmation',[
@@ -162,7 +177,31 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'addtofavourites'
     ]);
 
+    Route::get('/removefromfavourites/{restaurant}',[
+    'uses'=>'CustomerController@deletecustomerfavourite',
+    'as'=>'removefromfavourites'
+    ]);
+
 	//Restuarant pages
+    Route::post('/edititem/{item}',[
+    'uses'=>'RestaurantController@edititem',
+    'as'=>'edititem',
+    ]);
+
+    Route::get('/deleteitem/{item}',[
+    'uses'=>'RestaurantController@deleteitem',
+    'as'=>'deleteitem',
+    ]);
+
+    Route::post('/additem',[
+    'uses'=>'RestaurantController@additemtomenu',
+    'as'=>'additem',
+    ]);
+
+    Route::post('/addcategory',[
+    'uses'=>'RestaurantController@addcategory',
+    'as'=>'addcategory',
+    ]);
 
     Route::post('/sethours',[
     'uses'=>'RestaurantController@storehours',
