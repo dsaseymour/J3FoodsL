@@ -40,6 +40,7 @@ J3 Foods - Online Food Ordering
                     <textarea id="rating-comments" rows="5" name="comment"></textarea>
                   </div>
 
+                  <input type="hidden" name="restaurant_id" value="{{$rest_id}}" />
 
 
               <div class="input-row " >

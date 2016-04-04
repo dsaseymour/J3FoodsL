@@ -187,7 +187,7 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'submitfeedback',
     ]);
 
-    Route::get('/feedback',[
+    Route::get('/feedback/{rest_id}',[
     'uses'=>'CustomerController@showfeedbackpage',
     'as'=>'showfeedback'
     ]);

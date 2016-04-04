@@ -8,7 +8,9 @@ Hi (User), we love feedback, could you take a moment to share your experience wi
 Please select an overall rating for (Restaurant):
 <br />
 
-<a href="{{ route('showfeedback') }}">5 Excellent
+$rest_id= $event->order->restaurant_id;
+
+<a href="{{URL::to('/feedback/'. $rest_id)}}">5 Excellent
 <span  class="glyphicon glyphicon-star"></span>
 <span  class="glyphicon glyphicon-star"></span>
 <span  class="glyphicon glyphicon-star"></span>
@@ -17,7 +19,8 @@ Please select an overall rating for (Restaurant):
 </a>
 <br />
 
-<a href="{{ route('showfeedback') }}">4 Good
+
+<a href="{{URL::to('/feedback/'. $rest_id)}}">4 Good
 <span  class="glyphicon glyphicon-star-empty"></span>
 <span  class="glyphicon glyphicon-star"></span>
 <span  class="glyphicon glyphicon-star"></span>
@@ -25,7 +28,7 @@ Please select an overall rating for (Restaurant):
 </a>
 <br />
 
-<a href="{{ route('showfeedback') }}">3 Fair
+<a href="{{URL::to('/feedback/'. $rest_id)}}">3 Fair
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star"></span>
@@ -34,7 +37,7 @@ Please select an overall rating for (Restaurant):
 </a>
 <br />
 
-<a href="{{ route('showfeedback') }}">2 Poor
+<a href="{{URL::to('/feedback/'. $rest_id)}}">2 Poor
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star"></span>
@@ -42,7 +45,7 @@ Please select an overall rating for (Restaurant):
 </a>
 <br />
 
-<a href="{{ route('showfeedback') }}">1 Awful
+<a href="{{URL::to('/feedback/'. $rest_id)}}">1 Awful
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star-empty"></span>
   <span  class="glyphicon glyphicon-star-empty"></span>
@@ -51,4 +54,4 @@ Please select an overall rating for (Restaurant):
 </a>
 <br />
 
-<a href="{{ route('showfeedback') }}">Leave a Comment</a>
+<a href="{{URL::to('/feedback/'. $rest_id)}}">Leave a Comment</a>

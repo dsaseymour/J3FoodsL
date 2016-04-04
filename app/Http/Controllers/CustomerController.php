@@ -182,15 +182,16 @@ public function addfeedback(Request $request){
 					$id = \Auth::user()->id;
 		 }
 	$currentUser = CustomerRatings::create([
-          'restaurant_id' => 3,//need to add in the restaurant id
+          'restaurant_id' =>$request->restaurant_id ,//need to add in the restaurant id
           'customer_id' => $id,
           'rating' => $request->rating,
           'comment' => $request->comment,
       ]);
 }
 
-public function showfeedbackpage(){
-	return view('rating.restaurantfeedback');
+public function showfeedbackpage($rest_id){
+	$data['rest_id'] = $rest_id;
+	return view('rating.restaurantfeedback',$data);
 }
 
 
