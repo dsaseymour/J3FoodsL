@@ -243,6 +243,10 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'forgotpasswordlink'
     ]);
 
+    Route::get('/test', function()
+    {
+        return view('email.ratingrequest');
+    });
 
 
 

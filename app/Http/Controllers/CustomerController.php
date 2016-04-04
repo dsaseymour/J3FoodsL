@@ -177,6 +177,7 @@ public function addfeedback(Request $request){
 public function showfeedbackpage(){
 	return view('rating.restaurantfeedback');
 }
+
 public function sendFeedbackRequestEmailTo($email){
 		Mail::send('email.ratingrequest',$data, function($message) use ($email){
 		$message->to($email)->subject('Will You Rate Your Experience At J3Foods?');
