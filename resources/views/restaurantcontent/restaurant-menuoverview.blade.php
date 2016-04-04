@@ -94,10 +94,6 @@ J3 Foods - Online Food Ordering
           <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
         </p>
 
-        <p>
-          <span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
-        </p>
-
       </div>
 
 

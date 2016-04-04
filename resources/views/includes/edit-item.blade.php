@@ -10,13 +10,13 @@
         <div >
           <label class="list-group-item-heading">Category</label>
           <select class="form-control" name="category">
-          @foreach ($restaurant->categories as $category)
+            @foreach ($restaurant->categories as $category)
             @if($item->category_id == $category->id)
-              <option value="{{$category->id}}" selected >{{$category->category_name}}</option>
+            <option value="{{$category->id}}" selected >{{$category->category_name}}</option>
             @else
-              <option value="{{$category->id}}">{{$category->category_name}}</option>
+            <option value="{{$category->id}}">{{$category->category_name}}</option>
             @endif
-          @endforeach
+            @endforeach
           </select>
           <label class="list-group-item-heading">Item Name</label>
           <input type="text" class="form-control" name="name" value="{{$item->name}}" >
@@ -25,14 +25,20 @@
           <label class="list-group-item-heading">Image</label>
           <input type="text" class="form-control" name="image" value="{{$item->image}}" >
           <label class="list-group-item-heading">On special?</label>
+          @if($item->spec_id != null)
+          <input type="checkbox" class="form-control" name="is_special" checked >
+          <label class="list-group-item-heading">Special Price</label>
+          <input type="text" class="form-control" name="special_price" value="{{$item->special->spec_price}}">
+          @else
           <input type="checkbox" class="form-control" name="is_special" >
           <label class="list-group-item-heading">Special Price</label>
-          <input type="text" class="form-control" name="special_price">
+          <input type="text" class="form-control" name="special_price" >
+          @endif
         </div>
       </div>
       <div class="modal-footer">
        <button type='submit' class="btn btn-primary"/>Save Changes</button>
-    </form>
-  </div>
-</div>
+     </form>
+   </div>
+ </div>
 </div>
