@@ -9,6 +9,8 @@ use App\Restaurant;
 use App\Customer;
 use App\User;
 use App\Hours;
+use App\Item;
+use App\Category;
 use DB;
 use Validator;
 
@@ -94,6 +96,7 @@ class RestaurantController extends Controller
     return view('restaurantcontent.restaurant-sethours');
   }
 
+
   public function storehours(Request $request){
     if(\Auth::check()) {
       $id = \Auth::user()->id;
@@ -115,6 +118,46 @@ class RestaurantController extends Controller
     $updateHours->save();
   }
 
+  public function addcategory(Request $request){
+
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+
+      $newCategory = new Category;
+      $newCategory->category_name = $request->category;
+      $newCategory->rest_id = $id;
+      $newCategory->save();
+      return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+  }
+
+  public function additemtomenu(Request $request){
+
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+
+      $newItem = new Item;
+      $newItem->price = $request->price;
+      $newItem->name = $request->name;
+      $newItem->image = $request->image;
+      $newItem->rest_id = $id;
+      $newItem->category_id = $request->category;
+      $newItem->save();
+      return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+  }
+
+  public function showrestaurantmoverview(){
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+    $restaurantInfo = Restaurant::where('id',$id)->first();
+    $restaurant = Restaurant::where('id',$id)->first();
+          return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo'));
+  }
+
   public function restaurantlogin(Request $request){
         return view('restaurantcontent.restaurant-login');
   }
@@ -128,15 +171,21 @@ class RestaurantController extends Controller
   }
 
   public function showrestaurantmedit(){
+
           return view('restaurantcontent.restaurant-menuedit');
   }
 
-  public function showrestaurantmoverview(){
-          return view('restaurantcontent.restaurant-menuoverview');
-  }
+
 
   public function showrestaurantoverview(){
-          return view('restaurantcontent.restaurant-overview');
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+
+    $restaurant = Restaurant::where('id',$id)->first();
+
+
+    return view('restaurantcontent.restaurant-overview',compact('restaurant'));
   }
 
   public function showrestaurantprofile(){
