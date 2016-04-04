@@ -69,7 +69,7 @@ J3 Foods - Online Food Ordering
   <div id="restaurant-hdrcontainer" >
     <div class="row">
       <div id="rhdr-left" class="col-sm-3">
-        <img src="https://placehold.it/300x150" />
+        <img src="{{$restaurantInfo->image}}" />
       </div>
       <div id="rhdr-center" class="col-sm-6 text-center">
         <div id="avgrating">
@@ -123,7 +123,7 @@ J3 Foods - Online Food Ordering
     <div class="menu-item" data-itemid="{{$item->item_id}}">
       <img src="{{$item->image}}"/>
       <h3 class="name">{{$item->name}} 
-      <a class="btn btn-primary " href="{{ route('deleteitem' , ['item' => $item->item_id] ) }}"> 
+      <a class="btn btn-danger " href="{{ route('deleteitem' , ['item' => $item->item_id] ) }}"> 
         <span class="glyphicon glyphicon-remove"></span>
       </a> 
       <a class="btn btn-primary " data-toggle="modal" data-target="#edit-subscreen{{$item->item_id}}"> <span class="glyphicon glyphicon-edit"></span></a>

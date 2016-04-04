@@ -11,7 +11,6 @@ J3 Foods - Online Food Ordering
 @section('content')
 
 {{-- */$userfavs = Auth::user()->favourites;/* --}}
-
 <div id="customer-overview-container" class="container ">
   <div class="row ">
 
@@ -33,9 +32,9 @@ J3 Foods - Online Food Ordering
             <div class="col-sm-3 text-center">
               <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
                @if($rest->is_open == 1 )
-               <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+               <img class="img-responsive" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
                @else
-               <img style="opacity: 0.4;"class="img-responsive" src="http://placehold.it/700x400" alt="">
+               <img style="opacity: 0.4;" class="img-responsive" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
                @endif
              </a>
              <h5>

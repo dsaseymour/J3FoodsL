@@ -58,6 +58,7 @@ class RestaurantController extends Controller
       $updateRestaurant->city = $request->city;
       $updateRestaurant->postalcode = $request->postalcode;
       $updateRestaurant->phoneno = $request->phoneno;
+      $updateRestaurant->image = $request->image;
       $updateRestaurant->save();
     }
 
