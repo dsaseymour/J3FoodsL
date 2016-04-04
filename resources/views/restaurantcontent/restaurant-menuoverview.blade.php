@@ -8,58 +8,58 @@ J3 Foods - Online Food Ordering
 @endsection
 
 @section("styles")
-  <style>
-    .menu-items {
-      display: block;
-    }
+<style>
+  .menu-items {
+    display: block;
+  }
 
-    .menu-item {
-      position: relative;
-      display: inline-block;
-    }
+  .menu-item {
+    position: relative;
+    display: inline-block;
+  }
 
-    .menu-item:hover {
-      cursor: pointer;
-    }
+  .menu-item:hover {
+    cursor: pointer;
+  }
   
-    .menu-item img {
-      width: 250px;
-      height: 150px;
-    }
-    
-    .menu-item .name {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      color: white;
-      background: rgb(75, 75, 75);
-      padding: 4px;
-    }
-    
-    .menu-item .price {
-      margin-top: 0px;
-      color: white;
-      background: rgb(120, 120, 120);
-      padding: 4px;
-    }
+  .menu-item img {
+    width: 250px;
+    height: 150px;
+  }
 
-    .menu-category {
-      display: block;
-    }
+  .menu-item .name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: white;
+    background: rgb(75, 75, 75);
+    padding: 4px;
+  }
 
-    .old-price {
-      text-decoration: line-through;
-      color: rgb(180, 180, 180);
-    }
+  .menu-item .price {
+    margin-top: 0px;
+    color: white;
+    background: rgb(120, 120, 120);
+    padding: 4px;
+  }
 
-    .new-price {
-      padding-left: 8px;
-    }
+  .menu-category {
+    display: block;
+  }
 
-    #sort-by {
-      display: inline-block;
-      width: auto;
-    }
-  </style>
+  .old-price {
+    text-decoration: line-through;
+    color: rgb(180, 180, 180);
+  }
+
+  .new-price {
+    padding-left: 8px;
+  }
+
+  #sort-by {
+    display: inline-block;
+    width: auto;
+  }
+</style>
 @endsection
 @section('content')
 
@@ -94,10 +94,6 @@ J3 Foods - Online Food Ordering
           <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
         </p>
 
-        <p>
-          <span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
-        </p>
-
       </div>
 
 
@@ -120,24 +116,35 @@ J3 Foods - Online Food Ordering
 </div>
 
 @foreach($restaurant->categories as $category)
-      <div class="menu-category">
-        <h1>{{$category->category_name}}</h1>
-        <div class="menu-items">
-        @foreach ($category->items as $item)
-          <div class="menu-item" data-itemid="{{$item->item_id}}">
-            <img src="{{$item->image}}"/>
-            <h3 class="name">{{$item->name}}</h3>
-            @if($item->spec_id != NULL)
-              <h4 class="price"><span class="old-price">${{$item->price}}</span><span class="new-price">${{$item->special->spec_price}}</span></h4>
-            @else
-              <h4 class="price">${{$item->price}}</h4>
-            @endif
-          </div>
-        @endforeach
-        </div>
+<div class="menu-category">
+  <h1>{{$category->category_name}}</h1>
+  <div class="menu-items">
+    @foreach ($category->items as $item)
+    <div class="menu-item" data-itemid="{{$item->item_id}}">
+      <img src="{{$item->image}}"/>
+      <h3 class="name">{{$item->name}} 
+      <a class="btn btn-primary " href="{{ route('deleteitem' , ['item' => $item->item_id] ) }}"> 
+        <span class="glyphicon glyphicon-remove"></span>
+      </a> 
+      <a class="btn btn-primary " data-toggle="modal" data-target="#edit-subscreen{{$item->item_id}}"> <span class="glyphicon glyphicon-edit"></span></a>
+      <div id="edit-subscreen{{$item->item_id}}" class="modal fade" role="dialog">
+        @include('includes.edit-item',compact('restaurant'))
       </div>
-      <hr/>
+      </h3>
+      @if($item->spec_id != NULL)
+      <h4 class="price"><span class="old-price">${{$item->price}}
+        </span><span class="new-price">${{$item->special->spec_price}}</span>
+      </h4>
+      @else
+      <h4 class="price">${{$item->price}}</h4>
+      @endif
+
+    </div>
     @endforeach
+  </div>
+</div>
+<hr/>
+@endforeach
 
 
 

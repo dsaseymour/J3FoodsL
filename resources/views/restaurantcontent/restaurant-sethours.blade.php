@@ -49,6 +49,7 @@ J3 Foods - Online Food Ordering
                                     <input name="mon" value="mon" type="hidden"/>
                                  </td>
                                  <td>
+                                    <input name="mon_open" type="hidden" value="0"/>
                                     <input name="mon_open" type="checkbox" value="1" class="form-control" id="ghours-misclosed" />
                                  </td>
                                  <td class="form-inline">
@@ -73,10 +74,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Tuesday
+                                    <input name="tue" value="tue" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="tue" type="checkbox" class="form-control" id="ghours-tisclosed" />
+                                    <input name="tue_open" type="hidden" value="0"/>
+                                    <input name="tue_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="tue_open_time" class="form-control">
@@ -100,10 +103,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Wednesday
+                                    <input name="wed" value="wed" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="wed" type="checkbox" class="form-control" id="ghours-wisclosed" />
+                                    <input name="wed_open" type="hidden" value="0"/>
+                                    <input name="wed_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="wed_open_time" class="form-control">
@@ -127,10 +132,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Thursday
+                                    <input name="thur" value="thur" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="thur" type="checkbox" class="form-control" id="ghours-risclosed" />
+                                    <input name="thur_open" type="hidden" value="0"/>
+                                    <input name="thur_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="thur_open_time" class="form-control">
@@ -153,10 +160,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Friday
+                                    <input name="fri" value="fri" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="fri" type="checkbox" class="form-control" id="ghours-fisclosed" />
+                                    <input name="fri_open" type="hidden" value="0"/>
+                                    <input name="fri_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="fri_open_time" class="form-control">
@@ -180,10 +189,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Saturday
+                                    <input name="sat" value="sat" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="sat" type="checkbox" class="form-control" id="ghours-satisclosed" />
+                                    <input name="sat_open" type="hidden" value="0"/>
+                                    <input name="sat_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="sat_open_time" class="form-control">
@@ -207,10 +218,12 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Sunday
+                                    <input name="sun" value="sun" type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
-                                    <input name="sun" type="checkbox" class="form-control" id="ghours-sunisclosed" />
+                                    <input name="sun_open" type="hidden" value="0"/>
+                                    <input name="sun_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
                                  </td>
                                  <td class="form-inline">
                                     <select name="sun_open_time" class="form-control">
