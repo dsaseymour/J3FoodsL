@@ -119,9 +119,9 @@ class AuthController extends Controller
 
 
 			if($newresults== '1'){
-			return redirect()->action('RestaurantController@showrestaurantoverview');
+			   return redirect()->action('RestaurantController@showrestaurantoverview');
 			}else{
-			return redirect()->intended($this->redirectPath());
+			   return redirect()->intended($this->redirectPath());
 			}
     }
 
@@ -172,7 +172,7 @@ class AuthController extends Controller
 
         return User::create([
             'name' => $data['name'],
-			      'isRestaurant' => $data['isRestaurant'],
+			'isRestaurant' => $data['isRestaurant'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code'=>($this->sendEmailConfirmationTo($data['email'])),

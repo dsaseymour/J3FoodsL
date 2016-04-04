@@ -69,7 +69,7 @@ J3 Foods - Online Food Ordering
 	<div id="restaurant-hdrcontainer" >
 		<div class="row">
 			<div id="rhdr-left" class="col-sm-3">
-				<img src="../../images/logoplaceholder.PNG" />
+				<img src="{{$restaurantInfo->image}}" />
 			</div>
 			<div id="rhdr-center" class="col-sm-6 text-center">
 				<div id="avgrating">
@@ -94,10 +94,7 @@ J3 Foods - Online Food Ordering
 				<span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
 				</p>
 
-				<p>
-				<span class="glyphicon glyphicon-envelope"></span> {{$restaurant->email}}
-				</p>
-
+			
 			</div>
 			</div>
 	</div>
