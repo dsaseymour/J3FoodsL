@@ -27,16 +27,15 @@ J3 Foods - Online Food Ordering
               <td>Price</td>
             </tr>
             {{-- */$totalprice=0;/* --}}
-            @foreach($order as $nextitem)
-            {{-- */$itemname = DB::table('items')->where('item_id',$nextitem->item_id)->first();/* --}}
-            {{-- */$option = DB::table('options')->where('item_id',$nextitem->item_id)->where('id',$nextitem->option_id)->first();/* --}}
-            {{-- */$optionselection = DB::table('option_choices')->where('option_id',$nextitem->option_id)->where('choice_id',$nextitem->choice_id)->first();/* --}}
-            {{-- */$totalprice = $totalprice + (($nextitem->quantity)*($itemname->price));/* --}}
+            @foreach($order as $currentitem)
+            {{-- */$option = $currentitem->item->option->name;/* --}}
+            {{-- */$optionselection = $currentitem->item->option->selection->name;/* --}}
+            {{-- */$totalprice = $totalprice + (($currentitem->quantity)*($currentitem->item->price));/* --}}
             <tr>
-              <td>{{$nextitem->quantity}}</td>
-              <td>{{$itemname->name}}</td>
-              <td>{{$option->name.": ".$optionselection->name}}</td>
-              <td>${{$itemname->price}}</td>
+              <td>{{$currentitem->quantity}}</td>
+              <td>{{$currentitem->item->name}}</td>
+              <td>{{$option.": ".$optionselection}}</td>
+              <td>${{$currentitem->item->price}}</td>
             </tr>
             @endforeach
           </tbody>
