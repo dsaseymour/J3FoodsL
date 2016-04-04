@@ -108,7 +108,6 @@ J3 Foods - Online Food Ordering
   <div class="form-group">
     <label for="sort-by">Sort by</label>
     <select id="sort-by" class="form-control">
-      <option value="category">Categories</option>
       <option value="alpha-asc">Alphabetical A-Z</option>
       <option value="alpha-des">Alphabetical Z-A</option>
       <option value="price-asc">Price low-high</option>
@@ -134,19 +133,16 @@ J3 Foods - Online Food Ordering
     $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "category";
   ?>
 
-  @if($sortMethod == "alpha-asc" || $sortMethod == "alpha-des" || $sortMethod == "price-asc" || $sortMethod == "price-des")
-    <div class="menu-items">
+  @foreach($restaurant->categories as $category)
+    <div class="menu-category">
+      <h1>{{$category->category_name}}</h1>
+      <div class="menu-items">
+
       <?php
-        //If not sorting by category, get all items on the menu and sort them appropriately
-        $items = $restaurant->menu;
+        //Get all items in category and sort them appropriately
+        $items = $category->items;
 
-        if($sortMethod == "alpha-asc"){
-          //Sort by ascending alphabetical order
-          $items = $items->sortBy(function($item){
-            return $item->name;
-          });
-
-        } elseif ($sortMethod == "alpha-des") {
+        if ($sortMethod == "alpha-des") {
           //Sort by descending alphabetical order
           $items = $items->sortBy(function($item){
             return $item->name;
@@ -172,6 +168,12 @@ J3 Foods - Online Food Ordering
             }
           })->reverse();
 
+        } else{
+          //Sort by ascending alphabetical order
+          $items = $items->sortBy(function($item){
+            return $item->name;
+          });
+
         }
       ?>
 
@@ -187,29 +189,9 @@ J3 Foods - Online Food Ordering
         </div>
       @endforeach
       </div>
-  @else
-
-    @foreach($restaurant->categories as $category)
-      <div class="menu-category">
-        <h1>{{$category->category_name}}</h1>
-        <div class="menu-items">
-        @foreach ($category->items as $item)
-          <div class="menu-item" data-itemid="{{$item->item_id}}">
-            <img src="{{$item->image}}"/>
-            <h3 class="name">{{$item->name}}</h3>
-            @if($item->spec_id != NULL)
-              <h4 class="price"><span class="old-price">${{$item->price}}</span><span class="new-price">${{$item->special->spec_price}}</span></h4>
-            @else
-              <h4 class="price">${{$item->price}}</h4>
-            @endif
-          </div>
-        @endforeach
-        </div>
-      </div>
-      <hr/>
-    @endforeach
-
-  @endif
+    </div>
+    <hr/>
+  @endforeach
 
   <!-- Modal -->
   <div id="item-options-modal" class="modal fade" role="dialog">
@@ -252,9 +234,9 @@ J3 Foods - Online Food Ordering
     $(document).ready(function(){
       //Set sort box to correct selection based on URL parameters
       $("#sort-by").val("<?php echo $sortMethod ?>");
-      //If no valid sort was set, default to category
+      //If no valid sort was set, default to ascending alphabetical
       if($("#sort-by").val() == null){
-        $("#sort-by").val("category");
+        $("#sort-by").val("alpha-asc");
       }
 
       //Event handler for changing sort
