@@ -183,6 +183,11 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Restuarant pages
+    Route::get('/closerestaurant/{restaurant}',[
+    'uses'=>'RestaurantController@closerestaurant',
+    'as'=>'closerestaurant',
+    ]);
+
     Route::post('/edititem/{item}',[
     'uses'=>'RestaurantController@edititem',
     'as'=>'edititem',

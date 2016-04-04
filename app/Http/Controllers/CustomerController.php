@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Customer;
 use App\CustomerFavourites;
 use App\User;
+use App\Orders;
 use DB;
 use Validator;
 
@@ -124,7 +125,13 @@ class CustomerController extends Controller
   }
 
   public function showcustomerconfirmation(){
-          return view('customercontent.confirmationpage');
+    if(\Auth::check()) {
+       $user = \Auth::user()->id;
+    }
+    
+    $order = Orders::where('customer_id',$user)->get();
+
+    return view('customercontent.confirmationpage', compact('order'));
   }
 
   public function showcpeditaddress(){

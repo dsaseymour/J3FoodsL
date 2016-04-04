@@ -1,3 +1,10 @@
+<style>
+  .list-group-item-heading {
+    color:black;
+  }
+</style>
+
+
 <div class="modal-dialog modal-lg">
   <!-- Modal content-->
   <div class="modal-content">
@@ -26,13 +33,18 @@
           <input type="text" class="form-control" name="image" value="{{$item->image}}" >
           <label class="list-group-item-heading">On special?</label>
           @if($item->spec_id != null)
-          <input type="checkbox" class="form-control" name="is_special" checked >
-          <label class="list-group-item-heading">Special Price</label>
-          <input type="text" class="form-control" name="special_price" value="{{$item->special->spec_price}}">
+          <input  data-toggle="collapse" data-target="#spec_price" type="checkbox" class="form-control" name="is_special" checked >
+          <div id="spec_price" class ="collapse in">
+            <label class="list-group-item-heading">Special Price</label>
+            <input type="text" class="form-control" name="special_price" value="{{$item->special->spec_price}}">
+          </div>
+          
           @else
-          <input type="checkbox" class="form-control" name="is_special" >
-          <label class="list-group-item-heading">Special Price</label>
-          <input type="text" class="form-control" name="special_price" >
+          <input data-toggle="collapse" data-target="#spec_price" type="checkbox" class="form-control" name="is_special" >
+          <div id="spec_price" class ="collapse">
+            <label class="list-group-item-heading">Special Price</label>
+            <input type="text" class="form-control" name="special_price" >
+          </div>
           @endif
         </div>
       </div>
