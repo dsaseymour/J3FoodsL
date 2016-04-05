@@ -39,15 +39,14 @@ J3 Foods - Online Food Ordering
                     <label for="comment" class="ratings-labels">Comment:</label>
                     <textarea id="rating-comments" rows="5" name="comment"></textarea>
                   </div>
-
                   <input type="hidden" name="restaurant_id" value="{{$rest_id}}" />
+
+                  {{ csrf_field() }}
 
 
               <div class="input-row " >
                 <button type='submit'  class="btn  btn-primary   " />Submit Feedback</button>
               </div>
-
-
                   </form>
             </div>
   </div><!-- container --->

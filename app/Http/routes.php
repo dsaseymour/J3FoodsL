@@ -268,10 +268,18 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'forgotpasswordlink'
     ]);
 
+    Route::post('/createorder',[
+    'uses'=>'CustomerController@createOrder',
+    'as'=>'createorder',
+    ]);
+
+
     Route::get('/test', function()
     {
-        return view('email.ratingrequest');
+      //  return view('email.ratingrequest');
+            return view('debugging');
     });
+
 
 
 

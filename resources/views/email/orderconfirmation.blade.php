@@ -1,4 +1,5 @@
-$order=$event->order;
+
+
 
 <h1>Order Confirmation</h1>
 
@@ -14,9 +15,9 @@ $order->special_instructions
 
 -->
 
+{{$order}}
 
-
-<p>Order #: 42342345</p>
+<p>Order #: </p>
 <p>Name:</p>
 <p>Email:</p>
 <p>Purchase Date:</p>

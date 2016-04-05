@@ -8,8 +8,10 @@ use App\Restaurant;
 use App\Item;
 use App\Http\Requests;
 use App\Customer;
+use App\CustomerRatings;
 use App\CustomerFavourites;
 use App\User;
+use App\Orders;
 use DB;
 use Validator;
 use Event;
@@ -182,7 +184,7 @@ public function addfeedback(Request $request){
 					$id = \Auth::user()->id;
 		 }
 	$currentUser = CustomerRatings::create([
-          'restaurant_id' =>$request->restaurant_id ,//need to add in the restaurant id
+          'restaurant_id' =>$request->restaurant_id ,
           'customer_id' => $id,
           'rating' => $request->rating,
           'comment' => $request->comment,
@@ -196,6 +198,7 @@ public function showfeedbackpage($rest_id){
 
 
 public function createOrder(Request $request){
+	$specialinstructions=NULL;
 if($request->special_instructions!=NULL){
 $specialinstructions=$request->special_instructions;
 }
@@ -206,8 +209,11 @@ $specialinstructions=$request->special_instructions;
 					'quantity' => $request->quantity,
 					'specialinstructions' => $specialinstructions,
       ]);
-	Event::fire(new OrderWasSubmitted($orders));
-  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
+	Event::fire(new OrderWasSubmitted($order));
+			return view('login.forgottenpassword')->with('request',$request);
+
+//  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
+
 }
 
 
