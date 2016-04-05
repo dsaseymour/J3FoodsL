@@ -7,7 +7,6 @@ J3 Foods - Online Food Ordering
 @include('includes.topbar')
 @endsection
 
-
 {{$requestdesc}}
 
 @section('content')

@@ -8,6 +8,8 @@ use App\Restaurant;
 use App\Item;
 use App\Http\Requests;
 use App\Customer;
+use App\Option;
+use App\OptionChoice;
 use App\CustomerRatings;
 use App\CustomerFavourites;
 use App\User;
@@ -227,12 +229,39 @@ $fullorderdescription=DB::table('orders')
 						->where('restaurant_id', '=', '47')
 						->where('customer_id', '=', '7')
 						->get();
-//$fullorderdescription="monkeyface";
 
-			return view('login.forgottenpassword')->with('requestdesc',$fullorderdescription);
+return view('login.forgottenpassword')->with('requestdesc',$this->createOrderSummary($fullorderdescription));
 
+//return view('login.forgottenpassword')->with('requestdesc',$fullorderdescription);
 //  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 
+}
+
+public function createOrderSummary($orderset){
+//item name array
+//option name array
+//choice name array
+//special instructions array
+$itemname_set;
+$optionname_set;
+$choicename_set;
+$specialinstruction_set;
+$i=0;
+
+foreach ($orderset as $order){
+		 $itemname_set[$i]=$order->item_id;
+		 $optionname_set[$i]=$order->option_id;
+		 $choicename_set[$i]=$order->choice_id;
+		 $specialinstruction_set[$i]=$order->special_instructions;
+		 $i++;
+}
+
+for($j = $i-1; $j >= 0; $j--){
+$itemname_set[$j]=(DB::table('items')->where('item_id',$itemname_set[$j])->first())->name;
+$optionname_set[$j]=(DB::table('options')->where('id',$optionname_set[$j])->first())->name;
+$choicename_set[$j]=(DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first())->name;
+}
+return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set]);
 }
 
 
