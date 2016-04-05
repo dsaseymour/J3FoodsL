@@ -207,6 +207,7 @@ public function showfeedbackpage($rest_id){
 
 
 public function createOrder(Request $request){
+	/*
 	$specialinstructions=NULL;
 if($request->special_instructions!=NULL){
 $specialinstructions=$request->special_instructions;
@@ -218,8 +219,17 @@ $specialinstructions=$request->special_instructions;
 					'quantity' => $request->quantity,
 					'specialinstructions' => $specialinstructions,
       ]);
-	Event::fire(new OrderWasSubmitted($order));
-			return view('login.forgottenpassword')->with('request',$request);
+		*/
+//	Event::fire(new OrderWasSubmitted($order));
+
+$fullorderdescription=DB::table('orders')
+            ->where('order_id', '=', '1')
+						->where('restaurant_id', '=', '47')
+						->where('customer_id', '=', '7')
+						->get();
+//$fullorderdescription="monkeyface";
+
+			return view('login.forgottenpassword')->with('requestdesc',$fullorderdescription);
 
 //  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 

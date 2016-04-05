@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
 use Mail;
 use App\Restaurant;
+use App\Orders;
+
 
 class OrderConfirmation
 {

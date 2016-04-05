@@ -12,6 +12,7 @@ class Orders extends Model
         'item_id','restaurant_id', 'customer_id', 'quantity',
     ];
 
+
     public $timestamps = false;
 
 }

@@ -6,7 +6,9 @@ J3 Foods - Online Food Ordering
 @section('navigation')
 @include('includes.topbar')
 @endsection
-{{$request->item_id}}
+
+
+{{$requestdesc}}
 
 @section('content')
 <section id="forgotpassword-section">
