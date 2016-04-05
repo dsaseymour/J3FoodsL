@@ -1,5 +1,8 @@
 <form action="{{route('createorder')}}" method="post" role="form">
       <div class="form-group">
+            <label class="sr-only" for="order_id">Order Id:</label>
+            <input type="text" class="form-control" name="order_id" id="order_id" placeholder="Order Id"/>
+
         <label class="sr-only" for="item_id">Item Id:</label>
         <input type="text" class="form-control" name="item_id" id="item_id" placeholder="item_id"/>
 
