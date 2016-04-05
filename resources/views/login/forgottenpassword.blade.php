@@ -8,6 +8,16 @@ J3 Foods - Online Food Ordering
 @endsection
 
 @section('content')
+
+<!--one record below-->
+{{$requestdesc['itemname_set'][1]}}
+{{$requestdesc['optionname_set'][1]}}
+{{$requestdesc['choicename_set'][1]}}
+{{$requestdesc['specialinstruction_set'][1]}}
+
+
+
+
 <section id="forgotpassword-section">
 <div class="container text-center" id="forgotpassword-container">
     <div class="row " id='forgotpassword-block'>

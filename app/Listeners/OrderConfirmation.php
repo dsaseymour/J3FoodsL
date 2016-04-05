@@ -9,6 +9,12 @@ use App\User;
 use Mail;
 use App\Restaurant;
 use App\Orders;
+use App\Item;
+use App\Customer;
+use App\Option;
+use App\OptionChoice;
+use DB;
+
 
 
 class OrderConfirmation
@@ -35,7 +41,7 @@ class OrderConfirmation
         $user = User::find($orderparam->customer_id);
         $restaurant=Restaurant::find($orderparam->restaurant_id);
 //        $items= Items::find();
-        $fullorderdescription=createOrderSummary($orderparam);
+        $fullorderdescription=$this->createOrderSummary($orderparam);
 
         Mail::send('email.orderconfirmation',['order'=>$orderparam,'user'=>$user,'restaurant'=>$restaurant,'fullorderdescription'=>$fullorderdescription], function($message) use ($event){
         $order=$event->order;
@@ -71,10 +77,6 @@ class OrderConfirmation
             			->where('customer_id', '=', $order->customer_id)
             			->get();
 
-                        //item name array
-                        //option name array
-                        //choice name array
-                        //special instructions array
                         $itemname_set;
                         $optionname_set;
                         $choicename_set;
