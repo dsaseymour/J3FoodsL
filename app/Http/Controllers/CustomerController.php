@@ -257,9 +257,15 @@ foreach ($orderset as $order){
 }
 
 for($j = $i-1; $j >= 0; $j--){
-$itemname_set[$j]=(DB::table('items')->where('item_id',$itemname_set[$j])->first())->name;
-$optionname_set[$j]=(DB::table('options')->where('id',$optionname_set[$j])->first())->name;
-$choicename_set[$j]=(DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first())->name;
+$itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->first();
+if($itemsobject){$itemname_set[$j]=$itemsobject->name;}else{$itemname_set[$j]=NULL;}
+
+
+$optionsobject=DB::table('options')->where('id',$optionname_set[$j])->first();
+if($optionsobject){$optionname_set[$j]=$optionsobject->name;}else{$optionname_set[$j]=NULL;}
+
+$choiceobject=DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first();
+if($choiceobject){$choicename_set[$j]=$choiceobject->name;}else{$choicename_set[$j]=NULL;}
 }
 return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set]);
 }
