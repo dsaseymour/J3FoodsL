@@ -9,7 +9,11 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
-
+@if(session('status'))
+                  <div class="alert alert-info">
+                      {{ session('status') }}
+                  </div>
+              @endif
 {{-- */$userfavs = Auth::user()->favourites;/* --}}
 
 <div id="customer-overview-container" class="container ">
@@ -27,7 +31,7 @@ J3 Foods - Online Food Ordering
 
       <div class="panel-body">
         <h3>For More Information Click on a Restaurant Below</h3>
-			
+
 			<div class="row">
 				@foreach ($restaurants as $rest)
                   <div class="col-sm-3 text-center">
@@ -42,14 +46,14 @@ J3 Foods - Online Food Ordering
               <span class="glyphicon glyphicon-star"></span>
               @else
               <a class= "btn btn-default" href="{{ route('addtofavourites', ['restaurant' => $rest->id] ) }}">
-              <span class="glyphicon glyphicon-star-empty"></span> 
+              <span class="glyphicon glyphicon-star-empty"></span>
               @endif
               </a>
                       </h5>
                   </div>
 				@endforeach
             </div>
-			
+
     </div>
   </div>
 </div>
