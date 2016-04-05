@@ -232,7 +232,6 @@ $fullorderdescription=DB::table('orders')
 
 return view('login.forgottenpassword')->with('requestdesc',$this->createOrderSummary($fullorderdescription));
 
-//return view('login.forgottenpassword')->with('requestdesc',$fullorderdescription);
 //  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 
 }
@@ -259,7 +258,6 @@ foreach ($orderset as $order){
 for($j = $i-1; $j >= 0; $j--){
 $itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->first();
 if($itemsobject){$itemname_set[$j]=$itemsobject->name;}else{$itemname_set[$j]=NULL;}
-
 
 $optionsobject=DB::table('options')->where('id',$optionname_set[$j])->first();
 if($optionsobject){$optionname_set[$j]=$optionsobject->name;}else{$optionname_set[$j]=NULL;}

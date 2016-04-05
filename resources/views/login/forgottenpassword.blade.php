@@ -7,8 +7,6 @@ J3 Foods - Online Food Ordering
 @include('includes.topbar')
 @endsection
 
-{{var_dump($requestdesc)}}
-
 @section('content')
 <section id="forgotpassword-section">
 <div class="container text-center" id="forgotpassword-container">
