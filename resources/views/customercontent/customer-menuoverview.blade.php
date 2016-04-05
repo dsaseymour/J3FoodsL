@@ -55,9 +55,13 @@ J3 Foods - Online Food Ordering
       padding-left: 8px;
     }
 
-    #sort-by {
+    #filters .form-group {
       display: inline-block;
       width: auto;
+    }
+
+    #filters .form-group:first-child {
+      padding-right: 16px;
     }
 	</style>
 @endsection
@@ -104,21 +108,72 @@ J3 Foods - Online Food Ordering
 
 
 
+  <div id="filters">
+    <div class="form-group">
+      <label for="sort-by">Sort by</label>
+      <select id="sort-by" class="form-control">
+        <option value="alpha-asc">Alphabetical A-Z</option>
+        <option value="alpha-des">Alphabetical Z-A</option>
+        <option value="price-asc">Price low-high</option>
+        <option value="price-des">Price high-low</option>
+      </select>
+    </div>
 
-  <div class="form-group">
-    <label for="sort-by">Sort by</label>
-    <select id="sort-by" class="form-control">
-      <option value="alpha-asc">Alphabetical A-Z</option>
-      <option value="alpha-des">Alphabetical Z-A</option>
-      <option value="price-asc">Price low-high</option>
-      <option value="price-des">Price high-low</option>
-    </select>
+    <div class="form-group">
+      <label for="item-search">Search menu</label>
+      <input id="item-search" type="text" class="form-control"/>
+    </div>
+    <button id="item-search-btn" class="btn btn-primary">
+      <span class="glyphicon glyphicon-search"></span>     
+    </button>
   </div>
+
+  <?php
+    $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "alpha-asc";
+    $searchQuery = isset($_GET["search"]) ? $_GET["search"] : "";
+  ?>
 
   <div class="menu-category">
     <h1>Specials</h1>
-    <div class="menu-items">
-    @foreach ($restaurant->specials as $special)
+    <div class="menu-specials">
+    <?php
+      //Get all specials for the restaurant and sort them appropriately
+      $specials = $restaurant->specials;
+
+      if($searchQuery != ""){
+        $specials = $specials->filter(function($special) use ($searchQuery){
+          $pos = strpos(strtolower($special->item->name), strtolower($searchQuery));
+          return $pos !== false;
+        });
+      }
+
+      if ($sortMethod == "alpha-des") {
+        //Sort by descending alphabetical order
+        $specials = $specials->sortBy(function($special){
+          return $special->item->name;
+        })->reverse();
+
+      } elseif ($sortMethod == "price-asc") {
+        //Sort by ascending price order, using special prices if appropriate
+        $specials = $specials->sortBy(function($special){
+          return $special->price;
+        });
+
+      } elseif ($sortMethod == "price-des") {
+        //Sort by descending price order, using special prices if appropriate
+        $specials = $specials->sortBy(function($special){
+          return $special->price;
+        })->reverse();
+
+      } else{
+        //Sort by ascending alphabetical order
+        $specials = $specials->sortBy(function($special){
+          return $special->item->name;
+        });
+
+      }
+    ?>
+    @foreach ($specials as $special)
       <div class="menu-item" data-itemid="{{$special->item->item_id}}">
         <img src="{{$special->item->image}}"/>
         <h3 class="name">{{$special->item->name}}</h3>
@@ -129,10 +184,6 @@ J3 Foods - Online Food Ordering
   </div>
   <hr/>
 
-  <?php
-    $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "category";
-  ?>
-
   @foreach($restaurant->categories as $category)
     <div class="menu-category">
       <h1>{{$category->category_name}}</h1>
@@ -141,6 +192,13 @@ J3 Foods - Online Food Ordering
       <?php
         //Get all items in category and sort them appropriately
         $items = $category->items;
+
+        if($searchQuery != ""){
+          $items = $items->filter(function($item) use ($searchQuery){
+            $pos = strpos(strtolower($item->name), strtolower($searchQuery));
+            return $pos !== false;
+          });
+        }
 
         if ($sortMethod == "alpha-des") {
           //Sort by descending alphabetical order
@@ -233,10 +291,13 @@ J3 Foods - Online Food Ordering
     //On page load
     $(document).ready(function(){
       //Set sort box to correct selection based on URL parameters
-      $("#sort-by").val("<?php echo $sortMethod ?>");
-      //If no valid sort was set, default to ascending alphabetical
-      if($("#sort-by").val() == null){
-        $("#sort-by").val("alpha-asc");
+      if(getUrlParameter("sort") != undefined){
+        $("#sort-by").val(getUrlParameter("sort"));
+      }
+
+      //Set item search box to contain current search query
+      if(getUrlParameter("search") != undefined){
+        $("#item-search").val(decodeURIComponent(getUrlParameter("search")));
       }
 
       //Event handler for changing sort
@@ -244,10 +305,16 @@ J3 Foods - Online Food Ordering
         //Get current URL, without query string
         currentUrl = window.location.href.split("?")[0];
 
+        searchQuery = "";
+        if(getUrlParameter("search") != undefined){
+          searchQuery = "&search=" + getUrlParameter("search");
+        }
+
         //Redirect to this page with appropriate sort query
-        window.location.replace(currentUrl + "?sort=" + e.target.value);
+        window.location.replace(currentUrl + "?sort=" + e.target.value + searchQuery);
       });
 
+      //Open options window on clicking an item
       $(".menu-item").click(function(e){
         itemid = $(e.target).parent(".menu-item").data("itemid");
         $.get('/options/'+itemid, function(response){
@@ -257,6 +324,39 @@ J3 Foods - Online Food Ordering
           $("#item-options-modal").modal("show");
         });
       });
-    })
+
+      //On enter key press in item search
+      $("#item-search").on("keypress", function(e){
+        if(e.which == 13){
+          searchMenu();
+        }
+      });
+
+      //On click of item search button
+      $("#item-search-btn").click(function(e){
+        searchMenu();
+      });
+    });
+
+    function searchMenu(){
+      currentUrl = window.location.href.split("?")[0];
+      queryString = "";
+      searchQuery = $("#item-search").val();
+      if(searchQuery != ""){
+        queryString = "?";
+        if(getUrlParameter("sort") != undefined){
+          queryString += "sort=" + getUrlParameter("sort") + "&";
+        }
+
+        queryString += "search=" + encodeURIComponent(searchQuery);
+
+        window.location.replace(currentUrl + queryString);
+      } else if(getUrlParameter("sort") != undefined){
+        queryString += "?sort=" + getUrlParameter("sort");
+      }
+      window.location.replace(currentUrl + queryString);
+    }
+
+    @include('includes.js-get-url-params');
   </script>
 @endsection
