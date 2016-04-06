@@ -129,9 +129,30 @@ class CustomerController extends Controller
        $user = \Auth::user()->id;
     }
     
-    $order = Orders::where('customer_id',$user)->get();
+    $order = Orders::where('customer_id',$user)->where('completed','0')->get();
 
     return view('customercontent.confirmationpage', compact('order'));
+  }
+
+  public function submitOrder(){
+    if(\Auth::check()) {
+       $user = \Auth::user()->id;
+    }
+
+    $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
+
+
+
+    foreach($orders as $items){
+      $items->submit_time=Date('Y-m-d H:i:s');
+      $items->completed='1';
+      $items->quantity=$items->quantity;
+      $items->special_instructions=$items->special_instructions;
+      $items->save();
+    }
+
+    //return redirect()->action('CustomerController@showcustomerconfirmation');
+
   }
 
   public function showcpeditaddress(){
@@ -180,8 +201,6 @@ class CustomerController extends Controller
 
     return redirect()->action('CustomerController@showcustomeroverview');
   }
-
-
 
 
 }

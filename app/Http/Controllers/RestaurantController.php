@@ -12,6 +12,7 @@ use App\Hours;
 use App\Item;
 use App\Category;
 use App\Special;
+use App\Orders;
 use DB;
 use Validator;
 
@@ -290,8 +291,10 @@ class RestaurantController extends Controller
 
     $restaurant = Restaurant::where('id',$id)->first();
 
+    $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->get();
+    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->groupBy('order_id')->get();
 
-    return view('restaurantcontent.restaurant-overview',compact('restaurant'));
+    return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
   }
 
   public function showrestaurantprofile(){

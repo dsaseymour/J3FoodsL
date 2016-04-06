@@ -13,6 +13,7 @@ J3 Foods - Online Food Ordering
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
+  @if($order->first())
   <h1>Confirmation Page</h1>
   <div class="list-group">
     <div class="list-group-item ">
@@ -27,9 +28,23 @@ J3 Foods - Online Food Ordering
               <td>Price</td>
             </tr>
             {{-- */$totalprice=0;/* --}}
+            {{-- */$orderid = $order[0]->order_id;/* --}}
             @foreach($order as $currentitem)
-            {{-- */$option = $currentitem->item->option->name;/* --}}
-            {{-- */$optionselection = $currentitem->item->option->selection->name;/* --}}
+              @if($currentitem->option_id)
+                {{-- */$option = $currentitem->item->option->name;/* --}}
+                @if($currentitem->choice_id)
+                  @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first())
+                    {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first()->name;/* --}}
+                  @else
+                    {{-- */$optionselection = 'No Selection';/* --}}
+                  @endif
+                @else
+                  {{-- */$optionselection = 'No Selection';/* --}}
+                @endif
+              @else
+                {{-- */$option = 'No Additional Options';/* --}}
+                {{-- */$optionselection = 'No Selection';/* --}}
+              @endif
             {{-- */$totalprice = $totalprice + (($currentitem->quantity)*($currentitem->item->price));/* --}}
             <tr>
               <td>{{$currentitem->quantity}}</td>
@@ -74,9 +89,14 @@ J3 Foods - Online Food Ordering
       </div><!-- End table container -->
     </div>
     <div  class="list-group-item text-right" id="confirm-page-btn">
-    <div class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">Order</div>
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">Order
+    <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
     </div>
   </div>
+  @else
+  <h4>Confirmation Page</h4>
+  <h4>You have no items in your cart</h4>
+  @endif
 </div>
 </div>
 </div> <!-- container-->
@@ -100,4 +120,15 @@ J3 Foods - Online Food Ordering
   </div>
 </div>
 
+<script>
+  $(document).ready(function() {
+    $(".btn-lg").click(function() {
+      $request = $.ajax({
+        url: "{{ route('submitorderlink') }}",
+        type: "get",
+        data: {}
+      });
+    });
+  });
+</script>
 @endsection

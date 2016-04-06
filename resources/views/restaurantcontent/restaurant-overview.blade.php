@@ -39,59 +39,30 @@ J3 Foods - Online Food Ordering
                     <thead>
                       <tr>
                         <th>Time</th>
+                        <th>Order Number</th>
                         <th>Order Info</th>
                         <th>Pickup or Delivery</th>
                       </tr>
                     </thead>
                     <tbody>
-
+                    @foreach($uniqueorders as $currentorder)
                       <tr>
-                        <td>Chicken</td>
+                        <td>{{date('D, M j Y H:i:s', strtotime($currentorder->submit_time))}}</td>
+                        <td>{{$currentorder->order_id}}</td>
                         <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
+                          <p>{{$currentorder->user->name}}</p>
+                          <p>{{$currentorder->user->address}}</p>
                           <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
+                          <p>{{$currentorder->customer->phoneno}}</p>
                         </td>
 
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
-                          <div data-toggle="tooltip" title="Click to show Items of Order"  >
-                            Delivery
-                          </div>
-                        </td>
-
-                      </tr>
-
-                      <tr>
-                        <td>Chicken</td>
-                        <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
-                          <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
-                        </td>
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
+                        <td  id="specifics" data-toggle="collapse" data-target="#orderdropdown" data-value="{{$currentorder->order_id}}">
                           <div data-toggle="tooltip" title="Click to show Items of Order"  >
                             Delivery
                           </div>
                         </td>
                       </tr>
-
-                      <tr>
-                        <td>Chicken</td>
-                        <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
-                          <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
-                        </td>
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
-                          <div data-toggle="tooltip" title="Click to show Items of Order"  >
-                            Delivery
-                          </div>
-                        </td>
-                      </tr>
-
+                      @endforeach()
                     </tbody>
                   </table>
                 </div><!-- End table container -->
@@ -104,16 +75,21 @@ J3 Foods - Online Food Ordering
     </div>
   </div>
 </section>
-@include('includes.orderdropdown')
 
+{{-- */$id = 1;/* --}}
+@include('includes.orderdropdown')
 @endsection
 
 @section('javascript')
 <script>
-  $(function() {
+  $(document).ready(function() {
     $("#restaurantnavlink-orders").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
-
+    $("#specifics").click(function() {
+      $id.val($(this).attr('data_value'));   
+      $("#orderdropdown").load('restaurantoverviewlink');
+      var_dump($id);
+    });
   });
 </script>
 @endsection

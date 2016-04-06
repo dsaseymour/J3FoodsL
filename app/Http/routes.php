@@ -157,6 +157,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'customerconfirmationlink'
     ]);
 
+    Route::get('/submitorder',[
+    'uses'=>'CustomerController@submitOrder',
+    'as'=>'submitorderlink'
+    ]);
+
     Route::get('/cpeditaddress',[
     'uses'=>'CustomerController@showcpeditaddress',
     'as'=>'cpeditaddresslink'
