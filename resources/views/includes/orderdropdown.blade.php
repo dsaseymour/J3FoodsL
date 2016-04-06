@@ -1,8 +1,7 @@
-<div id="orderdropdown" class="collapse width">
-
+<div id="orderdropdown{{$id}}" class="collapse width">
     <div class="row"> <!-- start of row -->
       @foreach($completeorders as $currentitem)
-      @if($currentitem->item_id==$id)
+      @if($currentitem->order_id==$id)
       <div class="list-group">
         <div class="col-sm-3 menu-items">
             <a href="#" class="list-group-item">
@@ -13,8 +12,7 @@
             </a>
         </div>
       </div>
-    @endif
-    @endforeach
+      @endif
+      @endforeach
     </div> <!-- end of row -->
-
 </div><!-- main div -->

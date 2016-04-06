@@ -291,8 +291,8 @@ class RestaurantController extends Controller
 
     $restaurant = Restaurant::where('id',$id)->first();
 
-    $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->get();
-    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->groupBy('order_id')->get();
+    $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
+    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->get();
 
     return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
   }

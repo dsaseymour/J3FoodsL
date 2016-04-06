@@ -35,6 +35,7 @@ J3 Foods - Online Food Ordering
             <div class="row">
               <div class="col-sm-12 text-center">
                 <div class="table-responsive"><!-- Start table container -->
+                  @if($uniqueorders->first())
                   <table class="table table-condensed table-hover table-bordered">
                     <thead>
                       <tr>
@@ -55,16 +56,20 @@ J3 Foods - Online Food Ordering
                           <p>St. Catharines ON</p>
                           <p>{{$currentorder->customer->phoneno}}</p>
                         </td>
-
-                        <td  id="specifics" data-toggle="collapse" data-target="#orderdropdown" data-value="{{$currentorder->order_id}}">
+                        {{-- */$id = $currentorder->order_id;/* --}}
+                        <td data-toggle="collapse" data-target="#orderdropdown{{$id}}" data-value="{{$id}}">
                           <div data-toggle="tooltip" title="Click to show Items of Order"  >
                             Delivery
                           </div>
                         </td>
                       </tr>
+                      @include('includes.orderdropdown')
                       @endforeach()
                     </tbody>
                   </table>
+                  @else
+                  <h4>You currently have no pending orders</h4>
+                  @endif
                 </div><!-- End table container -->
 
               </div> <!--main column -->
@@ -76,8 +81,6 @@ J3 Foods - Online Food Ordering
   </div>
 </section>
 
-{{-- */$id = 1;/* --}}
-@include('includes.orderdropdown')
 @endsection
 
 @section('javascript')
@@ -85,11 +88,6 @@ J3 Foods - Online Food Ordering
   $(document).ready(function() {
     $("#restaurantnavlink-orders").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
-    $("#specifics").click(function() {
-      $id.val($(this).attr('data_value'));   
-      $("#orderdropdown").load('restaurantoverviewlink');
-      var_dump($id);
-    });
   });
 </script>
 @endsection
