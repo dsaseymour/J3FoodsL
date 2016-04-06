@@ -26,6 +26,7 @@ J3 Foods - Online Food Ordering
               <td>Menu Item</td>
               <td>Options</td>
               <td>Price</td>
+              <td>Remove</td>
             </tr>
             {{-- */$totalprice=0;/* --}}
             {{-- */$orderid = $order[0]->order_id;/* --}}
@@ -51,6 +52,8 @@ J3 Foods - Online Food Ordering
               <td>{{$currentitem->item->name}}</td>
               <td>{{$option.": ".$optionselection}}</td>
               <td>${{$currentitem->item->price}}</td>
+              <td><a class="btn btn-danger" href="{{route('removeitemlink', $currentitem->item_id)}}"> 
+                <span class="glyphicon glyphicon-remove"></span></a></td>
             </tr>
             @endforeach
           </tbody>

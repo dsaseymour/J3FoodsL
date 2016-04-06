@@ -135,6 +135,20 @@ class CustomerController extends Controller
     return view('customercontent.confirmationpage', compact('order'));
   }
 
+  public function removeItem($item){
+    if(\Auth::check()) {
+       $user = \Auth::user()->id;
+    }
+
+    $order = Orders::where('customer_id',$user)->where('completed','0')->where('item_id',$item)->get();
+
+    foreach($order as $items){
+      $items->delete();
+    }
+
+    return redirect()->action('CustomerController@showcustomerconfirmation');    
+  }
+
   public function submitOrder(){
     if(\Auth::check()) {
        $user = \Auth::user()->id;

@@ -162,6 +162,11 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'submitorderlink'
     ]);
 
+    Route::get('/removeitem/{item}',[
+    'uses'=>'CustomerController@removeItem',
+    'as'=>'removeitemlink'
+    ]);
+
     Route::get('/cpeditaddress',[
     'uses'=>'CustomerController@showcpeditaddress',
     'as'=>'cpeditaddresslink'
