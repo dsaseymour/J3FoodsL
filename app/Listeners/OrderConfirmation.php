@@ -40,7 +40,6 @@ class OrderConfirmation
         $orderparam=$event->order;
         $user = User::find($orderparam->customer_id);
         $restaurant=Restaurant::find($orderparam->restaurant_id);
-//        $items= Items::find();
         $fullorderdescription=$this->createOrderSummary($orderparam);
 
         Mail::send('email.orderconfirmation',['order'=>$orderparam,'user'=>$user,'restaurant'=>$restaurant,'fullorderdescription'=>$fullorderdescription], function($message) use ($event){
@@ -76,13 +75,13 @@ class OrderConfirmation
             			->where('restaurant_id', '=', $order->restaurant_id)
             			->where('customer_id', '=', $order->customer_id)
             			->get();
-
-                        $itemname_set;
-                        $optionname_set;
-                        $choicename_set;
-                        $specialinstruction_set;
-                        $itemprice_set;
-                        $orderquantity_set;
+                  //paste starting here
+                  $itemname_set;
+                  $optionname_set;
+                  $choicename_set;
+                  $specialinstruction_set;
+                  $itemprice_set;
+                  $orderquantity_set;
                         $i=0;
 
                         foreach ($orderset as $order){
@@ -93,22 +92,19 @@ class OrderConfirmation
                                  $orderquantity_set[$i]=$order->quantity;
                         		 $i++;
                         }
-                        array_reverse($orderquantity_set);
+                        $orderquantity_set=array_reverse($orderquantity_set);
                         for($j = $i-1; $j >= 0; $j--){
-                        $itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->first();
-                        if($itemsobject){
+                        $itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->where('restaurant_id', $order->restaurant_id)->first();
                         $itemname_set[$j]=$itemsobject->name;
                         $itemprice_set[$j]=$itemsobject->price;
-                        }else{
-                            $itemname_set[$j]=NULL;
-                            $itemprice_set[$j]=NULL;
-                        }
 
                         $optionsobject=DB::table('options')->where('id',$optionname_set[$j])->first();
-                        if($optionsobject){$optionname_set[$j]=$optionsobject->name;}else{$optionname_set[$j]=NULL;}
+                        if($optionsobject){$optionname_set[$j]=$optionsobject->name;}
+                        else{$optionname_set[$j]=NULL;}
 
                         $choiceobject=DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first();
-                        if($choiceobject){$choicename_set[$j]=$choiceobject->name;}else{$choicename_set[$j]=NULL;}
+                        if($choiceobject){$choicename_set[$j]=$choiceobject->name;}
+                        else{$choicename_set[$j]=NULL;}
                         }
                         return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set,'orderquantity_set'=>$orderquantity_set,'itemprice_set'=>$itemprice_set]);
         }
