@@ -13,6 +13,7 @@ use App\Item;
 use App\Category;
 use App\Special;
 use App\Orders;
+use Carbon\Carbon;
 use DB;
 use Validator;
 
@@ -292,7 +293,7 @@ class RestaurantController extends Controller
     $restaurant = Restaurant::where('id',$id)->first();
 
     $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
-    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->get();
+    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
     return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
   }
@@ -315,4 +316,34 @@ class RestaurantController extends Controller
     return view('restaurantcontent.restaurant-profile-hours');
   }
 
+  public function finishorder($order_id){
+    $orders = Orders::where('order_id',$order_id)->get();
+
+    foreach($orders as $items){
+      $items->submit_time=$items->submit_time;
+      $items->completed=$items->completed;
+      $items->quantity=$items->quantity;
+      $items->special_instructions=$items->special_instructions;
+      $items->time_out=Carbon::now();
+      $items->save();
+    }
+
+    return redirect()->action('RestaurantController@showrestaurantoverview');
+  }
+
+  public function cancelorder($order_id){
+    $orders = Orders::where('order_id',$order_id)->get();
+
+    foreach($orders as $items){
+      $items->submit_time=$items->submit_time;
+      $items->completed=$items->completed;
+      $items->quantity=$items->quantity;
+      $items->special_instructions=$items->special_instructions;
+      $items->time_out=Carbon::now();
+      $items->canceled='1';
+      $items->save();
+    }
+
+    return redirect()->action('RestaurantController@showrestaurantoverview');
+  }
 }

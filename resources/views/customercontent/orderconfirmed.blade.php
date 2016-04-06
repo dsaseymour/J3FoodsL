@@ -10,14 +10,15 @@ J3 Foods - Online Food Ordering
 
 @section('content')
 
+{{-- */$orderid = $order[0]->order_id;/* --}}
+
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
-  @if($order->first())
-  <h1>Confirmation Page</h1>
+  <h1>Order Confirmed</h1>
   <div class="list-group">
     <div class="list-group-item ">
-      <h4 class="list-group-item-heading">Order Information</h4>
+      <h4 class="list-group-item-heading">Order # {{$orderid}} Information</h4>
       <div class="table-responsive"><!-- Start table container -->
         <table class="table table-condensed table-bordered">
           <tbody>
@@ -28,7 +29,6 @@ J3 Foods - Online Food Ordering
               <td>Price</td>
             </tr>
             {{-- */$totalprice=0;/* --}}
-            {{-- */$orderid = $order[0]->order_id;/* --}}
             @foreach($order as $currentitem)
               @if($currentitem->option_id)
                 {{-- */$option = $currentitem->item->option->name;/* --}}
@@ -58,8 +58,6 @@ J3 Foods - Online Food Ordering
       </div><!-- End table container -->
     </div>
 
-
-
     <div class="list-group-item ">
       <h4 class="list-group-item-heading">Price </h4>
       <div class="table-responsive"><!-- Start table container -->
@@ -79,61 +77,12 @@ J3 Foods - Online Food Ordering
               <td>Total Purchases</td>
               <td>${{number_format($totalprice*1.13,2)}}</td>
             </tr>
-
-            <tr>
-              <td>Minimum Order Fee</td>
-              <td>$7</td>
-            </tr>
           </tbody>
         </table>
       </div><!-- End table container -->
     </div>
+
     <div  class="list-group-item text-right" id="confirm-page-btn">
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">Order
-    <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
+    <a href="{{ route('customeroverviewlink' ) }}"><button type="button" class="btn btn-default" >Return</button></a>
     </div>
-  </div>
-  @else
-  <h1>Confirmation Page</h1>
-    <div class="list-group">
-      <div class="list-group-item ">
-        <h4>You have no items in your cart</h4>
-      </div>
-    </div>
-  {{-- */$orderid = '0';/* --}}
-  @endif
-</div>
-</div>
-</div> <!-- container-->
-
-
-<!-- Modal -->
-<div id="confirmation-result" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Order Successfully Processed</p>
-      </div>
-      <div class="modal-footer">
-        <a href="{{ route('orderconfirmlink', $orderid ) }}"><button type="button" class="btn btn-default" >View Order Reciept</button></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  $(document).ready(function() {
-    $(".btn-lg").click(function() {
-      $request = $.ajax({
-        url: "{{ route('submitorderlink') }}",
-        type: "get",
-        data: {}
-      });
-    });
-  });
-</script>
 @endsection

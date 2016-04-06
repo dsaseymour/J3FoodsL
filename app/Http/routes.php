@@ -136,7 +136,7 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'sortalphabetically'
     ]);
 
-    Route::get('/order/confirmed',[
+    Route::get('/order/confirmed/{order_id}',[
     'uses'=>'CustomerController@orderconfirmandnotify',
     'as'=>'orderconfirmlink',
     ]);
@@ -278,7 +278,15 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'forgotpasswordlink'
     ]);
 
+    Route::get('/finishorder/{order}',[
+    'uses'=>'RestaurantController@finishorder',
+    'as'=>'finishorder'
+    ]);
 
+    Route::get('/cancelorder/{order}',[
+    'uses'=>'RestaurantController@cancelorder',
+    'as'=>'cancelorder'
+    ]);
 
 
 //DEBUGGGING

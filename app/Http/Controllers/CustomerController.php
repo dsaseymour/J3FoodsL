@@ -11,6 +11,7 @@ use App\Customer;
 use App\CustomerFavourites;
 use App\User;
 use App\Orders;
+use Carbon\Carbon;
 use DB;
 use Validator;
 
@@ -141,18 +142,21 @@ class CustomerController extends Controller
 
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
 
-
-
     foreach($orders as $items){
-      $items->submit_time=Date('Y-m-d H:i:s');
+      $items->submit_time=Carbon::now();
       $items->completed='1';
       $items->quantity=$items->quantity;
       $items->special_instructions=$items->special_instructions;
       $items->save();
     }
+  }
 
-    //return redirect()->action('CustomerController@showcustomerconfirmation');
 
+  public function orderconfirmandnotify($order_id){
+    
+    $order = Orders::where('order_id',$order_id)->get();
+
+     return view('customercontent.orderconfirmed', compact('order'));
   }
 
   public function showcpeditaddress(){
@@ -201,6 +205,4 @@ class CustomerController extends Controller
 
     return redirect()->action('CustomerController@showcustomeroverview');
   }
-
-
 }
