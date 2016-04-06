@@ -81,6 +81,8 @@ class OrderConfirmation
                         $optionname_set;
                         $choicename_set;
                         $specialinstruction_set;
+                        $itemprice_set;
+                        $orderquantity_set;
                         $i=0;
 
                         foreach ($orderset as $order){
@@ -88,12 +90,19 @@ class OrderConfirmation
                         		 $optionname_set[$i]=$order->option_id;
                         		 $choicename_set[$i]=$order->choice_id;
                         		 $specialinstruction_set[$i]=$order->special_instructions;
+                                 $orderquantity_set[$i]=$order->quantity;
                         		 $i++;
                         }
-
+                        array_reverse($orderquantity_set);
                         for($j = $i-1; $j >= 0; $j--){
                         $itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->first();
-                        if($itemsobject){$itemname_set[$j]=$itemsobject->name;}else{$itemname_set[$j]=NULL;}
+                        if($itemsobject){
+                        $itemname_set[$j]=$itemsobject->name;
+                        $itemprice_set[$j]=$itemsobject->price;
+                        }else{
+                            $itemname_set[$j]=NULL;
+                            $itemprice_set[$j]=NULL;
+                        }
 
                         $optionsobject=DB::table('options')->where('id',$optionname_set[$j])->first();
                         if($optionsobject){$optionname_set[$j]=$optionsobject->name;}else{$optionname_set[$j]=NULL;}
@@ -101,7 +110,7 @@ class OrderConfirmation
                         $choiceobject=DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first();
                         if($choiceobject){$choicename_set[$j]=$choiceobject->name;}else{$choicename_set[$j]=NULL;}
                         }
-                        return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set]);
+                        return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set,'orderquantity_set'=>$orderquantity_set,'itemprice_set'=>$itemprice_set]);
         }
 
 }

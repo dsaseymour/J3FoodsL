@@ -14,6 +14,8 @@ J3 Foods - Online Food Ordering
 {{$requestdesc['optionname_set'][1]}}
 {{$requestdesc['choicename_set'][1]}}
 {{$requestdesc['specialinstruction_set'][1]}}
+{{$requestdesc['orderquantity_set'][1]}}
+{{$requestdesc['itemprice_set'][1]}}
 
 
 
