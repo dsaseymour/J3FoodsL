@@ -238,6 +238,20 @@ class RestaurantController extends Controller
 
   }
 
+  public function savecategoryorder(Request $request){
+    $categoryList = $request->testdata;
+
+    $count = 1;
+
+    foreach ($categoryList as $categoryID){
+      $category = Category::find($categoryID);
+      $category->category_order = $count;
+      $category->save();
+      $count++;
+    }
+
+  }
+
   public function additemtomenu(Request $request){
 
     if(\Auth::check()) {

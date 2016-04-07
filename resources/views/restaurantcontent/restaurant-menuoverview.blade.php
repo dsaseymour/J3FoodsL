@@ -59,9 +59,18 @@ J3 Foods - Online Food Ordering
     display: inline-block;
     width: auto;
   }
+
+  h3.name > a.btn{
+    float:right;
+  }
+
+
 </style>
+
 @endsection
 @section('content')
+
+
 
 <div class="container">
   @include('includes.restaurant-nav')
@@ -115,36 +124,42 @@ J3 Foods - Online Food Ordering
   @include('includes.add-category')
 </div>
 
+<button class="btn btn-primary " id="savecategorylist" data-token="{{ csrf_token() }}"> Save Category List</button>
+<meta name="csrf_token" content="{{ csrf_token() }}" />
+<ul id="sortable">
 @foreach($restaurant->categories as $category)
-<div class="menu-category">
-  <h1>{{$category->category_name}}</h1>
-  <div class="menu-items">
+<li class="menu-category" id="{{$category->id}}" style="background-color: #99FF66;" >
+  <h1 style="background-color: #00ff00;">{{$category->category_name}}</h1>
+  <div class="menu-items" style="background-color: #66CC66;">
     @foreach ($category->items as $item)
     <div class="menu-item" data-itemid="{{$item->item_id}}">
       <img src="{{$item->image}}"/>
-      <h3 class="name">{{$item->name}} 
-      <a class="btn btn-danger " href="{{ route('deleteitem' , ['item' => $item->item_id] ) }}"> 
-        <span class="glyphicon glyphicon-remove"></span>
-      </a> 
-      <a class="btn btn-primary " data-toggle="modal" data-target="#edit-subscreen{{$item->item_id}}"> <span class="glyphicon glyphicon-edit"></span></a>
-      <div id="edit-subscreen{{$item->item_id}}" class="modal fade" role="dialog">
-        @include('includes.edit-item',compact('restaurant'))
-      </div>
+      <div>
+      <h3 class="name">{{$item->name}}
+        <a class="btn btn-danger " href="{{ route('deleteitem' , ['item' => $item->item_id] ) }}"> 
+          <span class="glyphicon glyphicon-remove"></span>
+        </a> 
+        <a class="btn btn-primary " data-toggle="modal" data-target="#edit-subscreen{{$item->item_id}}"> <span class="glyphicon glyphicon-edit"></span></a>
+        <div id="edit-subscreen{{$item->item_id}}" class="modal fade" role="dialog">
+          @include('includes.edit-item',compact('restaurant'))
+        </div>
       </h3>
+      </div>
       @if($item->spec_id != NULL)
       <h4 class="price"><span class="old-price">${{$item->price}}
-        </span><span class="new-price">${{$item->special->spec_price}}</span>
-      </h4>
-      @else
-      <h4 class="price">${{$item->price}}</h4>
-      @endif
+      </span><span class="new-price">${{$item->special->spec_price}}</span>
+    </h4>
+    @else
+    <h4 class="price">${{$item->price}}</h4>
+    @endif
 
-    </div>
-    @endforeach
   </div>
+  @endforeach
 </div>
+</li>
 <hr/>
 @endforeach
+</ul>
 
 
 
