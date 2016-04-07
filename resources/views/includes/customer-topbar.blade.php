@@ -21,7 +21,7 @@
             <form class="navbar-form" role="form" method="POST" action="{{ route('searchrestaurants') }}">
             {!! csrf_field() !!}
               <div class="form-group">
-                <input type="text" name= "term" class="form-control" placeholder="Search">
+                <input type="text" name= "term" class="form-control" placeholder="Search restaurants">
               </div>
              <button type="submit" class="btn btn-primary">
                 <span class="glyphicon glyphicon-search"></span>     
