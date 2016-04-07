@@ -64,6 +64,22 @@ J3 Foods - Online Food Ordering
     float:right;
   }
 
+  .menu-category {
+    border-style: solid;
+    border-width: 1px;
+    background-color: rgb(38, 102, 177);
+  }
+
+  .menu-category > h1{
+     background-color: #f2f2f2;
+     padding-left: 25px;
+  }
+
+  .menu-category > .menu-items{
+    background-color: #f2f2f2;
+  }
+
+   
 
 </style>
 
@@ -128,9 +144,9 @@ J3 Foods - Online Food Ordering
 <meta name="csrf_token" content="{{ csrf_token() }}" />
 <ul id="sortable">
 @foreach($restaurant->categories as $category)
-<li class="menu-category" id="{{$category->id}}" style="background-color: #99FF66;" >
-  <h1 style="background-color: #00ff00;">{{$category->category_name}}</h1>
-  <div class="menu-items" style="background-color: #66CC66;">
+<li class="menu-category" id="{{$category->id}}" >
+  <h1 >{{$category->category_name}}</h1>
+  <div class="menu-items" >
     @foreach ($category->items as $item)
     <div class="menu-item" data-itemid="{{$item->item_id}}">
       <img src="{{$item->image}}"/>
@@ -156,8 +172,9 @@ J3 Foods - Online Food Ordering
   </div>
   @endforeach
 </div>
+
 </li>
-<hr/>
+
 @endforeach
 </ul>
 
