@@ -10,17 +10,21 @@ J3 Foods - Online Food Ordering
 
 @section('content')
 <section id="feedback-section">
-  <div class="container text-center" >
+  <div class="container" >
     <div class="row ">
             <ul class="nav nav-tabs">
               <li class="nav-item" id="feedback-content">
-                <a class="nav-link" href="#">Rate Your Experience </a>
+                <a class="nav-link" href="#"><h4>Rate Your Experience</h4> </a>
               </li>
             </ul>
             <div id='ratings-formbody'>
               <form action="{{route('submitfeedback')}}" method="POST" role="form">
+                <!--content -->
                 <div class="form-group">
                     <label for="comment" class="ratings-labels">Rating:</label>
+                    <br />
+
+                    <div class="col-sm-3">
                     <fieldset class="rating">
                         <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Excellent - 5 stars"></label>
                         <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
@@ -35,23 +39,35 @@ J3 Foods - Online Food Ordering
                     </fieldset>
                   </div>
 
-                  <div class="form-group">
-                    <label for="comment" class="ratings-labels">Comment:</label>
-                    <textarea id="rating-comments" rows="5" name="comment"></textarea>
-                  </div>
+                  <!--content  end-->
+
                   <input type="hidden" name="restaurant_id" value="{{$rest_id}}" />
-
                   {{ csrf_field() }}
+<br />
+<br />
+<br />
+<br />
 
 
-              <div class="input-row " >
-                <button type='submit'  class="btn  btn-primary   " />Submit Feedback</button>
-              </div>
-                  </form>
+            <div class="form-group">
+              <label for="comment" class="ratings-labels">Comment:</label>
+              <textarea class="form-control" id="rating-comments" rows="5" name="comment"></textarea>
             </div>
-  </div><!-- container --->
+
+            <div class="input-row text-left" >
+              <button type='submit'  class="btn  btn-primary   " />Submit Feedback</button>
+            </div>
+
+
+          </form>
+          </div> <!--form body -->
+
+
+
 </div>
-</div>
+
+  </div><!-- row --->
+</div><!-- container --->
 </section>
 @endsection
 
