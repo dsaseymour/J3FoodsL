@@ -154,17 +154,17 @@ class RestaurantController extends Controller
       $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
 
       $parameters = $request->request->all();
-      //fetched the parameters array from the request object that can take a string as an argument
+      
+      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent 
       foreach ($dayStrings as $day){
-        $updateHours = Hours::where('rest_ID',$id)->first();
-        //dd($updateHours);
-        $updateHours->rest_ID = $id;
-        $updateHours->day_ID = $parameters[$day];
-        $updateHours->open = $parameters[$day . '_open'];
-        $updateHours->open_time = $parameters[$day . '_open_time'] + $parameters[$day . '_open_XM'] . ":00:00";
-        $updateHours->close_time = $parameters[$day . '_close_time'] + $parameters[$day . '_close_XM'] . ":00:00";
-                dd($updateHours);
-        $updateHours->save();
+        DB::table('hours')
+        ->where('rest_ID',$id)
+        ->where('day_ID',$parameters[$day])
+        ->update([
+          'open' => $parameters[$day . '_open'],
+          'open_time' => $parameters[$day . '_open_time'] + $parameters[$day . '_open_XM'] . ":00:00",
+          'close_time' => $parameters[$day . '_close_time'] + $parameters[$day . '_close_XM'] . ":00:00"
+          ]);
       }
     }
 
