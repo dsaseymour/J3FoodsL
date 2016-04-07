@@ -317,7 +317,7 @@ J3 Foods - Online Food Ordering
       //Open options window on clicking an item
       $(".menu-item").click(function(e){
         itemid = $(e.target).parent(".menu-item").data("itemid");
-        $.get('/options/'+itemid, function(response){
+        $.get('/J3/J3FoodsL/public/options/'+itemid, function(response){
           if(response != null){
             $("#item-option-group").html(response);
           }

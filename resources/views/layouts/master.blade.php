@@ -21,6 +21,54 @@
             <script src="{{ URL::to('js/highcharts.js') }}"></script>
             <script src="{{ URL::to('js/jqueryhighchartTable-min.js') }}"></script>
             <script src="https://code.highcharts.com"></script>
+            <script>//for sortable menu list
+              $(function() {
+                $( "#sortable" ).sortable();
+                $( "#sortable" ).disableSelection();
+              });
+
+              $(function() {
+                  $("#savecategorylist").click( function()
+                       {
+                        
+                        var order = [];
+                        var ids;
+                        var currentPosition = 0;
+
+                        $('.menu-category').each(function() {
+                            order.push(this.id);
+                            currentPosition++;
+                        });
+
+                        var data = {
+                          _token:$(this).data('token'),
+                          'newlist': order
+                        }
+                        //alert( order );
+                        $.post({
+                          url: "{{route('reordercategories')}}",
+                          type:"POST",
+                          beforeSend: function (xhr) {
+                              var token = $('meta[name="csrf_token"]').attr('content');
+
+                              if (token) {
+                                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                              }
+                          },
+                          data: { testdata : order },
+                          success:function(data){
+                            alert("Updated Successfully ")
+                          },error:function(){ 
+                              alert("Error updating your category ordering, sorry");
+                          }
+                          
+                        
+                       })
+                     }
+                  );
+            });
+            </script>
+
       @yield('styles')
       </head>
 

@@ -185,6 +185,11 @@ Route::group(['middleware' => ['web']], function () {
 	//Restuarant pages
     Route::get('/sethours', 'RestaurantController@showsethours');
 
+     Route::post('/reordercategories',[
+    'uses'=>'RestaurantController@savecategoryorder',
+    'as'=>'reordercategories',
+    ]);
+
     Route::get('/closerestaurant/{restaurant}',[
         'uses'=>'RestaurantController@closerestaurant',
         'as'=>'closerestaurant',
