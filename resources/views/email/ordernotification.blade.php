@@ -2,9 +2,9 @@
     Newly Processed Order for {{$restaurant['companyname']}}
    </h1>
    <h2>ORDER#: {{$restaurant['companyname']}}</h2>
-
+   <h2>ORDER DATE: {{$order['time_in']}}</h2>
    <br />
-   
+
    <!--order summary  -->
    <h2>Order Summary:</h2>
    <?php
@@ -12,9 +12,8 @@
    $i=0;
    foreach ($fullorderdescription['itemname_set'] as $iterate){
              echo"<p>Item ".$fullorderdescription['itemname_set'][$i]."</p>";
-             echo"<p>Selected Options:".$fullorderdescription['optionname_set'][$i]."
-             Selected Choices:".$fullorderdescription['choicename_set'][$i]."
-             </p>";
+if(isset($fullorderdescription['optionname_set'][$i])){ echo"<p>Selected Options:".$fullorderdescription['optionname_set'][$i]."</p>"; }
+if(isset($fullorderdescription['choicename_set'][$i])){echo"<p>Selected Choices:".$fullorderdescription['choicename_set'][$i]."</p>"; }
              echo"
              <p>Special Instructions:".$fullorderdescription['specialinstruction_set'][$i]."
              </p>";

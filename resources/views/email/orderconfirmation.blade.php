@@ -1,7 +1,7 @@
 <h1>Thank you for ordering via J3Foods​. Your business is greatly appreciated.</h1>
 
 <h2>ORDER#: {{$order['order_id']}}</h2>
-<h2>ORDER DATE: {{$order['submit_time']}}</h2>
+<h2>ORDER DATE: {{$order['time_in']}}</h2>
 
 <!--order summary  -->
 <h2>Order Summary:</h2>
@@ -10,9 +10,8 @@ $totals;
 $i=0;
 foreach ($fullorderdescription['itemname_set'] as $iterate){
           echo"<p>Item ".$fullorderdescription['itemname_set'][$i]."</p>";
-          echo"<p>Selected Options:".$fullorderdescription['optionname_set'][$i]."
-          Selected Choices:".$fullorderdescription['choicename_set'][$i]."
-          </p>";
+          if(isset($fullorderdescription['optionname_set'][$i])){ echo"<p>Selected Options:".$fullorderdescription['optionname_set'][$i]."</p>"; }
+          if(isset($fullorderdescription['choicename_set'][$i])){echo"<p>Selected Choices:".$fullorderdescription['choicename_set'][$i]."</p>"; }
           echo"
           <p>Special Instructions:".$fullorderdescription['specialinstruction_set'][$i]."
           </p>";
