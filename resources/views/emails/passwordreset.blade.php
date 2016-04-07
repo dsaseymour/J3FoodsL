@@ -1,2 +1,0 @@
-This is an automated email from J3Foods.com in response to a reset request for the password associated with this
-email at J3Foods.com Please visit the following page to reset your password: www.resetlink.com This link will expire in 3 days. If you would like to generate a new password reset request after that time, please visit www.passwordreset.com No changes will be made to your account if you choose to ignore this email notification.

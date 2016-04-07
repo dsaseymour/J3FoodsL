@@ -7,8 +7,6 @@ J3 Foods - Online Food Ordering
 @include('includes.topbar')
 @endsection
 
-
-@section('content')
 <section id="forgotpassword-section">
 <div class="container text-center" id="forgotpassword-container">
     <div class="row " id='forgotpassword-block'>
@@ -25,7 +23,7 @@ J3 Foods - Online Food Ordering
                               <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
                             </div>
 
-                </div><!-- panel body container -->
+                </div>
                 <div class="panel-footer text-right">
                         <input type="submit" class="button button-block " name="resendemail" id="resendemail" value="Submit">
                         <input type="submit" class="button button-block " name="resendemail" id="resendemail" value="Cancel">
@@ -33,7 +31,7 @@ J3 Foods - Online Food Ordering
                 <input type="hidden" value="{{Session::token()}}" name="_token" />
                 </form>
             </div>
-</div> <!-- main row -->
+</div>
 </div>
 </section>
 @endsection
