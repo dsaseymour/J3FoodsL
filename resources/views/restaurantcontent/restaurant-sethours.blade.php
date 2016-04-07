@@ -26,224 +26,48 @@ J3 Foods - Online Food Ordering
                                  <th>
                                     Day
                                  </th>
-                                 <!-- Day-->
                                  <th>
                                     Open
                                  </th>
-                                 <!-- Closed-->
                                  <th>
                                     Opening Time
                                  </th>
-                                 <!-- Open-->
                                  <th>
                                     Closing Time
                                  </th>
-                                 <!-- Closing-->
                               </tr>
                            </thead>
                            <tbody>
-                              <!-- table body start-->
+                              @for($i = 0; $i < count($dayNumbers); $i++)
                               <tr>
                                  <td>
-                                    Monday
-                                    <input name="mon" value=1 type="hidden"/>
+                                    {{$dayNames[$i]}}
+                                    <input name="{{$dayStrings[$i]}}" value={{$dayNumbers[$i]}} type="hidden"/>
                                  </td>
                                  <td>
-                                    <input name="mon_open" type="hidden" value="0"/>
-                                    <input name="mon_open" type="checkbox" value="1" class="form-control" id="ghours-misclosed" />
+                                    <input name="{{$dayStrings[$i]}}_open" type="hidden" value="0"/>
+                                    <input name="{{$dayStrings[$i]}}_open" type="checkbox" value="1" class="form-control" id="ghours-misclosed" />
                                  </td>
                                  <td class="form-inline">
-                                    <select name="mon_open_time" class="form-control">
+                                    <select name="{{$dayStrings[$i]}}_open_time" class="form-control">
                                        @include('includes.time-dropdown')
                                     </select>
-                                    <select name="mon_open_XM" class="form-control">
+                                    <select name="{{$dayStrings[$i]}}_open_XM" class="form-control">
                                        <option value="0">AM</option>
                                        <option value="12">PM</option>
                                     </select>
                                  </td>
                                  <td class="form-inline">
-                                    <select name="mon_close_time" class="form-control">
+                                    <select name="{{$dayStrings[$i]}}_close_time" class="form-control">
                                        @include('includes.time-dropdown')
                                     </select>
-                                    <select name="mon_close_XM" class="form-control">
+                                    <select name="{{$dayStrings[$i]}}_close_XM" class="form-control">
                                        <option value="12">PM</option>
                                        <option value="0">AM</option>
                                     </select>
                                  </td>
                               </tr>
-                              <tr>
-                                 <td>
-                                    Tuesday
-                                    <input name="tue" value=2 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="tue_open" type="hidden" value="0"/>
-                                    <input name="tue_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="tue_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="tue_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="tue_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="tue_close_XM" class="form-control">
-                                       <option value="0">PM</option>
-                                       <option value="12">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    Wednesday
-                                    <input name="wed" value=3 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="wed_open" type="hidden" value="0"/>
-                                    <input name="wed_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="wed_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="wed_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="wed_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="wed_close_XM" class="form-control">
-                                       <option value="12">PM</option>
-                                       <option value="0">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    Thursday
-                                    <input name="thur" value=4 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="thur_open" type="hidden" value="0"/>
-                                    <input name="thur_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="thur_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="thur_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>                                 </td>
-                                 <td class="form-inline">
-                                    <select name="thur_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="thur_close_XM" class="form-control">
-                                       <option value="12">PM</option>
-                                       <option value="0">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    Friday
-                                    <input name="fri" value=5 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="fri_open" type="hidden" value="0"/>
-                                    <input name="fri_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="fri_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="fri_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>
-                                 </td>
-                                 <td class="form-inline">
-                                     <select name="fri_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="fri_close_XM" class="form-control">
-                                       <option value="12">PM</option>
-                                       <option value="0">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    Saturday
-                                    <input name="sat" value=6 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="sat_open" type="hidden" value="0"/>
-                                    <input name="sat_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="sat_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="sat_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="sat_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="sat_close_XM" class="form-control">
-                                       <option value="12">PM</option>
-                                       <option value="0">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    Sunday
-                                    <input name="sun" value=7 type="hidden"/>
-                                 </td>
-                                 <!-- Day-->
-                                 <td>
-                                    <input name="sun_open" type="hidden" value="0"/>
-                                    <input name="sun_open" value="1" type="checkbox" class="form-control" id="ghours-tisclosed" />
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="sun_open_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="sun_open_XM" class="form-control">
-                                       <option value="0">AM</option>
-                                       <option value="12">PM</option>
-                                    </select>
-                                 </td>
-                                 <td class="form-inline">
-                                    <select name="sun_close_time" class="form-control">
-                                       @include('includes.time-dropdown')
-                                    </select>
-                                    <select name="sun_close_XM" class="form-control">
-                                       <option value="12">PM</option>
-                                       <option value="0">AM</option>
-                                    </select>
-                                 </td>
-                              </tr>
+                              @endfor
                            </tbody>
                            <!-- table body end-->
                         </table>
@@ -251,13 +75,13 @@ J3 Foods - Online Food Ordering
                      </div>
                      <!-- End table container -->
                   </div>
+               </div>
+               <!-- panel body container -->
             </div>
-            <!-- panel body container -->
-         </div>
          </form>
       </div>
    </div>
    <!-- main row -->
-   </div>
+</div>
 </section>
 @endsection

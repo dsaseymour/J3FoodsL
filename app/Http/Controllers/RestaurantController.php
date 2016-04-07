@@ -106,8 +106,9 @@ class RestaurantController extends Controller
 
     public function showsethours(){
       $dayNumbers = array(1,2,3,4,5,6,7);
-      $dayString = array("mon","tue","wed","thur","fri","sat","sun");
-      return view('restaurantcontent.restaurant-sethours',compact($dayNumbers,$dayString));
+      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+      $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+      return view('restaurantcontent.restaurant-sethours',compact('dayNumbers','dayStrings', 'dayNames'));
     }
 
 
@@ -123,61 +124,68 @@ class RestaurantController extends Controller
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
-      //MONDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->mon;
-      $updateHours->open = $request->mon_open;
-      $updateHours->open_time = $request->mon_open_time + $request->mon_open_XM;
-      $updateHours->close_time = $request->mon_close_time + $request->mon_close_XM;;
-      $updateHours->save();
+
+      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+      $parameterBag = $request->request;
+      $parameters = $parameterBag->all();
+      //array_pop($parameters);
+      dd($parameters['mon']);
+      foreach ($dayString as $day){
+          $updateHours = new Hours;
+          $updateHours->rest_ID = $id;
+          $updateHours->day_ID = $parameters[$day];
+          $updateHours->open = $parameters[$day . '_open_time'];
+          $updateHours->open_time = $request->mon_open_time + $request->mon_open_XM . ":00:00";
+          $updateHours->close_time = $request->mon_close_time + $request->mon_close_XM . ":00:00";
+          $updateHours->save();
+      }
       //TUESDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->tue;
       $updateHours->open = $request->tue_open;
-      $updateHours->open_time = $request->tue_open_time + $request->tue_open_XM;
-      $updateHours->close_time = $request->tue_close_time + $request->tue_close_XM;;
+      $updateHours->open_time = $request->tue_open_time + $request->tue_open_XM . ":00:00";
+      $updateHours->close_time = $request->tue_close_time + $request->tue_close_XM . ":00:00";
       $updateHours->save();
       //WEDNESDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->wed;
       $updateHours->open = $request->wed_open;
-      $updateHours->open_time = $request->wed_open_time + $request->wed_open_XM;
-      $updateHours->close_time = $request->wed_close_time + $request->wed_close_XM;;
+      $updateHours->open_time = $request->wed_open_time + $request->wed_open_XM . ":00:00";
+      $updateHours->close_time = $request->wed_close_time + $request->wed_close_XM . ":00:00";
       $updateHours->save();
       //THURSDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->thur;
       $updateHours->open = $request->thur_open;
-      $updateHours->open_time = $request->thur_open_time + $request->thur_open_XM;
-      $updateHours->close_time = $request->thur_close_time + $request->thur_close_XM;;
+      $updateHours->open_time = $request->thur_open_time + $request->thur_open_XM . ":00:00";
+      $updateHours->close_time = $request->thur_close_time + $request->thur_close_XM . ":00:00";
       $updateHours->save();
       //FRIDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->fri;
       $updateHours->open = $request->fri_open;
-      $updateHours->open_time = $request->fri_open_time + $request->fri_open_XM;
-      $updateHours->close_time = $request->fri_close_time + $request->fri_close_XM;;
+      $updateHours->open_time = $request->fri_open_time + $request->fri_open_XM . ":00:00";
+      $updateHours->close_time = $request->fri_close_time + $request->fri_close_XM . ":00:00";
       $updateHours->save();
       //SATURDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->sat;
       $updateHours->open = $request->sat_open;
-      $updateHours->open_time = $request->sat_open_time + $request->sat_open_XM;
-      $updateHours->close_time = $request->sat_close_time + $request->sat_close_XM;;
+      $updateHours->open_time = $request->sat_open_time + $request->sat_open_XM . ":00:00";
+      $updateHours->close_time = $request->sat_close_time + $request->sat_close_XM . ":00:00";
       $updateHours->save();
       //SUNDAY
       $updateHours = new Hours;
       $updateHours->rest_ID = $id;
       $updateHours->day_ID = $request->sun;
       $updateHours->open = $request->sun_open;
-      $updateHours->open_time = $request->sun_open_time + $request->sun_open_XM;
-      $updateHours->close_time = $request->sun_close_time + $request->sun_close_XM;;
+      $updateHours->open_time = $request->sun_open_time + $request->sun_open_XM . ":00:00";
+      $updateHours->close_time = $request->sun_close_time + $request->sun_close_XM . ":00:00";
       $updateHours->save();
     }
 
