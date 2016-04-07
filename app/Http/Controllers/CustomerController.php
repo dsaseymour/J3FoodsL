@@ -141,7 +141,29 @@ class CustomerController extends Controller
   }
 
   public function addItem(Request $request){
-    return $request->all();
+    $o = new Orders;
+    $item = Item::find($_POST["itemid"]);
+    $o->customer_id = \Auth::user()->id;
+    $o->item_id = $item->item_id;
+    $o->restaurant_id = $item->restaurant->id;
+    $o->quantity = $_POST["qty"];
+    $o->option_id = $item->option_id;
+    if(isset($_POST["item-option-combo"])){
+      $o->choice = $_POST["item-option-combo"];
+    } elseif(isset($_POST["item-option-check"]) && count($_POST["item-option-check"])>0){
+      $selected = $_POST["item-option-check"];
+      $choices = strval($selected[0]);
+      for($i=1; $i<count($selected); $i++){
+        $choices .= ",".$selected[$i];
+      }
+      $o->choice = $choices;
+    } elseif(isset($_POST["item-option-text"])){
+      $o->choice = $_POST["item-option-text"];
+    }
+
+    $o->save();
+    
+    return back();
   }
 
   public function removeItem($item){

@@ -270,7 +270,8 @@ J3 Foods - Online Food Ordering
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Add to order</button>
             </div>
-          <input type="hidden" value="{{Session::token()}}" name="_token" />
+            <input type="hidden" name="itemid" id="add-form-itemid" />
+            <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
         
@@ -315,6 +316,7 @@ J3 Foods - Online Food Ordering
       //Open options window on clicking an item
       $(".menu-item").click(function(e){
         itemid = $(e.target).parent(".menu-item").data("itemid");
+        $("#add-form-itemid").val(itemid);
         $.get("{{route("menuitemoptions", ["item"=>""])}}/"+itemid, function(response){
           if(response != null){
             $("#item-option-group").html(response);
