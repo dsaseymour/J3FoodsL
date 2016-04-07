@@ -107,7 +107,10 @@ class RestaurantController extends Controller
     }
 
     public function showsethours(){
-      return view('restaurantcontent.restaurant-sethours');
+      $dayNumbers = array(1,2,3,4,5,6,7);
+      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+      $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+      return view('restaurantcontent.restaurant-sethours',compact('dayNumbers','dayStrings', 'dayNames'));
     }
 
 
@@ -123,62 +126,48 @@ class RestaurantController extends Controller
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
-      //MONDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->mon;
-      $updateHours->open = $request->mon_open;
-      $updateHours->open_time = $request->mon_open_time + $request->mon_open_XM;
-      $updateHours->close_time = $request->mon_close_time + $request->mon_close_XM;;
-      $updateHours->save();
-      //TUESDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->tue;
-      $updateHours->open = $request->tue_open;
-      $updateHours->open_time = $request->tue_open_time + $request->tue_open_XM;
-      $updateHours->close_time = $request->tue_close_time + $request->tue_close_XM;;
-      $updateHours->save();
-      //WEDNESDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->wed;
-      $updateHours->open = $request->wed_open;
-      $updateHours->open_time = $request->wed_open_time + $request->wed_open_XM;
-      $updateHours->close_time = $request->wed_close_time + $request->wed_close_XM;;
-      $updateHours->save();
-      //THURSDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->thur;
-      $updateHours->open = $request->thur_open;
-      $updateHours->open_time = $request->thur_open_time + $request->thur_open_XM;
-      $updateHours->close_time = $request->thur_close_time + $request->thur_close_XM;;
-      $updateHours->save();
-      //FRIDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->fri;
-      $updateHours->open = $request->fri_open;
-      $updateHours->open_time = $request->fri_open_time + $request->fri_open_XM;
-      $updateHours->close_time = $request->fri_close_time + $request->fri_close_XM;;
-      $updateHours->save();
-      //SATURDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->sat;
-      $updateHours->open = $request->sat_open;
-      $updateHours->open_time = $request->sat_open_time + $request->sat_open_XM;
-      $updateHours->close_time = $request->sat_close_time + $request->sat_close_XM;;
-      $updateHours->save();
-      //SUNDAY
-      $updateHours = new Hours;
-      $updateHours->rest_ID = $id;
-      $updateHours->day_ID = $request->sun;
-      $updateHours->open = $request->sun_open;
-      $updateHours->open_time = $request->sun_open_time + $request->sun_open_XM;
-      $updateHours->close_time = $request->sun_close_time + $request->sun_close_XM;;
-      $updateHours->save();
+      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+
+      $parameters = $request->request->all();
+      //fetched the parameters array from the request object that can take a string as an argument
+      foreach ($dayStrings as $day){
+        $updateHours = new Hours;
+        $updateHours->rest_ID = $id;
+        $updateHours->day_ID = $parameters[$day];
+        $updateHours->open = $parameters[$day . '_open'];
+        $updateHours->open_time = $parameters[$day . '_open_time'] + $parameters[$day . '_open_XM'] . ":00:00";
+        $updateHours->close_time = $parameters[$day . '_close_time'] + $parameters[$day . '_close_XM'] . ":00:00";
+        $updateHours->save();
+      }
+    }
+
+    public function updatehours(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+      $this->updateDatabaseWithNewHours($request);
+      return redirect()->action('RestaurantController@showrestaurantoverview');
+    }
+
+    protected function updateDatabaseWithNewHours(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+
+      $parameters = $request->request->all();
+      
+      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent 
+      foreach ($dayStrings as $day){
+        DB::table('hours')
+        ->where('rest_ID',$id)
+        ->where('day_ID',$parameters[$day])
+        ->update([
+          'open' => $parameters[$day . '_open'],
+          'open_time' => $parameters[$day . '_open_time'] + $parameters[$day . '_open_XM'] . ":00:00",
+          'close_time' => $parameters[$day . '_close_time'] + $parameters[$day . '_close_XM'] . ":00:00"
+          ]);
+      }
     }
 
     public function addcategory(Request $request){
@@ -233,8 +222,6 @@ class RestaurantController extends Controller
       }
     }
 
-    
-
     $updateItem->save();
     return redirect()->action('RestaurantController@showrestaurantmoverview');
 
@@ -283,8 +270,6 @@ class RestaurantController extends Controller
     return view('restaurantcontent.restaurant-menuedit');
   }
 
-
-
   public function showrestaurantoverview(){
     if(\Auth::check()) {
       $id = \Auth::user()->id;
@@ -296,6 +281,7 @@ class RestaurantController extends Controller
     $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
     return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
+
   }
 
   public function showrestaurantprofile(){
@@ -313,7 +299,10 @@ class RestaurantController extends Controller
   }
 
   public function showrestaurantprofilehours(){
-    return view('restaurantcontent.restaurant-profile-hours');
+    $dayNumbers = array(1,2,3,4,5,6,7);
+    $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+    $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    return view('restaurantcontent.restaurant-profile-hours', compact('dayNumbers', 'dayStrings', 'dayNames'));
   }
 
   public function finishorder($order_id){
