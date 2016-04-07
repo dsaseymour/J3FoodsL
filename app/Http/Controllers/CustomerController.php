@@ -8,12 +8,17 @@ use App\Restaurant;
 use App\Item;
 use App\Http\Requests;
 use App\Customer;
+use App\Option;
+use App\OptionChoice;
+use App\CustomerRatings;
 use App\CustomerFavourites;
 use App\User;
 use App\Orders;
 use Carbon\Carbon;
 use DB;
 use Validator;
+use Event;
+use App\Events\OrderWasSubmitted;
 
 
 class CustomerController extends Controller
@@ -191,7 +196,7 @@ class CustomerController extends Controller
 
         return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
-		
+
   //Add restaurant to favourites
   public function addcustomerfavourite(User $restaurant){
   	if(\Auth::check()) {
@@ -206,7 +211,7 @@ class CustomerController extends Controller
 
   	return redirect()->action('CustomerController@showcustomeroverview');
   }
-		
+
 	//Remove restaurant from favourites
 	public function deletecustomerfavourite(User $restaurant){
     if(\Auth::check()) {
@@ -219,4 +224,45 @@ class CustomerController extends Controller
 
     return redirect()->action('CustomerController@showcustomeroverview');
   }
+
+
+
+public function addfeedback(Request $request){
+	if(\Auth::check()) {
+					$id = \Auth::user()->id;
+		 }
+//if the user is recorded as having made an order at this restaurant he/she can write a review
+if(Orders::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()>0 && CustomerRatings::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()==0 )
+{
+	$currentUser = CustomerRatings::create([
+          'restaurant_id' =>$request->restaurant_id ,
+          'customer_id' => $id,
+          'rating' => $request->rating,
+          'comment' => $request->comment,
+      ]);
+			return redirect('/customeroverview')->with('status', 'Thanks for your time your Rating was successfully recorded');
+}
+else{
+	return redirect('/customeroverview')->with('status', 'Our records either cannot confirm your previous experiences with this restaurant or have already recorded your rating for this restaurant ');
+}
+
+}
+
+public function showfeedbackpage($rest_id){
+	$data['rest_id'] = $rest_id;
+	return view('rating.restaurantfeedback',$data);
+}
+
+public function createOrder(Request $request){
+	$order=Orders::create([
+          'item_id' => $request->item_id,
+					'restaurant_id' => $request->restaurant_id,
+					'customer_id' => $request->customer_id,
+					'quantity' => $request->quantity,
+					'special_instructions' => $request->special_instructions,
+      ]);
+	Event::fire(new OrderWasSubmitted($order));
+  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
+}
+
 }

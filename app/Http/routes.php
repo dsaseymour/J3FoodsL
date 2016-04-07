@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -32,7 +31,7 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
-    
+
     Route::get('/sethours', 'RestaurantController@showsethours');
     Route::get('/home', 'MasterController@showhome');
 
@@ -48,7 +47,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Login pressed
-    
+
 	Route::post('/validcustomerlogin',[
     'uses'=>'CustomerController@validatecustomerlogin',
     'as'=>'validcustomerloginlink'
@@ -192,6 +191,15 @@ Route::group(['middleware' => ['web']], function () {
     'as'=>'removefromfavourites'
     ]);
 
+    Route::post('/feedback/submit',[
+    'uses'=>'CustomerController@addfeedback',
+    'as'=>'submitfeedback',
+    ]);
+
+    Route::get('/feedback/{rest_id}',[
+    'uses'=>'CustomerController@showfeedbackpage',
+    'as'=>'showfeedback'
+    ]);
 	//Restuarant pages
     Route::get('/closerestaurant/{restaurant}',[
     'uses'=>'RestaurantController@closerestaurant',
@@ -287,6 +295,18 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'RestaurantController@finishorder',
     'as'=>'finishorder'
     ]);
+
+    Route::post('/createorder',[ //danny testing order confirmation
+    'uses'=>'CustomerController@createOrder',
+    'as'=>'createorder',
+    ]);
+
+
+    Route::get('/test', function() //danny testing order confirmation
+    {
+      //  return view('email.ratingrequest');
+            return view('debugging');
+    });
 
     Route::get('/cancelorder/{order}',[
     'uses'=>'RestaurantController@cancelorder',

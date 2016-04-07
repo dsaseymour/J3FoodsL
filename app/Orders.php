@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Orders extends Model
 {
     protected $table = 'orders';//this is the name of the table that this model is linked to if the table name is different change the value
-
     protected $primaryKey = 'order_id';
-	protected $fillable = ['submit_time','completed','quantity','special_instructions'];
+	protected $fillable = ['submit_time','completed','quantity','special_instructions','item_id','restaurant_id', 'customer_id'];
 	public $timestamps = false;
 
     public function restaurant(){
@@ -27,4 +26,5 @@ class Orders extends Model
     public function item(){
     	return $this->belongsTo(Item::Class, 'item_id');
     }
+
 }

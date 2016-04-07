@@ -12,10 +12,10 @@ class LoginController extends Controller
           //return view('auth.login',['isRest' => false]);
     	return view('auth.login');
   }
-  
+
    public function showrestaurantlogin(){
           //return view('auth.login',['isRest' => true]);
    		return view ('auth.restaurantLogin');
   }
-  
+
 }
