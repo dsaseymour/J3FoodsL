@@ -46,7 +46,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Monday
-                                    <input name="mon" value="mon" type="hidden"/>
+                                    <input name="mon" value=1 type="hidden"/>
                                  </td>
                                  <td>
                                     <input name="mon_open" type="hidden" value="0"/>
@@ -74,7 +74,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Tuesday
-                                    <input name="tue" value="tue" type="hidden"/>
+                                    <input name="tue" value=2 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
@@ -103,7 +103,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Wednesday
-                                    <input name="wed" value="wed" type="hidden"/>
+                                    <input name="wed" value=3 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
@@ -132,7 +132,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Thursday
-                                    <input name="thur" value="thur" type="hidden"/>
+                                    <input name="thur" value=4 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
@@ -160,7 +160,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Friday
-                                    <input name="fri" value="fri" type="hidden"/>
+                                    <input name="fri" value=5 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
@@ -189,7 +189,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Saturday
-                                    <input name="sat" value="sat" type="hidden"/>
+                                    <input name="sat" value=6 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>
@@ -218,7 +218,7 @@ J3 Foods - Online Food Ordering
                               <tr>
                                  <td>
                                     Sunday
-                                    <input name="sun" value="sun" type="hidden"/>
+                                    <input name="sun" value=7 type="hidden"/>
                                  </td>
                                  <!-- Day-->
                                  <td>

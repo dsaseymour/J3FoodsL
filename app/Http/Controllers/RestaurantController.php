@@ -105,7 +105,9 @@ class RestaurantController extends Controller
     }
 
     public function showsethours(){
-      return view('restaurantcontent.restaurant-sethours');
+      $dayNumbers = array(1,2,3,4,5,6,7);
+      $dayString = array("mon","tue","wed","thur","fri","sat","sun");
+      return view('restaurantcontent.restaurant-sethours',compact($dayNumbers,$dayString));
     }
 
 
