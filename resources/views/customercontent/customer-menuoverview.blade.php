@@ -184,7 +184,13 @@ J3 Foods - Online Food Ordering
   </div>
   <hr/>
 
-  @foreach($restaurant->categories as $category)
+  <?php
+    $categories = $restaurant->categories;
+    $categories = $categories->sortBy(function($category){
+      return $category->category_order;
+    });
+  ?>
+  @foreach($categories as $category)
     <div class="menu-category">
       <h1>{{$category->category_name}}</h1>
       <div class="menu-items">
