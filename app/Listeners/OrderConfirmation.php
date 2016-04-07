@@ -38,31 +38,27 @@ class OrderConfirmation
     public function handle(OrderWasSubmitted $event)
     {
         $orderparam=$event->order;
-        $user = User::find($orderparam->customer_id);
+        $customer = User::find($orderparam->customer_id);
         $restaurant=Restaurant::find($orderparam->restaurant_id);
         $fullorderdescription=$this->createOrderSummary($orderparam);
 
-        Mail::send('email.orderconfirmation',['order'=>$orderparam,'user'=>$user,'restaurant'=>$restaurant,'fullorderdescription'=>$fullorderdescription], function($message) use ($event){
-        $order=$event->order;
-        $user = User::find($order->customer_id);
-        $email=$user->email;
+        Mail::send('email.orderconfirmation',['order'=>$orderparam,'customer'=>$customer,'restaurant'=>$restaurant,'fullorderdescription'=>$fullorderdescription], function($message) use ($event){
+        $customer = User::find($orderparam->customer_id);
+        $email=$customer->email;
         $message->to($email)->subject('Your Order has been processed');
         });
 
-        Mail::send('email.ratingrequest',['order'=>$orderparam,'user'=>$user, 'restaurant'=>$restaurant], function($message) use ($event){
-            $order=$event->order;
-            $user = User::find($order->customer_id);
-            $email=$user->email;
-            $name=$user->name;
+        Mail::send('email.ratingrequest',['order'=>$orderparam,'customer'=>$customer, 'restaurant'=>$restaurant], function($message) use ($orderparam){
+            $customer = User::find($orderparam->customer_id);
+            $email=$customer->email;
+            $name=$customer->name;
 		$message->to($email)->subject($name."".' Will You Rate Your Experience At J3Foods?');
 		});
 
-        $customer=User::find($orderparam->customer_id);
-        Mail::send('email.ordernotification',['order'=>$orderparam,'user'=>$user,'restaurant'=>$restaurant,'customer'=>$customer,'fullorderdescription'=>$fullorderdescription], function($message) use ($event){
-        $order=$event->order;
-        $user = User::find($order->restaurant_id);
-        $email=$user->email;
-        $orderno=$order->order_id;
+        Mail::send('email.ordernotification',['order'=>$orderparam,'customer'=>$customer,'restaurant'=>$restaurant,'fullorderdescription'=>$fullorderdescription], function($message) use ($orderparam){
+        $customer = User::find($orderparam->restaurant_id);
+        $email=$customer->email;
+        $orderno=$orderparam->order_id;
         $message->to($email)->subject('New Order#'.$orderno." ".'Has Been Submitted');
         });
 
@@ -83,7 +79,6 @@ class OrderConfirmation
                   $itemprice_set;
                   $orderquantity_set;
                         $i=0;
-
                         foreach ($orderset as $order){
                         		 $itemname_set[$i]=$order->item_id;
                         		 $optionname_set[$i]=$order->option_id;
@@ -94,7 +89,9 @@ class OrderConfirmation
                         }
                         $orderquantity_set=array_reverse($orderquantity_set);
                         for($j = $i-1; $j >= 0; $j--){
-                        $itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->where('restaurant_id', $order->restaurant_id)->first();
+                            $itemsobject=DB::table('items')
+                            ->where('item_id',$itemname_set[$j])->where('rest_id', $order->restaurant_id)
+                            ->first();
                         $itemname_set[$j]=$itemsobject->name;
                         $itemprice_set[$j]=$itemsobject->price;
 

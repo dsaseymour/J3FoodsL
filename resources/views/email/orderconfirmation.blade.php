@@ -8,18 +8,18 @@
 <?php
 $totals;
 $i=0;
-foreach ($fullorderdescription as $orderdescription){
-          echo"<p>Item ".$requestdesc['itemname_set'][$i]."</p>";
-          echo"<p>Selected Options:".$requestdesc['optionname_set'][$i]."
-          Selected Choices:".$requestdesc['choicename_set'][$i]."
+foreach ($fullorderdescription['itemname_set'] as $iterate){
+          echo"<p>Item ".$fullorderdescription['itemname_set'][$i]."</p>";
+          echo"<p>Selected Options:".$fullorderdescription['optionname_set'][$i]."
+          Selected Choices:".$fullorderdescription['choicename_set'][$i]."
           </p>";
           echo"
-          <p>Special Instructions:".$requestdesc['specialinstruction_set'][$i]."
+          <p>Special Instructions:".$fullorderdescription['specialinstruction_set'][$i]."
           </p>";
-          echo"<p> Quantity:".$requestdesc['orderquantity_set'][$i]."
-          Price: ".$requestdesc['itemprice_set'][$i]."
+          echo"<p> Quantity:".$fullorderdescription['orderquantity_set'][$i]."
+          Price: ".$fullorderdescription['itemprice_set'][$i]."
           </p>";
-          $totals[$i]=$requestdesc['orderquantity_set'][$i]*$requestdesc['itemprice_set'][$i];
+          $totals[$i]=$fullorderdescription['orderquantity_set'][$i]*$fullorderdescription['itemprice_set'][$i];
           $i++;
 }
 

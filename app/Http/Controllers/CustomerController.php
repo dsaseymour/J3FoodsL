@@ -209,7 +209,6 @@ public function showfeedbackpage($rest_id){
 
 
 public function createOrder(Request $request){
-	/*
 	$specialinstructions=NULL;
 if($request->special_instructions!=NULL){
 $specialinstructions=$request->special_instructions;
@@ -221,62 +220,12 @@ $specialinstructions=$request->special_instructions;
 					'quantity' => $request->quantity,
 					'specialinstructions' => $specialinstructions,
       ]);
-		*/
-//	Event::fire(new OrderWasSubmitted($order));
 
-$fullorderdescription=DB::table('orders')
-            ->where('order_id', '=', '1')
-						->where('restaurant_id', '=', '1')
-						->where('customer_id', '=', '44')
-						->get();
+	Event::fire(new OrderWasSubmitted($order));
 
-$summary=$this->createOrderSummary($fullorderdescription);
-return view('login.forgottenpassword')->with(['order'=>$fullorderdescription[0],'fullorderdescription'=>$summary ]);
-
-//  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
-
+  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 }
 
-public function createOrderSummary($orderset){
-//item name array
-//option name array
-//choice name array
-//special instructions array
-$itemname_set;
-$optionname_set;
-$choicename_set;
-$specialinstruction_set;
-$itemprice_set;
-$orderquantity_set;
-$i=0;
-
-foreach($orderset as $order){
-		 $itemname_set[$i]=$order->item_id;
-		 $optionname_set[$i]=$order->option_id;
-		 $choicename_set[$i]=$order->choice_id;
-		 $specialinstruction_set[$i]=$order->special_instructions;
-		 $orderquantity_set[$i]=$order->quantity;
-		 $i++;
-}
-
-$orderquantity_set=array_reverse($orderquantity_set);
-for($j = $i-1; $j >= 0; $j--){
-$itemsobject=DB::table('items')
-->where('item_id',$itemname_set[$j])->where('rest_id', $order->restaurant_id)
-->first();
-$itemname_set[$j]=$itemsobject->name;
-$itemprice_set[$j]=$itemsobject->price;
-
-$optionsobject=DB::table('options')->where('id',$optionname_set[$j])->first();
-if($optionsobject){$optionname_set[$j]=$optionsobject->name;}
-else{$optionname_set[$j]=NULL;}
-
-$choiceobject=DB::table('option_choices')->where('choice_id',$choicename_set[$j])->first();
-if($choiceobject){$choicename_set[$j]=$choiceobject->name;}
-else{$choicename_set[$j]=NULL;}
-}
-return(['itemname_set'=>$itemname_set,'optionname_set'=>$optionname_set,'choicename_set'=>$choicename_set,'specialinstruction_set'=>$specialinstruction_set,'orderquantity_set'=>$orderquantity_set,'itemprice_set'=>$itemprice_set]);
-}
 
 
 }
