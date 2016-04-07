@@ -226,11 +226,12 @@ $specialinstructions=$request->special_instructions;
 
 $fullorderdescription=DB::table('orders')
             ->where('order_id', '=', '1')
-						->where('restaurant_id', '=', '47')
-						->where('customer_id', '=', '7')
+						->where('restaurant_id', '=', '1')
+						->where('customer_id', '=', '44')
 						->get();
 
-return view('login.forgottenpassword')->with('requestdesc',$this->createOrderSummary($fullorderdescription));
+$summary=$this->createOrderSummary($fullorderdescription);
+return view('login.forgottenpassword')->with(['order'=>$fullorderdescription[0],'fullorderdescription'=>$summary ]);
 
 //  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 
@@ -246,7 +247,7 @@ $optionname_set;
 $choicename_set;
 $specialinstruction_set;
 $itemprice_set;
-$orderquantity_set=NULL;
+$orderquantity_set;
 $i=0;
 
 foreach($orderset as $order){
@@ -257,9 +258,12 @@ foreach($orderset as $order){
 		 $orderquantity_set[$i]=$order->quantity;
 		 $i++;
 }
+
 $orderquantity_set=array_reverse($orderquantity_set);
 for($j = $i-1; $j >= 0; $j--){
-$itemsobject=DB::table('items')->where('item_id',$itemname_set[$j])->where('restaurant_id', $order->restaurant_id)->first();
+$itemsobject=DB::table('items')
+->where('item_id',$itemname_set[$j])->where('rest_id', $order->restaurant_id)
+->first();
 $itemname_set[$j]=$itemsobject->name;
 $itemprice_set[$j]=$itemsobject->price;
 
