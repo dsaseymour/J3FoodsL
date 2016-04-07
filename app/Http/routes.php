@@ -182,6 +182,11 @@ Route::group(['middleware' => ['web']], function () {
     'uses'=>'CustomerController@showfeedbackpage',
     'as'=>'showfeedback'
     ]);
+
+    Route::post('/cart',[
+        'uses'=>'CustomerController@addItem',
+        'as'=>'addtocart'
+    ]);
 	//Restuarant pages
     Route::get('/sethours', 'RestaurantController@showsethours');
 

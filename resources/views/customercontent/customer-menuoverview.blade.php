@@ -261,21 +261,19 @@ J3 Foods - Online Food Ordering
           <h4>Item options</h4>
         </div>
         <div class="modal-body">
-          <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
+          <form action="{{route('addtocart')}}" method="post" role="form">
             <div id="item-option-group" class="form-group"></div>
             <div id="item-quantity" class="form-group">
               <label for="qty">Quantity</label>
               <input type="number" name="qty" min="1" max="99" value="1" class="form-control"/>
             </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Add to order</button>
+            </div>
           <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
-        <div class="modal-footer">
-          <div class = "btn-group btn-group-lg">
-            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Add to Shopping Cart</button></a>
-            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Return</button></a>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>

@@ -140,6 +140,10 @@ class CustomerController extends Controller
     return view('customercontent.confirmationpage', compact('order'));
   }
 
+  public function addItem(Request $request){
+    return $request->all();
+  }
+
   public function removeItem($item){
     if(\Auth::check()) {
        $user = \Auth::user()->id;
