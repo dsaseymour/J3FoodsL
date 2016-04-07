@@ -33,250 +33,252 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
     
-    Route::get('/sethours', 'RestaurantController@showsethours');
     Route::get('/home', 'MasterController@showhome');
 
-	Route::get('/dbtest', [
-    'uses'=>'CustomerController@showrestaurant',
-    'as'=>'dbtest'
-    ]);
+    Route::get('/dbtest', [
+        'uses'=>'CustomerController@showrestaurant',
+        'as'=>'dbtest'
+        ]);
 
 	//Home
-	Route::get('/', [
-    'uses'=>'MasterController@showhome',
-    'as'=>'homelink'
-    ]);
+    Route::get('/', [
+        'uses'=>'MasterController@showhome',
+        'as'=>'homelink'
+        ]);
 
 	//Login pressed
     
-	Route::post('/validcustomerlogin',[
-    'uses'=>'CustomerController@validatecustomerlogin',
-    'as'=>'validcustomerloginlink'
-    ]);
+    Route::post('/validcustomerlogin',[
+        'uses'=>'CustomerController@validatecustomerlogin',
+        'as'=>'validcustomerloginlink'
+        ]);
 
     Route::post('/searchrestaurants',[
-    'uses'=>'CustomerController@searchrestaurants',
-    'as'=>'searchrestaurants'
-    ]);
+        'uses'=>'CustomerController@searchrestaurants',
+        'as'=>'searchrestaurants'
+        ]);
 
 	//Login pages
 
-	Route::get('/loginRest', [
-    'uses'=>'LoginController@showrestaurantlogin',
-    'as'=>'loginrest'
-    ]);
+    Route::get('/loginRest', [
+        'uses'=>'LoginController@showrestaurantlogin',
+        'as'=>'loginrest'
+        ]);
 
-	Route::get('/loginCust', [
-    'uses'=>'LoginController@showcustomerlogin',
-    'as'=>'logincust'
-    ]);
+    Route::get('/loginCust', [
+        'uses'=>'LoginController@showcustomerlogin',
+        'as'=>'logincust'
+        ]);
 
-	/*Route::get('/customerlogin',[
-    'uses'=>'LoginController@showcustomerlogin',
-    'as'=>'customerloginlink'
-    ]);
+    Route::get('/password/reset',[
+       'uses'=>'MasterController@passwordreset',
+       'as'=>'passwordreset'
+       ]);
 
-	Route::get('/restaurantlogin',[
-    'uses'=>'LoginController@showrestaurantlogin',
-    'as'=>'restaurantloginlink'
-    ]);*/
-
-	Route::get('/password/reset',[
-     'uses'=>'MasterController@passwordreset',
-     'as'=>'passwordreset'
-     ]);
-
-	 /*
-	 Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-
-
-	//Register Pages
-   /* Route::get('/register/{user?}',[
-    'uses'=>'RegisterController@register',
-    'as'=>'registerlink'
-	]);*/
-
-	Route::get('/register',[
-    'uses'=>'RegisterController@register',
-    'as'=>'registerlink'
-	]);
+    Route::get('/register',[
+        'uses'=>'RegisterController@register',
+        'as'=>'registerlink'
+        ]);
 
     Route::get('/customerregister',[
-    'uses'=>'RegisterController@showcustomerregister',
-    'as'=>'registercustomer'
-    ]);
+        'uses'=>'RegisterController@showcustomerregister',
+        'as'=>'registercustomer'
+        ]);
 
-	Route::get('/restaurantregister',[
+    Route::get('/restaurantregister',[
         'uses'=>'RegisterController@showrestaurantregister',
         'as'=>'registerrestaurant'
         ]);
 
-		Route::get('/restaurantregisterinfo',[
+    Route::get('/restaurantregisterinfo',[
         'uses'=>'RegisterController@showrestaurantregisterinfo',
         'as'=>'registerrestaurantinfo'
         ]);
 
 
 	//Customer pages
-	Route::post('/customerupdateinfo',[
-    'uses'=>'CustomerController@updateinfo',
-    'as'=>'customerupdateinfo',
-    ]);
+    Route::post('/customerupdateinfo',[
+        'uses'=>'CustomerController@updateinfo',
+        'as'=>'customerupdateinfo',
+        ]);
 
     Route::get('/customeroverview',[
-    'uses'=>'CustomerController@showcustomeroverview',
-    'as'=>'customeroverviewlink',
-    ]);
+        'uses'=>'CustomerController@showcustomeroverview',
+        'as'=>'customeroverviewlink',
+        ]);
 
     Route::get('/sortalphabetically',[
-    'uses'=>'CustomerController@sortrestaurantlistalphabetically',
-    'as'=>'sortalphabetically'
-    ]);
+        'uses'=>'CustomerController@sortrestaurantlistalphabetically',
+        'as'=>'sortalphabetically'
+        ]);
 
     Route::get('/order/confirmed',[
-    'uses'=>'CustomerController@orderconfirmandnotify',
-    'as'=>'orderconfirmlink',
-    ]);
+        'uses'=>'CustomerController@orderconfirmandnotify',
+        'as'=>'orderconfirmlink',
+        ]);
 
 
     Route::get('/menu/{restaurant}',[
-    'uses'=>'CustomerController@showcustomermenu',
-    'as'=>'customermenuoverviewlink'
-    ]);
+        'uses'=>'CustomerController@showcustomermenu',
+        'as'=>'customermenuoverviewlink'
+        ]);
 
     Route::get('/options/{item}',[
-    'uses'=>'CustomerController@itemOptions',
-    'as'=>'menuitemoptions'
-    ]);
+        'uses'=>'CustomerController@itemOptions',
+        'as'=>'menuitemoptions'
+        ]);
 
     Route::get('/customerconfirmation',[
-    'uses'=>'CustomerController@showcustomerconfirmation',
-    'as'=>'customerconfirmationlink'
-    ]);
+        'uses'=>'CustomerController@showcustomerconfirmation',
+        'as'=>'customerconfirmationlink'
+        ]);
 
     Route::get('/cpeditaddress',[
-    'uses'=>'CustomerController@showcpeditaddress',
-    'as'=>'cpeditaddresslink'
-    ]);
+        'uses'=>'CustomerController@showcpeditaddress',
+        'as'=>'cpeditaddresslink'
+        ]);
 
     Route::get('/cpeditorders',[
-    'uses'=>'CustomerController@showcpeditorders',
-    'as'=>'showcpeditorderslink'
-    ]);
+        'uses'=>'CustomerController@showcpeditorders',
+        'as'=>'showcpeditorderslink'
+        ]);
 
     Route::get('/customerprofile',[
-    'uses'=>'CustomerController@showcustomerprofile',
-    'as'=>'customerprofilelink'
-    ]);
+        'uses'=>'CustomerController@showcustomerprofile',
+        'as'=>'customerprofilelink'
+        ]);
 
     Route::get('/addtofavourites/{restaurant}',[
-    'uses'=>'CustomerController@addcustomerfavourite',
-    'as'=>'addtofavourites'
-    ]);
+        'uses'=>'CustomerController@addcustomerfavourite',
+        'as'=>'addtofavourites'
+        ]);
 
     Route::get('/removefromfavourites/{restaurant}',[
-    'uses'=>'CustomerController@deletecustomerfavourite',
-    'as'=>'removefromfavourites'
-    ]);
+        'uses'=>'CustomerController@deletecustomerfavourite',
+        'as'=>'removefromfavourites'
+        ]);
 
 	//Restuarant pages
+    Route::get('/sethours', 'RestaurantController@showsethours');
+
     Route::get('/closerestaurant/{restaurant}',[
-    'uses'=>'RestaurantController@closerestaurant',
-    'as'=>'closerestaurant',
-    ]);
+        'uses'=>'RestaurantController@closerestaurant',
+        'as'=>'closerestaurant',
+        ]);
 
     Route::post('/edititem/{item}',[
-    'uses'=>'RestaurantController@edititem',
-    'as'=>'edititem',
-    ]);
+        'uses'=>'RestaurantController@edititem',
+        'as'=>'edititem',
+        ]);
 
     Route::get('/deleteitem/{item}',[
-    'uses'=>'RestaurantController@deleteitem',
-    'as'=>'deleteitem',
-    ]);
+        'uses'=>'RestaurantController@deleteitem',
+        'as'=>'deleteitem',
+        ]);
 
     Route::post('/additem',[
-    'uses'=>'RestaurantController@additemtomenu',
-    'as'=>'additem',
-    ]);
+        'uses'=>'RestaurantController@additemtomenu',
+        'as'=>'additem',
+        ]);
 
     Route::post('/addcategory',[
-    'uses'=>'RestaurantController@addcategory',
-    'as'=>'addcategory',
-    ]);
+        'uses'=>'RestaurantController@addcategory',
+        'as'=>'addcategory',
+        ]);
 
     Route::post('/sethours',[
-    'uses'=>'RestaurantController@storehours',
-    'as'=>'restaurantsethours',
-    ]);
+        'uses'=>'RestaurantController@storehours',
+        'as'=>'restaurantsethours',
+        ]);
+
+    Route::post('/restaurantprofilehours',[
+        'uses'=>'RestaurantController@updatehours',
+        'as'=>'restaurantupdatehours',
+        ]);
 
     Route::post('/restaurantprofile',[
-    'uses'=>'RestaurantController@updateinfo',
-    'as'=>'restaurantupdateinfo',
-    ]);
+        'uses'=>'RestaurantController@updateinfo',
+        'as'=>'restaurantupdateinfo',
+        ]);
 
     Route::get('/restauranthistory',[
-    'uses'=>'RestaurantController@showrestauranthistory',
-    'as'=>'restauranthistorylink'
-    ]);
+        'uses'=>'RestaurantController@showrestauranthistory',
+        'as'=>'restauranthistorylink'
+        ]);
 
     Route::get('/restaurantmadmin',[
-    'uses'=>'RestaurantController@showrestaurantmadmin',
-    'as'=>'restaurantmadminlink'
-    ]);
+        'uses'=>'RestaurantController@showrestaurantmadmin',
+        'as'=>'restaurantmadminlink'
+        ]);
 
     Route::get('/restaurantmedit',[
-    'uses'=>'RestaurantController@showrestaurantmedit',
-    'as'=>'restaurantmeditlink'
-    ]);
+        'uses'=>'RestaurantController@showrestaurantmedit',
+        'as'=>'restaurantmeditlink'
+        ]);
 
     Route::get('/restaurantmoverview',[
-    'uses'=>'RestaurantController@showrestaurantmoverview',
-    'as'=>'restaurantmoverviewlink'
-    ]);
+        'uses'=>'RestaurantController@showrestaurantmoverview',
+        'as'=>'restaurantmoverviewlink'
+        ]);
 
     Route::get('/restaurantoverview',[
-    'uses'=>'RestaurantController@showrestaurantoverview',
-    'as'=>'restaurantoverviewlink'
-     ]);
+        'uses'=>'RestaurantController@showrestaurantoverview',
+        'as'=>'restaurantoverviewlink'
+        ]);
 
     Route::get('/restaurantprofile',[
-    'uses'=>'RestaurantController@showrestaurantprofile',
-    'as'=>'restaurantprofilelink'
-    ]);
+        'uses'=>'RestaurantController@showrestaurantprofile',
+        'as'=>'restaurantprofilelink'
+        ]);
 
     Route::get('/restaurantprofilerestrictions',[
-    'uses'=>'RestaurantController@showrestaurantrestrictions',
-    'as'=>'restaurantprofilerestrictionslink'
-     ]);
+        'uses'=>'RestaurantController@showrestaurantrestrictions',
+        'as'=>'restaurantprofilerestrictionslink'
+        ]);
 
     Route::get('/restaurantprofilehours',[
-    'uses'=>'RestaurantController@showrestaurantprofilehours',
-    'as'=>'restaurantprofilehourslink'
-    ]);
+        'uses'=>'RestaurantController@showrestaurantprofilehours',
+        'as'=>'restaurantprofilehourslink'
+        ]);
 
     Route::get('/registerconfirm',[
-    'uses'=>'RegisterController@showregisterconfirm',
-    'as'=>'registerconfirmlink'
-    ]);
+        'uses'=>'RegisterController@showregisterconfirm',
+        'as'=>'registerconfirmlink'
+        ]);
 
-	 Route::get('register/verify/{confirmationCode}', [
+    Route::get('register/verify/{confirmationCode}', [
       'uses' => 'RegisterController@confirm',
-	     'as' => 'confirmation_path'
-	 ]);
+      'as' => 'confirmation_path'
+      ]);
 
     Route::get('/forgotpassword',[
-    'uses'=>'AuthController@showforgotpassword',
-    'as'=>'forgotpasswordlink'
-    ]);
-
-
-
+        'uses'=>'AuthController@showforgotpassword',
+        'as'=>'forgotpasswordlink'
+        ]);
 
 //DEBUGGGING
+     /*
+     Route::post('/restaurantlogin',[
+         'uses'=>'RestaurantController@restaurantlogin',
+         'as'=>'restaurantlogin'
+         ]);*/
+
+
+    //Register Pages
+   /* Route::get('/register/{user?}',[
+    'uses'=>'RegisterController@register',
+    'as'=>'registerlink'
+    ]);*/
+
+    /*Route::get('/customerlogin',[
+    'uses'=>'LoginController@showcustomerlogin',
+    'as'=>'customerloginlink'
+    ]);
+
+    Route::get('/restaurantlogin',[
+    'uses'=>'LoginController@showrestaurantlogin',
+    'as'=>'restaurantloginlink'
+    ]);*/
     /*
 Route::get('/test', function()
 {
