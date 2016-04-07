@@ -1,4 +1,4 @@
-Hi {{$user['name']}}, we love feedback, could you take a moment to share your experience with {{$restaurant['companyname']}} ?
+Hi {{$customer['name']}}, we love feedback, could you take a moment to share your experience with {{$restaurant['companyname']}} ?
 <br />
 Please select an overall rating:
 <br />

@@ -207,22 +207,15 @@ public function showfeedbackpage($rest_id){
 	return view('rating.restaurantfeedback',$data);
 }
 
-
 public function createOrder(Request $request){
-	$specialinstructions=NULL;
-if($request->special_instructions!=NULL){
-$specialinstructions=$request->special_instructions;
-}
 	$order=Orders::create([
           'item_id' => $request->item_id,
 					'restaurant_id' => $request->restaurant_id,
 					'customer_id' => $request->customer_id,
 					'quantity' => $request->quantity,
-					'specialinstructions' => $specialinstructions,
+					'special_instructions' => $request->special_instructions,
       ]);
-
 	Event::fire(new OrderWasSubmitted($order));
-
   return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
 }
 
