@@ -140,10 +140,18 @@ J3 Foods - Online Food Ordering
   @include('includes.add-category')
 </div>
 
+
 <button class="btn btn-primary " id="savecategorylist" data-token="{{ csrf_token() }}"> Save Category List</button>
 <meta name="csrf_token" content="{{ csrf_token() }}" />
+
+  <?php
+    $categories = $restaurant->categories;
+    $categories = $categories->sortBy(function($category){
+      return $category->category_order;
+    });
+  ?>
 <ul id="sortable">
-@foreach($restaurant->categories as $category)
+@foreach($categories as $category)
 <li class="menu-category" id="{{$category->id}}" >
   <h1 >{{$category->category_name}}</h1>
   <div class="menu-items" >

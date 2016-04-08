@@ -14,6 +14,8 @@ use App\Category;
 use App\Special;
 use App\Orders;
 use Carbon\Carbon;
+use App\Option;
+use App\OptionChoice;
 use DB;
 use Validator;
 
@@ -222,10 +224,120 @@ class RestaurantController extends Controller
       }
     }
 
-    $updateItem->save();
-    return redirect()->action('RestaurantController@showrestaurantmoverview');
 
+if ($request->are_options == "on"){
+
+    if($updateItem->option_id != null){
+
+      $textOption = Option::where('item_id',$item->item_id)->where('type',"text")->first(); //saving text option
+      $textOption->item_id = $updateItem->item_id;
+      $textOption->type = "text";
+      $textOption->name = $request->text_option;
+      $textOption->save();
+
+      $comboBox =  Option::where('item_id',$item->item_id)->where('type',"combo")->first(); //saving combo option
+      $comboBox->item_id = $updateItem->item_id;
+      $comboBox->type = "combo";
+      $comboBox->name = $request->combo_name;
+      $comboBox->save();
+
+      $comboOptions =  OptionChoice::where('option_id',$comboBox->id)->where('choice_id',"1")->first();
+      $comboOptions->option_id = $comboBox->id;
+      $comboOptions->choice_id = 1;
+      $comboOptions->name = $request->combo_1;
+      $comboOptions->choice_order = 4;
+      $comboOptions->save();
+
+      $comboOptions2 = OptionChoice::where('option_id',$comboBox->id)->where('choice_id',"2")->first();
+      $comboOptions2->option_id = $comboBox->id;
+      $comboOptions2->choice_id = 2;
+      $comboOptions2->name = $request->combo_2;
+      $comboOptions2->choice_order = 2;
+      $comboOptions2->save();
+
+
+      $checkOption =  Option::where('item_id',$item->item_id)->where('type',"check")->first(); //saving checkbox option
+      $checkOption->item_id = $updateItem->item_id;
+      $checkOption->type = "check";
+      $checkOption->name = $request->check_name;
+      $checkOption->save();
+
+      $checkOptions = OptionChoice::where('option_id',$checkOption->id)->where('choice_id',"1")->first();
+
+      $checkOptions->option_id = $checkOption->id;
+      $checkOptions->choice_id = 1;
+      $checkOptions->name = $request->check_1;
+      $checkOptions->choice_order = 1;
+      $checkOptions->save();
+
+
+      $checkOptions2 = OptionChoice::where('option_id',$checkOption->id)->where('choice_id',"2")->first();
+
+      $checkOptions2->option_id = $checkOption->id;
+      $checkOptions2->choice_id = 2;
+      $checkOptions2->name = $request->check_2;
+      $checkOptions2->choice_order = 2;
+      $checkOptions2->save();
+
+        
+
+
+    }else{//new options
+
+      $textOption = new Option; //saving text option
+      $textOption->item_id = $updateItem->item_id;
+      $textOption->type = "text";
+      $textOption->name = $request->text_option;
+      $textOption->save();
+
+      $updateItem->option_id = $textOption->id;
+      $updateItem->save();
+
+      $comboBox = new Option; //saving combo option
+      $comboBox->item_id = $updateItem->item_id;
+      $comboBox->type = "combo";
+      $comboBox->name = $request->combo_name;
+      $comboBox->save();
+
+      $comboOptions = new OptionChoice;
+      $comboOptions->option_id = $comboBox->id;
+      $comboOptions->choice_id = 1;
+      $comboOptions->name = $request->combo_1;
+      $comboOptions->choice_order = 1;
+      $comboOptions->save();
+
+      $comboOptions2 = new OptionChoice;
+      $comboOptions2->option_id = $comboBox->id;
+      $comboOptions2->choice_id = 2;
+      $comboOptions2->name = $request->combo_2;
+      $comboOptions2->choice_order = 2;
+      $comboOptions2->save();
+
+
+      $checkOption = new Option; //saving checkbox option
+      $checkOption->item_id = $updateItem->item_id;
+      $checkOption->type = "check";
+      $checkOption->name = $request->check_name;
+      $checkOption->save();
+
+      $checkOptions = new OptionChoice;
+      $checkOptions->option_id = $checkOption->id;
+      $checkOptions->choice_id = 1;
+      $checkOptions->name = $request->check_1;
+      $checkOptions->choice_order = 1;
+      $checkOptions->save();
+
+      $checkOptions2 = new OptionChoice;
+      $checkOptions2->option_id = $checkOption->id;
+      $checkOptions2->choice_id = 2;
+      $checkOptions2->name = $request->check_2;
+      $checkOptions2->choice_order = 2;
+      $checkOptions2->save();
+    }
   }
+  $updateItem->save();
+  return redirect()->action('RestaurantController@showrestaurantmoverview');
+}
 
   public function savecategoryorder(Request $request){
     $categoryList = $request->testdata;
@@ -254,6 +366,64 @@ class RestaurantController extends Controller
     $newItem->rest_id = $id;
     $newItem->category_id = $request->category;
     $newItem->save();
+
+    if ($request->are_options == "on"){
+
+      $textOption = new Option; //saving text option
+      $textOption->item_id = $newItem->item_id;
+      $textOption->type = "text";
+      $textOption->name = $request->text_option;
+      $textOption->save();
+
+      $newItem->option_id = $textOption->id;
+      $newItem->save();
+
+      $comboBox = new Option; //saving combo option
+      $comboBox->item_id = $newItem->item_id;
+      $comboBox->type = "combo";
+      $comboBox->name = $request->combo_name;
+      $comboBox->save();
+
+      $comboOptions = new OptionChoice;
+      $comboOptions->option_id = $comboBox->id;
+      $comboOptions->choice_id = 1;
+      $comboOptions->name = $request->combo_1;
+      $comboOptions->choice_order = 1;
+      $comboOptions->save();
+
+      $comboOptions2 = new OptionChoice;
+      $comboOptions2->option_id = $comboBox->id;
+      $comboOptions2->choice_id = 2;
+      $comboOptions2->name = $request->combo_2;
+      $comboOptions2->choice_order = 2;
+      $comboOptions2->save();
+
+
+      $checkOption = new Option; //saving checkbox option
+      $checkOption->item_id = $newItem->item_id;
+      $checkOption->type = "check";
+      $checkOption->name = $request->check_name;
+      $checkOption->save();
+
+      $checkOptions = new OptionChoice;
+      $checkOptions->option_id = $checkOption->id;
+      $checkOptions->choice_id = 1;
+      $checkOptions->name = $request->check_1;
+      $checkOptions->choice_order = 1;
+      $checkOptions->save();
+
+      $checkOptions2 = new OptionChoice;
+      $checkOptions2->option_id = $checkOption->id;
+      $checkOptions2->choice_id = 2;
+      $checkOptions2->name = $request->check_2;
+      $checkOptions2->choice_order = 2;
+      $checkOptions2->save();
+
+
+
+    }
+
+
     return redirect()->action('RestaurantController@showrestaurantmoverview');
 
   }
