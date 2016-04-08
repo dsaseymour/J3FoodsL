@@ -54,8 +54,10 @@ J3 Foods - Online Food Ordering
                         <td>{{$currentorder->order_id}}</td>
                         <td>
                           <p>{{$currentorder->user->name}}</p>
-                          <p>{{$currentorder->user->address}}</p>
-                          <p>St. Catharines ON</p>
+                          {{-- */$Address=explode(',',$currentorder->user->address);/* --}}
+                          @foreach($Address as $addresspart)
+                          <p>{{$addresspart}}</p>
+                          @endforeach
                           <p>{{$currentorder->customer->phoneno}}</p>
                         </td>
                         {{-- */$id = $currentorder->order_id;/* --}}
