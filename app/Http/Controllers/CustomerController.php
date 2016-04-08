@@ -145,7 +145,7 @@ class CustomerController extends Controller
 
     if(!\Auth::user()->isRestaurant){
       $currentCart = \Auth::user()->customer->cart;
-      if($currentCart[0]->restaurant_id != $item->restaurant->id){
+      if(count($currentCart) > 0 && $currentCart[0]->restaurant_id != $item->restaurant->id){
         return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "You already have items in a cart with a different restaurant. Please clear your cart before adding items from this restaurant.");
       }
     }
