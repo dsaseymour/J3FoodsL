@@ -8,39 +8,39 @@ J3 Foods - Online Food Ordering
 @endsection
 
 @section("styles")
-	<style>
+  <style>
     .menu-items {
       display: block;
     }
 
-		.menu-item {
-			position: relative;
-			display: inline-block;
-		}
+    .menu-item {
+      position: relative;
+      display: inline-block;
+    }
 
     .menu-item:hover {
       cursor: pointer;
     }
-	
-		.menu-item img {
-			width: 250px;
-			height: 150px;
-		}
-		
-		.menu-item .name {
-			margin-top: 0px;
-			margin-bottom: 0px;
-			color: white;
-			background: rgb(75, 75, 75);
-			padding: 4px;
-		}
-		
-		.menu-item .price {
-			margin-top: 0px;
-			color: white;
-			background: rgb(120, 120, 120);
-			padding: 4px;
-		}
+  
+    .menu-item img {
+      width: 250px;
+      height: 150px;
+    }
+    
+    .menu-item .name {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      color: white;
+      background: rgb(75, 75, 75);
+      padding: 4px;
+    }
+    
+    .menu-item .price {
+      margin-top: 0px;
+      color: white;
+      background: rgb(120, 120, 120);
+      padding: 4px;
+    }
 
     .menu-category {
       display: block;
@@ -63,45 +63,45 @@ J3 Foods - Online Food Ordering
     #filters .form-group:first-child {
       padding-right: 16px;
     }
-	</style>
+  </style>
 @endsection
 
 
 @section('content')
 
 <div class="container">
-	<div id="restaurant-hdrcontainer" >
-		<div class="row">
-			<div id="rhdr-left" class="col-sm-3">
-				<img src="{{$restaurantInfo->image}}" />
-			</div>
-			<div id="rhdr-center" class="col-sm-6 text-center">
-				<div id="avgrating">
-					<span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-					<span id="avgrating-star" class="glyphicon glyphicon-star"></span>
-				</div>
-			</div>
-			<div id="rhdr-right" class="col-sm-3">
-				<a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
-			<div id="rhdr-info">
-				<p>
-				<span class="glyphicon glyphicon-map-marker"></span> 
-					<a href="http://maps.google.com/?q=
-						{{{ $restaurantInfo->address or '' }}},
-						{{{ $restaurantInfo->city or '' }}},
-						{{$restaurantInfo->province}}">
-						{{{ $restaurantInfo->address or 'N/A' }}}
-					</a>
-				</p>
+  <div id="restaurant-hdrcontainer" >
+    <div class="row">
+      <div id="rhdr-left" class="col-sm-3">
+        <img src="{{$restaurantInfo->image}}" />
+      </div>
+      <div id="rhdr-center" class="col-sm-6 text-center">
+        <div id="avgrating">
+          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
+          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+        </div>
+      </div>
+      <div id="rhdr-right" class="col-sm-3">
+        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
+      <div id="rhdr-info">
+        <p>
+        <span class="glyphicon glyphicon-map-marker"></span> 
+          <a href="http://maps.google.com/?q=
+            {{{ $restaurantInfo->address or '' }}},
+            {{{ $restaurantInfo->city or '' }}},
+            {{$restaurantInfo->province}}">
+            {{{ $restaurantInfo->address or 'N/A' }}}
+          </a>
+        </p>
 
-				<p>
-				<span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
-				</p>
+        <p>
+        <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+        </p>
 
-			
-			</div>
-			</div>
-	</div>
+      
+      </div>
+      </div>
+  </div>
 </div>
 
   <hr />
@@ -317,7 +317,7 @@ J3 Foods - Online Food Ordering
       //Open options window on clicking an item
       $(".menu-item").click(function(e){
         itemid = $(e.target).parent(".menu-item").data("itemid");
-        $.get('/J3/J3FoodsL/public/options/'+itemid, function(response){
+        $.get("{{route("menuitemoptions", ["item"=>""])}}/"+itemid, function(response){
           if(response != null){
             $("#item-option-group").html(response);
           }
