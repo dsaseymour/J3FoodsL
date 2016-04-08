@@ -141,8 +141,16 @@ class CustomerController extends Controller
   }
 
   public function addItem(Request $request){
-    $o = new Orders;
     $item = Item::find($_POST["itemid"]);
+
+    if(!\Auth::user()->isRestaurant){
+      $currentCart = \Auth::user()->customer->cart;
+      if($currentCart[0]->restaurant_id != $item->restaurant->id){
+        return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "You already have items in a cart with a different restaurant. Please clear your cart before adding items from this restaurant.");
+      }
+    }
+
+    $o = new Orders;
     $o->customer_id = \Auth::user()->id;
     $o->item_id = $item->item_id;
     $o->restaurant_id = $item->restaurant->id;
@@ -162,7 +170,7 @@ class CustomerController extends Controller
     }
 
     $o->save();
-    
+
     return back();
   }
 

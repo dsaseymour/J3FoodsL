@@ -94,6 +94,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'registerrestaurantinfo'
         ]);
 
+    //Error page
+    Route::get('/error' ,[
+        'uses'=>'MasterController@error',
+        'as'=>'error'
+    ]);
 
 	//Customer pages
     Route::post('/customerupdateinfo',[
@@ -187,6 +192,7 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'CustomerController@addItem',
         'as'=>'addtocart'
     ]);
+
 	//Restuarant pages
     Route::get('/sethours', 'RestaurantController@showsethours');
 
