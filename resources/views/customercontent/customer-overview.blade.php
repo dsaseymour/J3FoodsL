@@ -9,7 +9,11 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
-
+@if(session('status'))
+                  <div class="alert alert-info">
+                      {{ session('status') }}
+                  </div>
+              @endif
 {{-- */$userfavs = Auth::user()->favourites;/* --}}
 <div id="customer-overview-container" class="container ">
   <div class="row ">
@@ -55,5 +59,6 @@ J3 Foods - Online Food Ordering
 
         </div>
       </div>
+
     </div>
     @endsection

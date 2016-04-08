@@ -10,6 +10,7 @@ J3 Foods - Online Food Ordering
 
 @section('content')
 @include('includes.restaurant-nav')
+
 <section id="restaurantoverview-section">
   <div id="restaurant-overview-container" class="container">
     <div class="row ">
@@ -19,7 +20,7 @@ J3 Foods - Online Food Ordering
           <!-- Default panel contents -->
           <div class="panel-heading">
             <h1>{{$restaurant->companyname}} Orders
-              <span class="badge">10</span>
+              <span class="badge">{{count($uniqueorders)}}</span>
               @if ($restaurant->is_open == 1)
               <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
                 <span class="glyphicon glyphicon-remove"></span> CLOSE
@@ -35,65 +36,48 @@ J3 Foods - Online Food Ordering
             <div class="row">
               <div class="col-sm-12 text-center">
                 <div class="table-responsive"><!-- Start table container -->
+                  @if($uniqueorders->first())
                   <table class="table table-condensed table-hover table-bordered">
                     <thead>
                       <tr>
                         <th>Time</th>
+                        <th>Order Number</th>
                         <th>Order Info</th>
                         <th>Pickup or Delivery</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-
+                    @foreach($uniqueorders as $currentorder)
                       <tr>
-                        <td>Chicken</td>
+                        <td>{{date('D, M j Y H:i:s', strtotime($currentorder->submit_time))}}</td>
+                        <td>{{$currentorder->order_id}}</td>
                         <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
+                          <p>{{$currentorder->user->name}}</p>
+                          <p>{{$currentorder->user->address}}</p>
                           <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
+                          <p>{{$currentorder->customer->phoneno}}</p>
                         </td>
-
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
+                        {{-- */$id = $currentorder->order_id;/* --}}
+                        <td data-toggle="collapse" data-target="#orderdropdown{{$id}}" data-value="{{$id}}">
                           <div data-toggle="tooltip" title="Click to show Items of Order"  >
                             Delivery
                           </div>
                         </td>
-
-                      </tr>
-
-                      <tr>
-                        <td>Chicken</td>
                         <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
-                          <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
-                        </td>
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
-                          <div data-toggle="tooltip" title="Click to show Items of Order"  >
-                            Delivery
-                          </div>
+                          <a class="btn btn-success" href="{{ route('finishorder' , $id ) }}"> 
+                          <span class="glyphicon glyphicon-ok"></span> Order Completed</a>
+                          <a class="btn btn-danger" href="{{ route('cancelorder' , $id  ) }}"> 
+                          <span class="glyphicon glyphicon-remove"></span> Cancel Order</a>
                         </td>
                       </tr>
-
-                      <tr>
-                        <td>Chicken</td>
-                        <td>
-                          <p>Mr. Jim Smith</p>
-                          <p>James Street</p>
-                          <p>St. Catharines ON</p>
-                          <p>905-378-5843</p>
-                        </td>
-                        <td  data-toggle="collapse" data-target="#orderdropdown">
-                          <div data-toggle="tooltip" title="Click to show Items of Order"  >
-                            Delivery
-                          </div>
-                        </td>
-                      </tr>
-
+                      @include('includes.orderdropdown')
+                      @endforeach()
                     </tbody>
                   </table>
+                  @else
+                  <h4>You currently have no pending orders</h4>
+                  @endif
                 </div><!-- End table container -->
 
               </div> <!--main column -->
@@ -104,16 +88,23 @@ J3 Foods - Online Food Ordering
     </div>
   </div>
 </section>
-@include('includes.orderdropdown')
 
 @endsection
 
 @section('javascript')
 <script>
-  $(function() {
+  $(document).ready(function() {
     $("#restaurantnavlink-orders").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
-
+    setTimeout(function(){
+      $("#restaurantoverview-section").submit(function(){
+        $.ajax({
+          url: "{{ route('restaurantoverviewlink') }}",
+          type: "get",
+          data: {}
+        });
+      });
+    },300);
   });
 </script>
 @endsection

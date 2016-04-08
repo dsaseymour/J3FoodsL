@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -32,7 +31,7 @@ Wrap all routes in the web middleware to have session state and Cross-Site Reque
 Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
-    
+
     Route::get('/home', 'MasterController@showhome');
 
     Route::get('/dbtest', [
@@ -112,10 +111,16 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'sortalphabetically'
         ]);
 
-    Route::get('/order/confirmed',[
+    Route::get('/order/confirmed/{order_id}',[
+    'uses'=>'CustomerController@orderconfirmandnotify',
+    'as'=>'orderconfirmlink',
+    ]);
+
+   /* Route::get('/order/confirmed',[ // Danny Dummy Route
         'uses'=>'CustomerController@orderconfirmandnotify',
         'as'=>'orderconfirmlink',
-        ]);
+        ]);*/
+
 
 
     Route::get('/menu/{restaurant}',[
@@ -132,6 +137,16 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'CustomerController@showcustomerconfirmation',
         'as'=>'customerconfirmationlink'
         ]);
+
+    Route::get('/submitorder',[
+    'uses'=>'CustomerController@submitOrder',
+    'as'=>'submitorderlink'
+    ]);
+
+    Route::get('/removeitem/{item}',[
+    'uses'=>'CustomerController@removeItem',
+    'as'=>'removeitemlink'
+    ]);
 
     Route::get('/cpeditaddress',[
         'uses'=>'CustomerController@showcpeditaddress',
@@ -158,8 +173,22 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'removefromfavourites'
         ]);
 
+    Route::post('/feedback/submit',[
+    'uses'=>'CustomerController@addfeedback',
+    'as'=>'submitfeedback',
+    ]);
+
+    Route::get('/feedback/{rest_id}',[
+    'uses'=>'CustomerController@showfeedbackpage',
+    'as'=>'showfeedback'
+    ]);
 	//Restuarant pages
     Route::get('/sethours', 'RestaurantController@showsethours');
+
+     Route::post('/reordercategories',[
+    'uses'=>'RestaurantController@savecategoryorder',
+    'as'=>'reordercategories',
+    ]);
 
     Route::get('/closerestaurant/{restaurant}',[
         'uses'=>'RestaurantController@closerestaurant',
@@ -263,6 +292,28 @@ Route::group(['middleware' => ['web']], function () {
          'as'=>'restaurantlogin'
          ]);*/
 
+    Route::get('/finishorder/{order}',[
+    'uses'=>'RestaurantController@finishorder',
+    'as'=>'finishorder'
+    ]);
+
+    Route::post('/createorder',[ //danny testing order confirmation
+    'uses'=>'CustomerController@createOrder',
+    'as'=>'createorder',
+    ]);
+
+
+
+    Route::get('/test', function() //danny testing order confirmation
+    {
+      //  return view('email.ratingrequest');
+            return view('debugging');
+    });
+
+    Route::get('/cancelorder/{order}',[
+    'uses'=>'RestaurantController@cancelorder',
+    'as'=>'cancelorder'
+    ]);
 
     //Register Pages
    /* Route::get('/register/{user?}',[

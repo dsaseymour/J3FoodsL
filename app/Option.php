@@ -16,7 +16,4 @@ class Option extends Model
 		return $this->hasMany(OptionChoice::class);
 	}
 
-	public function selection(){
-		return $this->hasOne(OptionChoice::class, 'choice_id');
-	}
 }

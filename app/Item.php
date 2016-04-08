@@ -24,6 +24,6 @@ class Item extends Model
 	}
 
 	public function option(){
-		return $this->hasOne(Option::class);
+		return $this->hasOne(Option::class, 'item_id');
 	}
 }
