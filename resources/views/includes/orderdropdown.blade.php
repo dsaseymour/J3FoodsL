@@ -4,9 +4,9 @@
       @if($currentitem->order_id==$id)
        @if($currentitem->option_id)
         {{-- */$option = $currentitem->item->option->name;/* --}}
-        @if($currentitem->choice_id)
-          @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first())
-            {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first()->name;/* --}}
+        @if($currentitem->choice)
+          @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice)->first())
+            {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice)->first()->name;/* --}}
           @else
             {{-- */$optionselection = 'No Selection';/* --}}
           @endif

@@ -61,7 +61,11 @@ J3 Foods - Online Food Ordering
                         {{-- */$id = $currentorder->order_id;/* --}}
                         <td data-toggle="collapse" data-target="#orderdropdown{{$id}}" data-value="{{$id}}">
                           <div data-toggle="tooltip" title="Click to show Items of Order"  >
+                            @if($currentorder->pickup_delivery=='1')
                             Delivery
+                            @else
+                            Pick-up
+                            @endif
                           </div>
                         </td>
                         <td>

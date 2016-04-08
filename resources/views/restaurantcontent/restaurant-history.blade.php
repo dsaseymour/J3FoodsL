@@ -10,6 +10,8 @@ J3 Foods - Online Food Ordering
 
 @section('content')
 @include('includes.restaurant-nav')
+{{-- */use Carbon\Carbon;/* --}}
+
 <div id="history-content-container" class="container table-responsive">
 
   <table class="highchart table table-condensed table-bordered" data-graph-container-before="1" data-graph-type="column">
@@ -21,20 +23,36 @@ J3 Foods - Online Food Ordering
      </thead>
      <tbody>
         <tr>
-            <td>January</td>
-            <td>8000</td>
+            <td>{{Carbon::now()->subMonths(3)->format('F')}}</td>
+            {{-- */$sum=0;/* --}}
+            @foreach($threemonthorders as $order)
+            {{-- */$sum=$sum+($order->item->price*$order->quantity);/* --}}
+            @endforeach
+            <td>{{$sum}}</td>
         </tr>
         <tr>
-            <td>February</td>
-            <td>12000</td>
+            <td>{{Carbon::now()->subMonths(2)->format('F')}}</td>
+            {{-- */$sum=0;/* --}}
+            @foreach($twomonthorders as $order)
+            {{-- */$sum=$sum+($order->item->price*$order->quantity);/* --}}
+            @endforeach
+            <td>{{$sum}}</td>
         </tr>
         <tr>
-            <td>March</td>
-            <td>12000</td>
+            <td>{{Carbon::now()->subMonth()->format('F')}}</td>
+            {{-- */$sum=0;/* --}}
+            @foreach($lastmonthorders as $order)
+            {{-- */$sum=$sum+($order->item->price*$order->quantity);/* --}}
+            @endforeach
+            <td>{{$sum}}</td>
         </tr>
         <tr>
-            <td>April</td>
-            <td>12000</td>
+            <td>{{Carbon::now()->format('F')}}</td>
+            {{-- */$sum=0;/* --}}
+            @foreach($currentmonthorders as $order)
+            {{-- */$sum=$sum+($order->item->price*$order->quantity);/* --}}
+            @endforeach
+            <td>{{$sum}}</td>
         </tr>
 
     </tbody>

@@ -31,14 +31,26 @@ J3 Foods - Online Food Ordering
             {{-- */$totalprice=0;/* --}}
             {{-- */$orderid = $order[0]->order_id;/* --}}
             @foreach($order as $currentitem)
+              {{-- */$optionselection = '';/* --}}
               @if($currentitem->option_id)
                 {{-- */$option = $currentitem->item->option->name;/* --}}
-                @if($currentitem->choice_id)
-                  @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first())
-                    {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first()->name;/* --}}
-                  @else
-                    {{-- */$optionselection = 'No Selection';/* --}}
-                  @endif
+                @if($currentitem->choice)
+                  {{-- */$choices=explode(',',$currentitem->choice);/* --}}
+                  @foreach($choices as $choice)
+                    @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first())
+                      @if(empty($optionselection))
+                        {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first()->name;/* --}}
+                      @else
+                        {{-- */$optionselection = $optionselection.", ".$currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first()->name;/* --}}
+                      @endif
+                    @else
+                      @if(empty($optionselection))
+                        {{-- */$optionselection = $choice;/* --}}
+                      @else
+                        {{-- */$optionselection = $optionselection.", ".$choice;/* --}}
+                      @endif
+                    @endif
+                  @endforeach
                 @else
                   {{-- */$optionselection = 'No Selection';/* --}}
                 @endif
@@ -86,6 +98,15 @@ J3 Foods - Online Food Ordering
             <tr>
               <td>Minimum Order Fee</td>
               <td>$7</td>
+            </tr>
+
+            <tr>
+              <td>Delivery or Pickup</td>
+              @if($order[0]->pickup_delivery=='1')
+              <td>Delivery</td>
+              @else
+              <td>Pick-up</td>
+              @endif
             </tr>
           </tbody>
         </table>

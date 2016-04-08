@@ -272,7 +272,17 @@ class RestaurantController extends Controller
   }
 
   public function showrestauranthistory(){
-    return view('restaurantcontent.restaurant-history');
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
+
+    $currentmonth = Carbon::now()->month;
+    $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
+    $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
+    $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
+    $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
+
+    return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
   }
 
   public function showrestaurantmadmin(){
