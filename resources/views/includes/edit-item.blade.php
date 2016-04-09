@@ -53,35 +53,74 @@
             <input type="text" class="form-control" name="special_price" >
           </div>
           @endif
-       
-      </div>
-      <div id="option{{$item->item_id}}" class="tab-pane fade">
-        <label class="list-group-item-heading"> Item has options? </label>
-        <input data-toggle="collapse" data-target="#are_options{{$item->item_id}}" type="checkbox" class="form-control" name="are_options" >
-        <div id="are_options{{$item->item_id}}" class ="collapse">
-              <label class="list-group-item-heading">Text option</label>
-              <input type="text" class="form-control" name="text_option">
-              <hr>
-              <label class="list-group-item-heading">Combobox name</label>
-              <input type="text" class="form-control" name="combo_name">
-              <label class="list-group-item-heading">Choose one of</label>
-              <input type="text" class="form-control" name="combo_1">
-              <input type="text" class="form-control" name="combo_2">
-              <hr>
-              <label class="list-group-item-heading">Checkbox name</label>
-              <input type="text" class="form-control" name="check_name">
-              <label class="list-group-item-heading">Choose any of</label>
-              <input type="text" class="form-control" name="check_1">
-              <input type="text" class="form-control" name="check_2">
+          
+        </div>
+        <div id="option{{$item->item_id}}" class="tab-pane fade">
+          <label class="list-group-item-heading"> Item has options? </label>
+          <input data-toggle="collapse" data-target="#are_options{{$item->item_id}}" type="checkbox" class="form-control" name="are_options" @if($item->option_id != null) checked @endif>
+          <div id="are_options{{$item->item_id}}" @if($item->option_id == null) class ="collapse" @else  class ="collapse in" @endif>
+            <div class="form-group">
+              <label class="radio-inline list-group-item-heading">
+                <input type="radio" class="text-input" name="option_type" value="textbox" @if($item->option_id != null) @if($item->option->type == "text") checked @endif @endif> <strong>Textbox</strong>
+              </label>
+              <label class="radio-inline list-group-item-heading">
+                <input type="radio" class="select-one" name="option_type" value="combobox" @if($item->option_id != null) @if($item->option->type == "combo") checked @endif @endif> <strong>Select one option</strong>
+              </label>
+              <label class="radio-inline list-group-item-heading">
+                <input type="radio" class="select-many" name="option_type" value="checkbox" @if($item->option_id != null) @if($item->option->type == "check") checked @endif @endif> <strong>Select many options</strong>
+              </label>
             </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-     <button type='submit' class="btn btn-primary"/>Save Changes</button>
-    
-     </form>
- </div>
+            <div>
+              <div id="text_option"  @if($item->option_id != null) @if($item->option->type == "check") class="options collapse in text-input" @else class="options collapse text-input" @endif @else class="options collapse text-input" @endif  >
+                <label class="list-group-item-heading">Text option</label>
+                <input type="text" class="form-control" name="text_option" @if($item->option_id != null) @if($item->option->type == "text") value="{{$item->option->name}}" @endif @endif  >
+              </div>
+              <div id="combo_option" @if($item->option_id != null) @if($item->option->type == "combo") class="options collapse in select-one"   @else class="options collapse select-one" @endif  @else class="options collapse select-one"@endif>
+                <label class="list-group-item-heading">Combobox name</label>
+                <input type="text" class="form-control" name="combo_name" @if($item->option_id != null) @if($item->option->type == "combo") value="{{$item->option->name}}" @endif @endif>
+                <label class="list-group-item-heading">Choose one of</label>
+                @if($item->option_id != null) 
+                @if($item->option->type == "combo")
+                @foreach($item->option->choices as $choice)
+                <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                @endforeach
+                @else
+                <input type="text" class="form-control" name="combo_1">
+                <input type="text" class="form-control" name="combo_2">
+                @endif
+                @else
+                <input type="text" class="form-control" name="combo_1">
+                <input type="text" class="form-control" name="combo_2">
+                @endif
+              </div>
+              <div id="check_option" @if($item->option_id != null) @if($item->option->type == "check") class="options collapse in select-many"  @else class="options collapse select-many" @endif @else class="options collapse select-many" @endif>
+                <label class="list-group-item-heading">Checkbox name</label>
+                <input type="text" class="form-control" name="check_name" @if($item->option_id != null) @if($item->option->type == "check") value="{{$item->option->name}}" @endif @endif>
+                <label class="list-group-item-heading">Choose any of</label>
+                @if($item->option_id != null) 
+                  @if($item->option->type == "check")
+                    @foreach($item->option->choices as $choice)
+                    <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                    @endforeach
+                    @else
+                      <input type="text" class="form-control" name="check_1">
+                      <input type="text" class="form-control" name="check_2">
+                  @endif
+                  @else
+                    <input type="text" class="form-control" name="check_1">
+                    <input type="text" class="form-control" name="check_2">
+                @endif
+              </div>
+            </div>
 
-</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+         <button type='submit' class="btn btn-primary"/>Save Changes</button>
+         
+       </form>
+     </div>
+
+   </div>
 
 

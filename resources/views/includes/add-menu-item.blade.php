@@ -30,31 +30,50 @@
 
             </div>
           </div>
-           <div id="option" class="tab-pane fade">
+          <div id="option" class="tab-pane fade">
             <label class="list-group-item-heading"> Item has options? </label>
             <input data-toggle="collapse" data-target="#are_options" type="checkbox" class="form-control" name="are_options" >
             <div id="are_options" class ="collapse">
-              <label class="list-group-item-heading">Text option</label>
-              <input type="text" class="form-control" name="text_option">
-              <hr>
-              <label class="list-group-item-heading">Combobox name</label>
-              <input type="text" class="form-control" name="combo_name">
-              <label class="list-group-item-heading">Choose one of</label>
-              <input type="text" class="form-control" name="combo_1">
-              <input type="text" class="form-control" name="combo_2">
-              <hr>
-              <label class="list-group-item-heading">Checkbox name</label>
-              <input type="text" class="form-control" name="check_name">
-              <label class="list-group-item-heading">Choose any of</label>
-              <input type="text" class="form-control" name="check_1">
-              <input type="text" class="form-control" name="check_2">
+              <div class="form-group">
+                <label class="radio-inline">
+                  <input type="radio" class="text-input" name="option_type" value="textbox"> <strong>Textbox</strong>
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" class="select-one" name="option_type" value="combobox"> <strong>Select one option</strong>
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" class="select-many" name="option_type" value="checkbox"> <strong>Select many options</strong>
+                </label>
+              </div>
+              <div>
+                <div id="text_option" class="options collapse text-input" >
+                  <label class="list-group-item-heading">Text option</label>
+                  <input type="text" class="form-control" name="text_option">
+                </div>
+                <div id="combo_option" class="options collapse select-one">
+                  <label class="list-group-item-heading">Combobox name</label>
+                  <input type="text" class="form-control" name="combo_name">
+                  <label class="list-group-item-heading">Choose one of</label>
+                  <input type="text" class="form-control" name="combo_1">
+                  <input type="text" class="form-control" name="combo_2">
+                </div>
+                <div id="check_option" class="options collapse select-many">
+                  <label class="list-group-item-heading">Checkbox name</label>
+                  <input type="text" class="form-control" name="check_name">
+                  <label class="list-group-item-heading">Choose any of</label>
+                  <input type="text" class="form-control" name="check_1">
+                  <input type="text" class="form-control" name="check_2">
+                </div>
+              </div>
             </div>
-          </div>
         </div>
-        <div class="modal-footer">
-         <button type='submit' class="btn btn-primary"/>Save Changes</button>
-         </div>
-       </form><!-- have to end form after button !-->
+      </div>
+      <div class="modal-footer">
+       <button type='submit' class="btn btn-primary"/>Save Changes</button>
      </div>
-   </div>
+   </form><!-- have to end form after button !-->
  </div>
+</div>
+</div>
+
+
