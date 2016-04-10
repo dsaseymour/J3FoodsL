@@ -48,10 +48,10 @@ class OrderConfirmation
         $message->to($email)->subject('Your Order has been processed');
         });
 
-        Mail::send('email.ratingrequest',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($orderparam){
-            $customer = User::find($orderparam->customer_id);
-            $email=$customer->email;
-            $name=$customer->name;
+        Mail::send('email.ratingrequest',['order'=>$orderparam,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($orderparam){
+        $customer = User::find($orderparam->customer_id);
+        $email=$customer->email;
+        $name=$customer->name;
 		$message->to($email)->subject($name."".' Will You Rate Your Experience At J3Foods?');
 		});
 
