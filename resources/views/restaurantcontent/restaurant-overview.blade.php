@@ -9,6 +9,12 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
+@if(session('status'))
+                  <div class="alert alert-info">
+                      {{ session('status') }}
+                  </div>
+              @endif
+
 @include('includes.restaurant-nav')
 
 <section id="restaurantoverview-section">
@@ -22,13 +28,13 @@ J3 Foods - Online Food Ordering
             <h1>{{$restaurant->companyname}} Orders
               <span class="badge">{{count($uniqueorders)}}</span>
               @if ($restaurant->is_open == 1)
-              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}">
                 <span class="glyphicon glyphicon-remove"></span> CLOSE
-              </a> 
+              </a>
               @else
-              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}">
                 <span class="glyphicon glyphicon-plus"></span> OPEN
-              </a> 
+              </a>
               @endif
             </h1>
           </div>
@@ -65,9 +71,9 @@ J3 Foods - Online Food Ordering
                           </div>
                         </td>
                         <td>
-                          <a class="btn btn-success" href="{{ route('finishorder' , $id ) }}"> 
+                          <a class="btn btn-success" href="{{ route('finishorder' , $id ) }}">
                           <span class="glyphicon glyphicon-ok"></span> Order Completed</a>
-                          <a class="btn btn-danger" href="{{ route('cancelorder' , $id  ) }}"> 
+                          <a class="btn btn-danger" href="{{ route('cancelorder' , $id  ) }}">
                           <span class="glyphicon glyphicon-remove"></span> Cancel Order</a>
                         </td>
                       </tr>

@@ -19,6 +19,7 @@ use DB;
 use Validator;
 use Event;
 use App\Events\OrderWasSubmitted;
+use App\Events\OrderWasCanceled;
 
 
 class CustomerController extends Controller
@@ -134,7 +135,7 @@ class CustomerController extends Controller
     if(\Auth::check()) {
        $user = \Auth::user()->id;
     }
-    
+
     $order = Orders::where('customer_id',$user)->where('completed','0')->get();
 
     return view('customercontent.confirmationpage', compact('order'));
@@ -151,16 +152,14 @@ class CustomerController extends Controller
       $items->delete();
     }
 
-    return redirect()->action('CustomerController@showcustomerconfirmation');    
+    return redirect()->action('CustomerController@showcustomerconfirmation');
   }
 
   public function submitOrder(){
     if(\Auth::check()) {
        $user = \Auth::user()->id;
     }
-
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-
     foreach($orders as $items){
       $items->submit_time=Carbon::now();
       $items->completed='1';
@@ -168,11 +167,12 @@ class CustomerController extends Controller
       $items->special_instructions=$items->special_instructions;
       $items->save();
     }
+    Event::fire(new OrderWasSubmitted($orders));
   }
 
 
   public function orderconfirmandnotify($order_id){
-    
+
     $order = Orders::where('order_id',$order_id)->get();
 
      return view('customercontent.orderconfirmed', compact('order'));
@@ -254,6 +254,7 @@ public function showfeedbackpage($rest_id){
 }
 
 public function createOrder(Request $request){
+	//debugging create order notifications
 	$order=Orders::create([
           'item_id' => $request->item_id,
 					'restaurant_id' => $request->restaurant_id,
@@ -263,6 +264,7 @@ public function createOrder(Request $request){
       ]);
 	Event::fire(new OrderWasSubmitted($order));
   return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
+	//debugging create order notifications
 }
 
 }

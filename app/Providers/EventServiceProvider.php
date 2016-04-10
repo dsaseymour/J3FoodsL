@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\OrderWasSubmitted' => [
-            'App\Listeners\OrderConfirmation',
+        'App\Events\OrderWasCanceled' => [
+            'App\Listeners\OrderCancellationNotification',
         ],
     ];
 

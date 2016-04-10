@@ -7,7 +7,7 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderWasSubmitted extends Event
+class OrderWasCanceled extends Event
 {
     use SerializesModels;
 
@@ -20,6 +20,8 @@ class OrderWasSubmitted extends Event
     public function __construct($order)
     {
         $this->order=$order;
+
+        //
     }
 
     /**

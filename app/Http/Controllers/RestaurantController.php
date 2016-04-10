@@ -16,6 +16,9 @@ use App\Orders;
 use Carbon\Carbon;
 use DB;
 use Validator;
+use App\Events\OrderWasCanceled;
+use Event;
+
 
 class RestaurantController extends Controller
 {
@@ -26,8 +29,8 @@ class RestaurantController extends Controller
 
     /**
     Updates the user info with the data eneterd in the update user info page
-  */  
-    public function updateinfo(Request $request){ 
+  */
+    public function updateinfo(Request $request){
       $validator = $this->validaterestaurantupdate($request->all());
 
       if ($validator->fails()) {
@@ -41,9 +44,9 @@ class RestaurantController extends Controller
 
   /**
     Updates the database with the updated info of the restaurant
-    
+
   */
-    protected function updateDatabaseWithNewInfo(Request $request){   
+    protected function updateDatabaseWithNewInfo(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
@@ -90,7 +93,7 @@ class RestaurantController extends Controller
           'city' => 'required',
           'postalcode' => 'required | max:7 | min:6',
           'phoneno' => 'required | max:13',
-          ]);      
+          ]);
       }
     }
 
@@ -156,8 +159,8 @@ class RestaurantController extends Controller
       $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
 
       $parameters = $request->request->all();
-      
-      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent 
+
+      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
       foreach ($dayStrings as $day){
         DB::table('hours')
         ->where('rest_ID',$id)
@@ -346,7 +349,8 @@ class RestaurantController extends Controller
       $items->canceled='1';
       $items->save();
     }
+    Event::fire(new OrderWasCanceled($orders));
 
-    return redirect()->action('RestaurantController@showrestaurantoverview');
+    return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
   }
 }
