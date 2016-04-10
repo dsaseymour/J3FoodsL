@@ -20,6 +20,7 @@ class OrderWasSubmitted extends Event
     public function __construct($order)
     {
         $this->order=$order;
+        //
     }
 
     /**

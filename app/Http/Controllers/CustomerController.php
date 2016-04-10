@@ -159,6 +159,7 @@ class CustomerController extends Controller
     if(\Auth::check()) {
        $user = \Auth::user()->id;
     }
+
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
     foreach($orders as $items){
       $items->submit_time=Carbon::now();
@@ -167,8 +168,9 @@ class CustomerController extends Controller
       $items->special_instructions=$items->special_instructions;
       $items->save();
     }
-    Event::fire(new OrderWasSubmitted($orders));
-  }
+		Event::fire(new OrderWasSubmitted($orders));
+
+	  }
 
 
   public function orderconfirmandnotify($order_id){
@@ -251,20 +253,6 @@ else{
 public function showfeedbackpage($rest_id){
 	$data['rest_id'] = $rest_id;
 	return view('rating.restaurantfeedback',$data);
-}
-
-public function createOrder(Request $request){
-	//debugging create order notifications
-	$order=Orders::create([
-          'item_id' => $request->item_id,
-					'restaurant_id' => $request->restaurant_id,
-					'customer_id' => $request->customer_id,
-					'quantity' => $request->quantity,
-					'special_instructions' => $request->special_instructions,
-      ]);
-	Event::fire(new OrderWasSubmitted($order));
-  return redirect('/customeroverview')->with('status', 'Your Order has been created! Its unique id is: '.$order->order_id);
-	//debugging create order notifications
 }
 
 }

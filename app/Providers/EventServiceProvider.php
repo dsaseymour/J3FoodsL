@@ -13,9 +13,13 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\OrderWasCanceled' => [
-            'App\Listeners\OrderCancellationNotification',
-        ],
+
+                'App\Events\OrderWasCanceled' => [
+                    'App\Listeners\OrderCancellationNotification',
+                ],
+                 'App\Events\OrderWasSubmitted' => [
+                            'App\Listeners\OrderConfirmation',
+                        ],
     ];
 
     /**
@@ -27,7 +31,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot(DispatcherContract $events)
     {
         parent::boot($events);
-
         //
     }
 }
