@@ -11,11 +11,13 @@ J3 Foods - Online Food Ordering
 <style>
   .menu-items {
     display: block;
+    background: #f2f2f2;
   }
 
   .menu-item {
     position: relative;
     display: inline-block;
+
   }
 
   .menu-item:hover {
@@ -68,15 +70,24 @@ J3 Foods - Online Food Ordering
     border-style: solid;
     border-width: 1px;
     background-color: rgb(38, 102, 177);
+    margin-bottom: 15px;
+    margin-top:15px;
   }
 
   .menu-category > h1{
      background-color: #f2f2f2;
-     padding-left: 25px;
+     padding-left: 10px;
   }
 
   .menu-category > .menu-items{
     background-color: #f2f2f2;
+  }
+
+  .expand-category{
+    display: inline;
+    width: 20px;
+    height: 20px;
+   padding-right:100px;
   }
 
    
@@ -97,6 +108,7 @@ J3 Foods - Online Food Ordering
         <img src="{{$restaurantInfo->image}}" />
       </div>
       <div id="rhdr-center" class="col-sm-6 text-center">
+        <span> {{$reviews->comment}} I give it {{$reviews->rating}}/5</span>
         <div id="avgrating">
           <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
           <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
@@ -141,8 +153,13 @@ J3 Foods - Online Food Ordering
 </div>
 
 
+<button class="btn btn-primary " id="expand-all" > Expand All (Broken currently)</button>
+
 <button class="btn btn-primary " id="savecategorylist" data-token="{{ csrf_token() }}"> Save Category List</button>
+
 <meta name="csrf_token" content="{{ csrf_token() }}" />
+
+
 
   <?php
     $categories = $restaurant->categories;
@@ -150,10 +167,16 @@ J3 Foods - Online Food Ordering
       return $category->category_order;
     });
   ?>
+
+
+
+
+
 <ul id="sortable">
 @foreach($categories as $category)
-<li class="menu-category" id="{{$category->id}}" >
-  <h1 >{{$category->category_name}}</h1>
+<li class="menu-category" id="{{$category->id}}">
+  <h1 ><input data-toggle="collapse" data-target="#category_{{$category->category_name}}" type="checkbox" class="form-control expand-category" name="are_options" checked>{{$category->category_name}} </h1>
+  <div id="category_{{$category->category_name}}" class ="collapse in menu-section">
   <div class="menu-items" >
     @foreach ($category->items as $item)
     <div class="menu-item" data-itemid="{{$item->item_id}}">
@@ -199,11 +222,16 @@ J3 Foods - Online Food Ordering
 
   });
 
-
 $('input[type=radio]').on('change', function () {
     if (!this.checked) return
     $('.options').not($('div.' + $(this).attr('class'))).slideUp();
     $('.collapse.' + $(this).attr('class')).slideDown();
+});
+
+$('#expand-all').click(function() {
+  $('.expand-category').removeClass("collapsed");
+  $('.menu-section').slideDown();
+  $('.menu-section').addClass("in");
 });
 
 </script>

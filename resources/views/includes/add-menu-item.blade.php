@@ -36,13 +36,13 @@
             <div id="are_options" class ="collapse">
               <div class="form-group">
                 <label class="radio-inline">
-                  <input type="radio" class="text-input" name="option_type" value="textbox"> <strong>Textbox</strong>
+                  <input type="radio" class="text-input" name="option_type" value="textbox"> Textbox
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" class="select-one" name="option_type" value="combobox"> <strong>Select one option</strong>
+                  <input type="radio" class="select-one" name="option_type" value="combobox"> Select one option
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" class="select-many" name="option_type" value="checkbox"> <strong>Select many options</strong>
+                  <input type="radio" class="select-many" name="option_type" value="checkbox"> Select many options
                 </label>
               </div>
               <div>

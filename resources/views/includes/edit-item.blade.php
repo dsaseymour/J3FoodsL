@@ -10,8 +10,8 @@
 <div class="modal-dialog modal-lg">
   <!-- Modal content-->
   <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
+  <div class="modal-header list-group-item-heading">
+      {{$item->name}}
     </div>
     <div class="modal-body">
       <ul class="nav nav-tabs">
@@ -53,7 +53,7 @@
             <input type="text" class="form-control" name="special_price" >
           </div>
           @endif
-          
+
         </div>
         <div id="option{{$item->item_id}}" class="tab-pane fade">
           <label class="list-group-item-heading"> Item has options? </label>
@@ -117,7 +117,7 @@
         </div>
         <div class="modal-footer">
          <button type='submit' class="btn btn-primary"/>Save Changes</button>
-         
+
        </form>
      </div>
 

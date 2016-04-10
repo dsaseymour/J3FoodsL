@@ -437,7 +437,10 @@ public function showrestaurantmoverview(){
   }
   $restaurantInfo = Restaurant::where('id',$id)->first();
   $restaurant = Restaurant::where('id',$id)->first();
-  return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo'));
+  $reviews = DB::table('customer_ratings')
+        ->where('restaurant_id',$id)
+        ->first();
+  return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews'));
 }
 
 public function restaurantlogin(Request $request){
