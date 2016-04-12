@@ -26,6 +26,8 @@ class RestaurantController extends Controller
    $this->middleware('auth');
  }
 
+
+
     /**
     Updates the user info with the data eneterd in the update user info page
   */  
@@ -293,11 +295,11 @@ class RestaurantController extends Controller
           if($updateItem->option_id != null){
             if($updateItem->option->type == "check"){
               $checkOption =  Option::where('item_id',$item->item_id)->where('type',"check")->first(); //saving checkbox option
+            }else{
+              $checkOption = new Option;
+              $updateItem->option->delete();
+            }
           }else{
-            $checkOption = new Option;
-            $updateItem->option->delete();
-          }
-        }else{
             $checkOption = new Option; //saving combo option
           }
 
@@ -431,16 +433,87 @@ class RestaurantController extends Controller
   return redirect()->action('RestaurantController@showrestaurantmoverview');
 }
 
+
+public function viewreviews(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+  $reviews = DB::table('customer_ratings')
+  ->where('restaurant_id',$id)
+  ->get();
+  
+  return view('restaurantcontent.restaurant-view-reviews',compact('reviews'));
+
+}
+
+public function toggleshowingreview(User $reviewer){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+
+  $review = DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->first();
+
+  $isDisplaying = ($review->is_displaying == 0 ? 1 : 0);
+
+  DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->update(['is_displaying' => $isDisplaying]);
+  
+  return redirect()->action('RestaurantController@viewreviews');
+
+}
+
+
+public function deletereview(User $reviewer){
+
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+
+
+  DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->delete();
+
+  return redirect()->action('RestaurantController@viewreviews');
+}
+
 public function showrestaurantmoverview(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
   }
   $restaurantInfo = Restaurant::where('id',$id)->first();
   $restaurant = Restaurant::where('id',$id)->first();
-  $reviews = DB::table('customer_ratings')
-        ->where('restaurant_id',$id)
-        ->first();
-  return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews'));
+  $allReviews = DB::table('customer_ratings')
+  ->where('restaurant_id',$id)
+  ->where('is_displaying', 1)
+  ->get();
+
+
+$numReviews = count($allReviews);
+$reviews = array();
+  if($numReviews > 1){
+    foreach( array_rand($allReviews, 2) as $k ) {
+      $reviews[] = $allReviews[$k];
+    }
+  }else if($numReviews ==1){
+    $reviews[0] = $allReviews[0];
+  }else{
+    
+  }
+
+  $average = DB::table('restaurant_average_ratings')
+  ->where('restaurant_id',$id)
+  ->first();
+
+  $averageReview = round($average->AVG_RATING,1);
+
+  return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews','averageReview'));
 }
 
 public function restaurantlogin(Request $request){

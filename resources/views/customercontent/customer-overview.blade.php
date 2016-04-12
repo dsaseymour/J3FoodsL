@@ -6,39 +6,47 @@ J3 Foods - Online Food Ordering
 @section('navigation')
 @include('includes.customer-topbar')
 @endsection
+@section("styles")
+  <style>
 
+  .img-responsive{
+
+    width: 250px; 
+    height:125px;
+  }
+
+  .closed{
+    opacity: 0.4;
+  }
+
+  </style>
+@endsection
 
 @section('content')
 @if(session('status'))
-                  <div class="alert alert-info">
-                      {{ session('status') }}
-                  </div>
-              @endif
+<div class="alert alert-info">
+  {{ session('status') }}
+</div>
+@endif
 {{-- */$userfavs = Auth::user()->favourites;/* --}}
 <div id="customer-overview-container" class="container ">
   <div class="row ">
-
-
     <div class="panel panel-default">
-
       <!-- Default panel contents -->
       <div class="panel-heading">
         <h1>Currently Open
           <span class="badge">{{$restaurants->count()}}</span></h1>
         </div>
-
-
         <div class="panel-body">
           <h3>For More Information Click on a Restaurant Below</h3>
-
           <div class="row">
             @foreach ($restaurants as $rest)
             <div class="col-sm-3 text-center">
               <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
                @if($rest->is_open == 1 )
-               <img class="img-responsive" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
+               <img class="img-responsive open" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
                @else
-               <img style="opacity: 0.4;" class="img-responsive" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
+               <img  class="img-responsive closed" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
                @endif
              </a>
              <h5>
@@ -56,9 +64,7 @@ J3 Foods - Online Food Ordering
             </div>
             @endforeach
           </div>
-
         </div>
       </div>
-
     </div>
     @endsection

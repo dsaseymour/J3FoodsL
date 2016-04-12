@@ -111,6 +111,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customeroverviewlink',
         ]);
 
+    Route::get('/sortfavouties',[
+        'uses'=>'CustomerController@sortbyfavourites',
+        'as'=>'sortbyfavourites'
+        ]);
+
     Route::get('/sortalphabetically',[
         'uses'=>'CustomerController@sortrestaurantlistalphabetically',
         'as'=>'sortalphabetically'
@@ -194,6 +199,23 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 	//Restuarant pages
+
+    Route::get('/toggleshowingreview/{reviewer}',[
+        'uses'=>'RestaurantController@toggleshowingreview',
+        'as'=>'toggleshowingreview',
+        ]);
+
+ Route::get('/deletereview/{reviewer}',[
+        'uses'=>'RestaurantController@deletereview',
+        'as'=>'deletereview',
+        ]);
+
+    Route::get('/viewreviews',[
+        'uses'=>'RestaurantController@viewreviews',
+        'as'=>'viewreviews',
+        ]);
+
+
     Route::get('/sethours', 'RestaurantController@showsethours');
 
      Route::post('/reordercategories',[

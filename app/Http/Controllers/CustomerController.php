@@ -114,6 +114,29 @@ class CustomerController extends Controller
   }
 
 
+  public function sortbyfavourites(){
+    $restaurants = Restaurant::get();
+
+    if(\Auth::check()) {
+       $id = \Auth::user()->id;
+    }
+    $favouriteRestaurants = DB::table('customer_favourites')
+        ->where('customer_id',$id)
+        ->get();
+
+    foreach($favouriteRestaurants as $favRelation){
+        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
+        $restaurants->prepend($favouriteRestaurant);
+    }
+    $restaurants = $restaurants->unique();
+    //dd($restaurants);
+    return view('customercontent.customer-overview',compact('restaurants'));
+  }
+
+
+ 
+
+
   public function showcustomermenu(Restaurant $restaurant){
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();

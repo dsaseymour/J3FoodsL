@@ -90,6 +90,25 @@ J3 Foods - Online Food Ordering
    padding-right:100px;
   }
 
+  .move{
+    cursor:move;
+  }
+
+  #customer-review{
+    display:block;
+    padding-top:40px;
+  }
+
+  #average-rating{
+    margin-top:40px;
+  }
+
+ #logo {
+    height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;
+}
    
 
 </style>
@@ -105,14 +124,13 @@ J3 Foods - Online Food Ordering
   <div id="restaurant-hdrcontainer" >
     <div class="row">
       <div id="rhdr-left" class="col-sm-3">
-        <img src="{{$restaurantInfo->image}}" />
+        <img id="logo" src="{{$restaurantInfo->image}}" />
       </div>
       <div id="rhdr-center" class="col-sm-6 text-center">
-        <span> {{$reviews->comment}} I give it {{$reviews->rating}}/5</span>
-        <div id="avgrating">
-          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
-        </div>
+      @foreach($reviews as $review)
+        <span id="customer-review"> {{$review->comment}} I give it {{$review->rating}}/5</span>
+      @endforeach
+        <span id ="average-rating"> Average {{$averageReview}} / 5</span>
       </div>
       <div id="rhdr-right" class="col-sm-3">
         <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
@@ -174,7 +192,7 @@ J3 Foods - Online Food Ordering
 
 <ul id="sortable">
 @foreach($categories as $category)
-<li class="menu-category" id="{{$category->id}}">
+<li class="menu-category move" id="{{$category->id}}">
   <h1 ><input data-toggle="collapse" data-target="#category_{{$category->category_name}}" type="checkbox" class="form-control expand-category" name="are_options" checked>{{$category->category_name}} </h1>
   <div id="category_{{$category->category_name}}" class ="collapse in menu-section">
   <div class="menu-items" >
