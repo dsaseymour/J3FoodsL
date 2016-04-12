@@ -11,11 +11,13 @@ J3 Foods - Online Food Ordering
 <style>
   .menu-items {
     display: block;
+    background: #f2f2f2;
   }
 
   .menu-item {
     position: relative;
     display: inline-block;
+
   }
 
   .menu-item:hover {
@@ -68,17 +70,45 @@ J3 Foods - Online Food Ordering
     border-style: solid;
     border-width: 1px;
     background-color: rgb(38, 102, 177);
+    margin-bottom: 15px;
+    margin-top:15px;
   }
 
   .menu-category > h1{
      background-color: #f2f2f2;
-     padding-left: 25px;
+     padding-left: 10px;
   }
 
   .menu-category > .menu-items{
     background-color: #f2f2f2;
   }
 
+  .expand-category{
+    display: inline;
+    width: 20px;
+    height: 20px;
+   padding-right:100px;
+  }
+
+  .move{
+    cursor:move;
+  }
+
+  #customer-review{
+    display:block;
+    padding-top:40px;
+  }
+
+  #average-rating{
+    margin-top:40px;
+  }
+
+ #logo {
+    height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;
+}
    
 
 </style>
@@ -94,13 +124,13 @@ J3 Foods - Online Food Ordering
   <div id="restaurant-hdrcontainer" >
     <div class="row">
       <div id="rhdr-left" class="col-sm-3">
-        <img src="{{$restaurantInfo->image}}" />
+        <img id="logo" src="{{$restaurantInfo->image}}" />
       </div>
       <div id="rhdr-center" class="col-sm-6 text-center">
-        <div id="avgrating">
-          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
-        </div>
+      @foreach($reviews as $review)
+        <span id="customer-review"> {{$review->comment}} I give it {{$review->rating}}/5</span>
+      @endforeach
+        <span id ="average-rating"> Average {{$averageReview}} / 5</span>
       </div>
       <div id="rhdr-right" class="col-sm-3">
         <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
@@ -140,12 +170,31 @@ J3 Foods - Online Food Ordering
   @include('includes.add-category')
 </div>
 
+
+<button class="btn btn-primary " id="expand-all" > Expand All (Broken currently)</button>
+
 <button class="btn btn-primary " id="savecategorylist" data-token="{{ csrf_token() }}"> Save Category List</button>
+
 <meta name="csrf_token" content="{{ csrf_token() }}" />
+
+
+
+  <?php
+    $categories = $restaurant->categories;
+    $categories = $categories->sortBy(function($category){
+      return $category->category_order;
+    });
+  ?>
+
+
+
+
+
 <ul id="sortable">
-@foreach($restaurant->categories as $category)
-<li class="menu-category" id="{{$category->id}}" >
-  <h1 >{{$category->category_name}}</h1>
+@foreach($categories as $category)
+<li class="menu-category move" id="{{$category->id}}">
+  <h1 ><input data-toggle="collapse" data-target="#category_{{$category->category_name}}" type="checkbox" class="form-control expand-category" name="are_options" checked>{{$category->category_name}} </h1>
+  <div id="category_{{$category->category_name}}" class ="collapse in menu-section">
   <div class="menu-items" >
     @foreach ($category->items as $item)
     <div class="menu-item" data-itemid="{{$item->item_id}}">
@@ -190,5 +239,18 @@ J3 Foods - Online Food Ordering
     $('[data-toggle="tooltip"]').tooltip();
 
   });
+
+$('input[type=radio]').on('change', function () {
+    if (!this.checked) return
+    $('.options').not($('div.' + $(this).attr('class'))).slideUp();
+    $('.collapse.' + $(this).attr('class')).slideDown();
+});
+
+$('#expand-all').click(function() {
+  $('.expand-category').removeClass("collapsed");
+  $('.menu-section').slideDown();
+  $('.menu-section').addClass("in");
+});
+
 </script>
 @endsection

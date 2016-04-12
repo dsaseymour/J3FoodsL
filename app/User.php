@@ -32,4 +32,12 @@ class User extends Authenticatable
     public function favourites(){
         return $this->hasMany('App\CustomerFavourites', 'customer_id');
     }
+
+    public function customer(){
+        if($this->isRestaurant){
+            return null;
+        } else {
+            return $this->hasOne('App\Customer', 'id');
+        }
+    }
 }

@@ -114,6 +114,29 @@ class CustomerController extends Controller
   }
 
 
+  public function sortbyfavourites(){
+    $restaurants = Restaurant::get();
+
+    if(\Auth::check()) {
+       $id = \Auth::user()->id;
+    }
+    $favouriteRestaurants = DB::table('customer_favourites')
+        ->where('customer_id',$id)
+        ->get();
+
+    foreach($favouriteRestaurants as $favRelation){
+        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
+        $restaurants->prepend($favouriteRestaurant);
+    }
+    $restaurants = $restaurants->unique();
+    //dd($restaurants);
+    return view('customercontent.customer-overview',compact('restaurants'));
+  }
+
+
+ 
+
+
   public function showcustomermenu(Restaurant $restaurant){
 		$id = $restaurant->id;
 		$restaurantInfo = Restaurant::where('id',$id)->first();
@@ -138,6 +161,40 @@ class CustomerController extends Controller
     $order = Orders::where('customer_id',$user)->where('completed','0')->get();
 
     return view('customercontent.confirmationpage', compact('order'));
+  }
+
+  public function addItem(Request $request){
+    $item = Item::find($_POST["itemid"]);
+
+    if(!\Auth::user()->isRestaurant){
+      $currentCart = \Auth::user()->customer->cart;
+      if(count($currentCart) > 0 && $currentCart[0]->restaurant_id != $item->restaurant->id){
+        return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "You already have items in a cart with a different restaurant. Please clear your cart before adding items from this restaurant.");
+      }
+    }
+
+    $o = new Orders;
+    $o->customer_id = \Auth::user()->id;
+    $o->item_id = $item->item_id;
+    $o->restaurant_id = $item->restaurant->id;
+    $o->quantity = $_POST["qty"];
+    $o->option_id = $item->option_id;
+    if(isset($_POST["item-option-combo"])){
+      $o->choice = $_POST["item-option-combo"];
+    } elseif(isset($_POST["item-option-check"]) && count($_POST["item-option-check"])>0){
+      $selected = $_POST["item-option-check"];
+      $choices = strval($selected[0]);
+      for($i=1; $i<count($selected); $i++){
+        $choices .= ",".$selected[$i];
+      }
+      $o->choice = $choices;
+    } elseif(isset($_POST["item-option-text"])){
+      $o->choice = $_POST["item-option-text"];
+    }
+
+    $o->save();
+
+    return back();
   }
 
   public function removeItem($item){
