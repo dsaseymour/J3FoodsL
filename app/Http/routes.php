@@ -70,9 +70,9 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/password/reset',[
-     'uses'=>'MasterController@passwordreset',
-     'as'=>'passwordreset'
-     ]);
+       'uses'=>'MasterController@passwordreset',
+       'as'=>'passwordreset'
+       ]);
 
     Route::get('/register',[
         'uses'=>'RegisterController@register',
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/error' ,[
         'uses'=>'MasterController@error',
         'as'=>'error'
-    ]);
+        ]);
 
 	//Customer pages
     Route::post('/customerupdateinfo',[
@@ -187,14 +187,10 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'showfeedback'
         ]);
 
-    'uses'=>'CustomerController@showfeedbackpage',
-    'as'=>'showfeedback'
-    ]);
-
     Route::post('/cart',[
         'uses'=>'CustomerController@addItem',
         'as'=>'addtocart'
-    ]);
+        ]);
 
 	//Restuarant pages
 
@@ -203,7 +199,7 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'toggleshowingreview',
         ]);
 
- Route::get('/deletereview/{reviewer}',[
+    Route::get('/deletereview/{reviewer}',[
         'uses'=>'RestaurantController@deletereview',
         'as'=>'deletereview',
         ]);
@@ -255,6 +251,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'RestaurantController@updatehours',
         'as'=>'restaurantupdatehours',
         ]);
+
+    Route::post('/restaurantprofilerestrictions',[
+        'uses'=>'RestaurantController@updaterestrictions',
+        'as'=>'restaurantupdaterestrictions',
+    ]);
 
     Route::post('/restaurantprofile',[
         'uses'=>'RestaurantController@updateinfo',

@@ -10,7 +10,8 @@ class LoginController extends Controller
 {
     public function showcustomerlogin(){
           //return view('auth.login',['isRest' => false]);
-    	return view('auth.login');
+    	$guestemail = 'temp' . rand() . '@temp.com';
+    	return view('auth.login',compact('guestemail'));
   }
 
    public function showrestaurantlogin(){

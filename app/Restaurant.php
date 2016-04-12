@@ -10,7 +10,7 @@ class Restaurant extends Model
     protected $table = 'restaurant';//this is the name of the table that this model is linked to if the table name is different change the value
 	public $timestamps = false;
 	protected $primaryKey = 'id';
-	protected $fillable = ['id','companyname','address','province','city','postalcode','phoneno'];
+	protected $fillable = ['id','companyname','address','province','city','postalcode','phoneno','max_order_price','allow_guests'];
 
     public function customer()
      {

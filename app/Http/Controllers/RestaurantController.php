@@ -174,6 +174,25 @@ class RestaurantController extends Controller
       }
     }
 
+    public function updaterestrictions(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+      $this->updateDatabaseWithNewResrtictions($request);
+      return redirect()->action('RestaurantController@showrestaurantoverview');
+    }
+
+    protected function updateDatabaseWithNewResrtictions(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+      
+      $updateRestaurant = Restaurant::find($id);
+      $updateRestaurant->max_order_price = $request->max_price;
+      $updateRestaurant->allow_guests = $request->allow_guests;
+      $updateRestaurant->save();
+    }
+
     public function addcategory(Request $request){
 
       if(\Auth::check()) {

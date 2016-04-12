@@ -80,7 +80,7 @@ J3 Foods - Online Food Ordering
 
    </div>
    <div class="input-row row text-right" >
-     <button type='submit'  class="btn  btn-primary   " />Save Changes</button>
+     <button type='submit'  class="btn  btn-primary"/>Save Changes</button>
   </div>
 
 
