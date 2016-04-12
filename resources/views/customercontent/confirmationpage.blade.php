@@ -113,7 +113,13 @@ J3 Foods - Online Food Ordering
       </div><!-- End table container -->
     </div>
     <div  class="list-group-item text-right" id="confirm-page-btn">
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">Order
+    @if(($totalprice>($order[0]->restaurant->max_order_price)) && ($order[0]->customer->is_guest))
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result" disabled>
+    <div data-toggle="tooltip" title="Your order total is above the Restaurants' limit"  >
+    @else
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">
+    @endif
+    Order
     <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
     </div>
   </div>
@@ -151,6 +157,7 @@ J3 Foods - Online Food Ordering
 
 <script>
   $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     $(".btn-lg").click(function() {
       $request = $.ajax({
         url: "{{ route('submitorderlink') }}",
