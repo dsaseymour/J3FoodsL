@@ -94,6 +94,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'registerrestaurantinfo'
         ]);
 
+    //Error page
+    Route::get('/error' ,[
+        'uses'=>'MasterController@error',
+        'as'=>'error'
+    ]);
 
 	//Customer pages
     Route::post('/customerupdateinfo',[
@@ -104,6 +109,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/customeroverview',[
         'uses'=>'CustomerController@showcustomeroverview',
         'as'=>'customeroverviewlink',
+        ]);
+
+    Route::get('/sortfavouties',[
+        'uses'=>'CustomerController@sortbyfavourites',
+        'as'=>'sortbyfavourites'
         ]);
 
     Route::get('/sortalphabetically',[
@@ -172,10 +182,38 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/feedback/{rest_id}',[
+
         'uses'=>'CustomerController@showfeedbackpage',
         'as'=>'showfeedback'
         ]);
+
+    'uses'=>'CustomerController@showfeedbackpage',
+    'as'=>'showfeedback'
+    ]);
+
+    Route::post('/cart',[
+        'uses'=>'CustomerController@addItem',
+        'as'=>'addtocart'
+    ]);
+
 	//Restuarant pages
+
+    Route::get('/toggleshowingreview/{reviewer}',[
+        'uses'=>'RestaurantController@toggleshowingreview',
+        'as'=>'toggleshowingreview',
+        ]);
+
+ Route::get('/deletereview/{reviewer}',[
+        'uses'=>'RestaurantController@deletereview',
+        'as'=>'deletereview',
+        ]);
+
+    Route::get('/viewreviews',[
+        'uses'=>'RestaurantController@viewreviews',
+        'as'=>'viewreviews',
+        ]);
+
+
     Route::get('/sethours', 'RestaurantController@showsethours');
 
     Route::post('/reordercategories',[

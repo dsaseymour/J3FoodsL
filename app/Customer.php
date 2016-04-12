@@ -19,7 +19,14 @@ class Customer extends Model
 
     public function restaurant()
      {
-         return $this->belongsToMany('App\Restaurant');
+        return $this->belongsToMany('App\Restaurant');
      }
 
+    public function cart(){
+        return $this->hasMany('App\Orders', 'customer_id')->where('completed', 0);
+    }
+
+    public function user(){
+        return $this->belongsTo('app\User', 'id');
+    }
 }

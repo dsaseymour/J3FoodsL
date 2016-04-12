@@ -184,7 +184,13 @@ J3 Foods - Online Food Ordering
   </div>
   <hr/>
 
-  @foreach($restaurant->categories as $category)
+  <?php
+    $categories = $restaurant->categories;
+    $categories = $categories->sortBy(function($category){
+      return $category->category_order;
+    });
+  ?>
+  @foreach($categories as $category)
     <div class="menu-category">
       <h1>{{$category->category_name}}</h1>
       <div class="menu-items">
@@ -261,21 +267,20 @@ J3 Foods - Online Food Ordering
           <h4>Item options</h4>
         </div>
         <div class="modal-body">
-          <form action="{{route('validcustomerloginlink')}}" method="post" role="form">
+          <form action="{{route('addtocart')}}" method="post" role="form">
             <div id="item-option-group" class="form-group"></div>
             <div id="item-quantity" class="form-group">
               <label for="qty">Quantity</label>
               <input type="number" name="qty" min="1" max="99" value="1" class="form-control"/>
             </div>
-          <input type="hidden" value="{{Session::token()}}" name="_token" />
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Add to order</button>
+            </div>
+            <input type="hidden" name="itemid" id="add-form-itemid" />
+            <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
-        <div class="modal-footer">
-          <div class = "btn-group btn-group-lg">
-            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Add to Shopping Cart</button></a>
-            <a data-dismiss="modal"><button type="button" class="btn btn-default" >Return</button></a>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -317,6 +322,7 @@ J3 Foods - Online Food Ordering
       //Open options window on clicking an item
       $(".menu-item").click(function(e){
         itemid = $(e.target).parent(".menu-item").data("itemid");
+        $("#add-form-itemid").val(itemid);
         $.get("{{route("menuitemoptions", ["item"=>""])}}/"+itemid, function(response){
           if(response != null){
             $("#item-option-group").html(response);

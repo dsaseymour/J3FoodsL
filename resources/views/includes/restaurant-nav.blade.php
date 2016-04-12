@@ -11,6 +11,9 @@
     <li class="nav-item" id="restaurantnavlink-history">
       <a class="nav-link" href="{{ route('restauranthistorylink'  ) }}">History</a>
     </li>
+    <li class="nav-item" id="restaurantnavlink-reviews">
+      <a class="nav-link" href="{{ route('viewreviews') }}">Reviews</a>
+    </li>
   </ul>
 </div>
 </div>

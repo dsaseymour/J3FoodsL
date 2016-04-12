@@ -36,7 +36,10 @@ class MasterController extends Controller
 
   }
 
-
+  public function error(Request $request){
+  	$request->session()->reflash();
+  	return view('errors.error');
+  }
 
 
 
