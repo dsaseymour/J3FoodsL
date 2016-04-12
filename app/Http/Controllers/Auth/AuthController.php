@@ -49,20 +49,21 @@ class AuthController extends Controller
     }
 
 
-	public function register(Request $request)
+    public function register(Request $request)
     {
 
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+        if ($request->isGuest != "1"){
+            $validator = $this->validator($request->all());
+            if ($validator->fails()) {
+                $this->throwValidationException(
+                    $request, $validator
+                    );
+            }
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 
-                $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
+        $results = DB::select("SELECT  `id` FROM  `users` WHERE email =  ?",[$request->email]);
         $idOfUser=  $results[0]->id;
         if($request->isRestaurant == "1"){//Register a restaurant with the required fields
             $restaurant = new Restaurant;
@@ -89,10 +90,10 @@ class AuthController extends Controller
         $confirmation_code=str_random(30);
         $data=['confirmation_code'=>$confirmation_code];
         Mail::send('email.registrationconfirmation',$data, function($message) use ($email){
-        $message->to($email)->subject('Verify your email address');
+            $message->to($email)->subject('Verify your email address');
         });
         return $confirmation_code;
-}
+    }
 
 
 
@@ -100,8 +101,8 @@ class AuthController extends Controller
 	/**
 		Handles sending the user to different pages depending on if they are a customer or a restaurant
 	*/
-	protected function handleUserWasAuthenticated(Request $request, $throttles)
-    {
+     protected function handleUserWasAuthenticated(Request $request, $throttles)
+     {
 
         if ($throttles) {
             $this->clearLoginAttempts($request);
@@ -111,24 +112,24 @@ class AuthController extends Controller
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
 
-			$results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
+        $results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 
 
-			$newresults=  $results[0]->isRestaurant;
+        $newresults=  $results[0]->isRestaurant;
 
 
 
-			if($newresults== '1'){
-			   return redirect()->action('RestaurantController@showrestaurantoverview');
-			}else{
-			   return redirect()->intended($this->redirectPath());
-			}
-    }
+        if($newresults== '1'){
+          return redirect()->action('RestaurantController@showrestaurantoverview');
+      }else{
+          return redirect()->intended($this->redirectPath());
+      }
+  }
 
- protected function getCredentials(Request $request)
-    {
-        return $request->only($this->loginUsername(), 'password');
-    }
+  protected function getCredentials(Request $request)
+  {
+    return $request->only($this->loginUsername(), 'password');
+}
 
     /**
      * Get a validator for an incoming registration request.
@@ -138,28 +139,28 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-		if ($data['isRestaurant'] == 1){
-            return Validator::make($data, [
-                'name' => 'required|max:255',
-                'isRestaurant' => 'required',
-                'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|min:6|confirmed',
-                'companyname' => 'required',
-                'address' => 'required',
-                'province' => 'required',
-                'city' => 'required',
-                'postalcode' => 'required | max:7 | min:6',
-                'phoneno' => 'required | max:13',
+      if ($data['isRestaurant'] == 1){
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'isRestaurant' => 'required',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'companyname' => 'required',
+            'address' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+            'postalcode' => 'required | max:7 | min:6',
+            'phoneno' => 'required | max:13',
             ]);
-        } else {
-            return Validator::make($data, [
-                'name' => 'required|max:255',
-                'isRestaurant' => 'required',
-                'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|min:6|confirmed',
+    } else {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'isRestaurant' => 'required',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
             ]);
-        }
     }
+}
 
     /**
      * Create a new user instance after a valid registration.
@@ -172,10 +173,10 @@ class AuthController extends Controller
 
         return User::create([
             'name' => $data['name'],
-			'isRestaurant' => $data['isRestaurant'],
+            'isRestaurant' => $data['isRestaurant'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code'=>($this->sendEmailConfirmationTo($data['email'])),
-        ]);
+            ]);
     }
 }

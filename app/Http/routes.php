@@ -70,9 +70,9 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/password/reset',[
-       'uses'=>'MasterController@passwordreset',
-       'as'=>'passwordreset'
-       ]);
+     'uses'=>'MasterController@passwordreset',
+     'as'=>'passwordreset'
+     ]);
 
     Route::get('/register',[
         'uses'=>'RegisterController@register',
@@ -112,16 +112,9 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/order/confirmed/{order_id}',[
-    'uses'=>'CustomerController@orderconfirmandnotify',
-    'as'=>'orderconfirmlink',
-    ]);
-
-   /* Route::get('/order/confirmed',[ // Danny Dummy Route
         'uses'=>'CustomerController@orderconfirmandnotify',
         'as'=>'orderconfirmlink',
-        ]);*/
-
-
+        ]);
 
     Route::get('/menu/{restaurant}',[
         'uses'=>'CustomerController@showcustomermenu',
@@ -139,14 +132,14 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/submitorder',[
-    'uses'=>'CustomerController@submitOrder',
-    'as'=>'submitorderlink'
-    ]);
+        'uses'=>'CustomerController@submitOrder',
+        'as'=>'submitorderlink'
+        ]);
 
     Route::get('/removeitem/{item}',[
-    'uses'=>'CustomerController@removeItem',
-    'as'=>'removeitemlink'
-    ]);
+        'uses'=>'CustomerController@removeItem',
+        'as'=>'removeitemlink'
+        ]);
 
     Route::get('/cpeditaddress',[
         'uses'=>'CustomerController@showcpeditaddress',
@@ -174,21 +167,21 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::post('/feedback/submit',[
-    'uses'=>'CustomerController@addfeedback',
-    'as'=>'submitfeedback',
-    ]);
+        'uses'=>'CustomerController@addfeedback',
+        'as'=>'submitfeedback',
+        ]);
 
     Route::get('/feedback/{rest_id}',[
-    'uses'=>'CustomerController@showfeedbackpage',
-    'as'=>'showfeedback'
-    ]);
+        'uses'=>'CustomerController@showfeedbackpage',
+        'as'=>'showfeedback'
+        ]);
 	//Restuarant pages
     Route::get('/sethours', 'RestaurantController@showsethours');
 
-     Route::post('/reordercategories',[
-    'uses'=>'RestaurantController@savecategoryorder',
-    'as'=>'reordercategories',
-    ]);
+    Route::post('/reordercategories',[
+        'uses'=>'RestaurantController@savecategoryorder',
+        'as'=>'reordercategories',
+        ]);
 
     Route::get('/closerestaurant/{restaurant}',[
         'uses'=>'RestaurantController@closerestaurant',
@@ -285,35 +278,40 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'forgotpasswordlink'
         ]);
 
-//DEBUGGGING
-     /*
-     Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-
     Route::get('/finishorder/{order}',[
-    'uses'=>'RestaurantController@finishorder',
-    'as'=>'finishorder'
-    ]);
+        'uses'=>'RestaurantController@finishorder',
+        'as'=>'finishorder'
+        ]);
 
     Route::post('/createorder',[ //danny testing order confirmation
-    'uses'=>'CustomerController@createOrder',
-    'as'=>'createorder',
-    ]);
+        'uses'=>'CustomerController@createOrder',
+        'as'=>'createorder',
+        ]);
 
 
 
     Route::get('/test', function() //danny testing order confirmation
     {
       //  return view('email.ratingrequest');
-            return view('debugging');
+        return view('debugging');
     });
 
     Route::get('/cancelorder/{order}',[
-    'uses'=>'RestaurantController@cancelorder',
-    'as'=>'cancelorder'
-    ]);
+        'uses'=>'RestaurantController@cancelorder',
+        'as'=>'cancelorder'
+        ]);
+
+    //DEBUGGGING
+         /*
+     Route::post('/restaurantlogin',[
+         'uses'=>'RestaurantController@restaurantlogin',
+         'as'=>'restaurantlogin'
+         ]);*/
+            /* Route::get('/order/confirmed',[ // Danny Dummy Route
+        'uses'=>'CustomerController@orderconfirmandnotify',
+        'as'=>'orderconfirmlink',
+        ]);*/
+
 
     //Register Pages
    /* Route::get('/register/{user?}',[
