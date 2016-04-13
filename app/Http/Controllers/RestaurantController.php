@@ -18,6 +18,9 @@ use App\Option;
 use App\OptionChoice;
 use DB;
 use Validator;
+use App\Events\OrderWasCanceled;
+use Event;
+
 
 class RestaurantController extends Controller
 {
@@ -30,8 +33,8 @@ class RestaurantController extends Controller
 
     /**
     Updates the user info with the data eneterd in the update user info page
-  */  
-    public function updateinfo(Request $request){ 
+  */
+    public function updateinfo(Request $request){
       $validator = $this->validaterestaurantupdate($request->all());
 
       if ($validator->fails()) {
@@ -45,9 +48,9 @@ class RestaurantController extends Controller
 
   /**
     Updates the database with the updated info of the restaurant
-    
+
   */
-    protected function updateDatabaseWithNewInfo(Request $request){   
+    protected function updateDatabaseWithNewInfo(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
@@ -94,7 +97,7 @@ class RestaurantController extends Controller
           'city' => 'required',
           'postalcode' => 'required | max:7 | min:6',
           'phoneno' => 'required | max:13',
-          ]);      
+          ]);
       }
     }
 
@@ -160,8 +163,8 @@ class RestaurantController extends Controller
       $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
 
       $parameters = $request->request->all();
-      
-      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent 
+
+      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
       foreach ($dayStrings as $day){
         DB::table('hours')
         ->where('rest_ID',$id)
@@ -454,18 +457,18 @@ class RestaurantController extends Controller
 
 
 public function showrestauranthistory(){
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
-    }
-
-    $currentmonth = Carbon::now()->month;
-    $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
-    $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
-    $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
-    $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
-
-    return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
+
+  $currentmonth = Carbon::now()->month;
+  $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
+  $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
+  $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
+  $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
+
+  return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
+}
 
 
 public function viewreviews(){
@@ -530,8 +533,8 @@ public function showrestaurantmoverview(){
   ->get();
 
 
-$numReviews = count($allReviews);
-$reviews = array();
+  $numReviews = count($allReviews);
+  $reviews = array();
   if($numReviews > 1){
     foreach( array_rand($allReviews, 2) as $k ) {
       $reviews[] = $allReviews[$k];
@@ -539,7 +542,7 @@ $reviews = array();
   }else if($numReviews ==1){
     $reviews[0] = $allReviews[0];
   }else{
-    
+
   }
 
   $average = DB::table('restaurant_average_ratings')
@@ -547,7 +550,7 @@ $reviews = array();
   ->first();
 
   if($average != null){
-  $averageReview = round($average->AVG_RATING,1);
+    $averageReview = round($average->AVG_RATING,1);
   }else{
     $averageReview = "N/A";
   }
@@ -618,6 +621,7 @@ public function finishorder($order_id){
   return redirect()->action('RestaurantController@showrestaurantoverview');
 }
 
+
 public function cancelorder($order_id){
   $orders = Orders::where('order_id',$order_id)->get();
 
@@ -630,7 +634,9 @@ public function cancelorder($order_id){
     $items->canceled='1';
     $items->save();
   }
+  Event::fire(new OrderWasCanceled($orders));
 
-  return redirect()->action('RestaurantController@showrestaurantoverview');
+  return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
+  
 }
 }
