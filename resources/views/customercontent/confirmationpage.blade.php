@@ -31,14 +31,26 @@ J3 Foods - Online Food Ordering
             {{-- */$totalprice=0;/* --}}
             {{-- */$orderid = $order[0]->order_id;/* --}}
             @foreach($order as $currentitem)
+              {{-- */$optionselection = '';/* --}}
               @if($currentitem->option_id)
                 {{-- */$option = $currentitem->item->option->name;/* --}}
-                @if($currentitem->choice_id)
-                  @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first())
-                    {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',$currentitem->choice_id)->first()->name;/* --}}
-                  @else
-                    {{-- */$optionselection = 'No Selection';/* --}}
-                  @endif
+                @if($currentitem->choice)
+                  {{-- */$choices=explode(',',$currentitem->choice);/* --}}
+                  @foreach($choices as $choice)
+                    @if($currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first())
+                      @if(empty($optionselection))
+                        {{-- */$optionselection = $currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first()->name;/* --}}
+                      @else
+                        {{-- */$optionselection = $optionselection.", ".$currentitem->item->option->choices->where('option_id',$currentitem->option_id)->where('choice_id',(int)$choice)->first()->name;/* --}}
+                      @endif
+                    @else
+                      @if(empty($optionselection))
+                        {{-- */$optionselection = $choice;/* --}}
+                      @else
+                        {{-- */$optionselection = $optionselection.", ".$choice;/* --}}
+                      @endif
+                    @endif
+                  @endforeach
                 @else
                   {{-- */$optionselection = 'No Selection';/* --}}
                 @endif
@@ -87,12 +99,27 @@ J3 Foods - Online Food Ordering
               <td>Minimum Order Fee</td>
               <td>$7</td>
             </tr>
+
+            <tr>
+              <td>Delivery or Pickup</td>
+              @if($order[0]->pickup_delivery=='1')
+              <td>Delivery</td>
+              @else
+              <td>Pick-up</td>
+              @endif
+            </tr>
           </tbody>
         </table>
       </div><!-- End table container -->
     </div>
     <div  class="list-group-item text-right" id="confirm-page-btn">
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">Order
+    @if(($totalprice>($order[0]->restaurant->max_order_price)) && ($order[0]->customer->is_guest))
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result" disabled>
+    <div data-toggle="tooltip" title="Your order total is above the Restaurants' limit"  >
+    @else
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">
+    @endif
+    Order
     <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
     </div>
   </div>
@@ -130,6 +157,7 @@ J3 Foods - Online Food Ordering
 
 <script>
   $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     $(".btn-lg").click(function() {
       $request = $.ajax({
         url: "{{ route('submitorderlink') }}",
