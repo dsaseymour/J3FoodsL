@@ -530,7 +530,11 @@ $reviews = array();
   ->where('restaurant_id',$id)
   ->first();
 
+  if($average != null){
   $averageReview = round($average->AVG_RATING,1);
+  }else{
+    $averageReview = "N/A";
+  }
 
   return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews','averageReview'));
 }
