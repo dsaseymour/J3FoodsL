@@ -52,6 +52,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
+        $isGuestHolder = 0;
         if ($request->isGuest != "1"){
             $validator = $this->validator($request->all());
             if ($validator->fails()) {
@@ -59,6 +60,8 @@ class AuthController extends Controller
                     $request, $validator
                     );
             }
+        } else {
+          $isGuestHolder = 1;
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
@@ -80,6 +83,7 @@ class AuthController extends Controller
             $customer = new Customer;
             $customer->id = $idOfUser;
             $customer->phoneno = "";
+            $customer->is_guest = $isGuestHolder;
             $customer->save();
             return redirect()->action('CustomerController@showcustomerprofile');
         }
