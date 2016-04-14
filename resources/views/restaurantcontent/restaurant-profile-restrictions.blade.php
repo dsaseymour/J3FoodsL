@@ -30,14 +30,18 @@ J3 Foods - Online Food Ordering
 
                   <tr>
                     <td>Maximum Order Price</td>
-                    <td><input type="number" name="max_price" class="form-control"  /></td>
+                    <td><input type="number" name="max_price" class="form-control" value="{{$currentRestaurant->max_order_price}}"/></td>
                   </tr>
 
                   <tr>
                     <td>Allow Guest Orders</td>
                     <td>
                     <input type="hidden" name="allow_guests" class="form-control" value="0">
-                    <input type="checkbox" name="allow_guests" class="form-control" value="1">
+                    @if ($currentRestaurant->allow_guests === 1)
+                      <input type="checkbox" name="allow_guests" class="form-control" value="1" checked>
+                    @else
+                      <input type="checkbox" name="allow_guests" class="form-control" value="1">
+                    @endif
                     </td>
                   </tr>
 
