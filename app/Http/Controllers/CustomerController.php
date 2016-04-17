@@ -172,19 +172,9 @@ class CustomerController extends Controller
       if(count($currentCart) > 0 && $currentCart[0]->restaurant_id != $item->restaurant->id){
         return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "You already have items in a cart with a different restaurant. Please clear your cart before adding items from this restaurant.");
       }
-    
 
       $o = new Orders;
 
-      if(count($currentCart) > 0){
-        $o->order_id = $currentCart[0]->order_id;
-      }
-
-      $o->customer_id = \Auth::user()->id;
-      $o->item_id = $item->item_id;
-      $o->restaurant_id = $item->restaurant->id;
-      $o->quantity = $_POST["qty"];
-      $o->option_id = $item->option_id;
       if(isset($_POST["item-option-combo"])){
         $o->choice = $_POST["item-option-combo"];
       } elseif(isset($_POST["item-option-check"]) && count($_POST["item-option-check"])>0){
@@ -198,9 +188,31 @@ class CustomerController extends Controller
         $o->choice = $_POST["item-option-text"];
       }
 
-      $o->save();
+      $updating = false;
+      foreach ($currentCart as $cartItem) {
+        if($cartItem->item_id == $item->item_id && $cartItem->choice == $o->choice){
+          $updating = true;
+          $cartItem->quantity = $cartItem->quantity + $_POST["qty"];
+          $cartItem->save();
+          return back();
+        }
+      }
+      if(!$updating){
+        if(count($currentCart) > 0){
+          $o->order_id = $currentCart[0]->order_id;
+        }
 
-      return back();
+        $o->customer_id = \Auth::user()->id;
+        $o->item_id = $item->item_id;
+        $o->restaurant_id = $item->restaurant->id;
+        $o->quantity = $_POST["qty"];
+        $o->option_id = $item->option_id;
+        
+
+        $o->save();
+
+        return back();
+      }
     } else {
       return redirect('error')->with('error-title', 'Restaurants cannot make orders')->with("error-message", "Please sign out of your restaurant account before attempting to make an order.");
     }
