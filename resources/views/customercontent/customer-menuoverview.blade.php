@@ -125,28 +125,32 @@ J3 Foods - Online Food Ordering
       </div>
       <div id="rhdr-center" class="col-sm-6 text-center">
         <div id="avgrating">
-          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+          @for($i=0; $i<floor($restaurant->aveRating()); $i++)
+            <i class="material-icons">star</i>
+          @endfor
+          @if(floor($restaurant->aveRating()) != ceil($restaurant->aveRating()))
+            <i class="material-icons">star_half</i>
+          @endif
+          @for($i=0; $i<5-ceil($restaurant->aveRating()); $i++)
+            <i class="material-icons">star_border</i>
+          @endfor
         </div>
       </div>
       <div id="rhdr-right" class="col-sm-3">
-        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
-      <div id="rhdr-info">
-        <p>
-        <span class="glyphicon glyphicon-map-marker"></span> 
-          <a href="http://maps.google.com/?q=
-            {{{ $restaurantInfo->address or '' }}},
-            {{{ $restaurantInfo->city or '' }}},
-            {{$restaurantInfo->province}}">
-            {{{ $restaurantInfo->address or 'N/A' }}}
-          </a>
-        </p>
+        <div id="rhdr-info">
+          <p>
+          <span class="glyphicon glyphicon-map-marker"></span> 
+            <a href="http://maps.google.com/?q=
+              {{{ $restaurantInfo->address or '' }}},
+              {{{ $restaurantInfo->city or '' }}},
+              {{$restaurantInfo->province}}">
+              {{{ $restaurantInfo->address or 'N/A' }}}
+            </a>
+          </p>
 
-        <p>
-        <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
-        </p>
-
-      
+          <p>
+            <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+          </p>
       </div>
       </div>
   </div>
