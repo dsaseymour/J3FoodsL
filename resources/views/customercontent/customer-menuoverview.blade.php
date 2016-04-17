@@ -70,6 +70,10 @@ J3 Foods - Online Food Ordering
       width: auto;
     }
 
+    #filters .form-group:nth-child(2) {
+      vertical-align: top;
+    }
+
     #filters .form-group:first-child {
       padding-right: 16px;
     }
