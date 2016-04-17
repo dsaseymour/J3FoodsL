@@ -40,13 +40,8 @@ class OrderCancellationNotification
         $orderset=$event->order;
         $customer = User::find($orderparam->customer_id);
         $restaurant=Restaurant::find($orderparam->restaurant_id);
-
-        Mail::send('email.ordercancellation',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($orderparam){
-        $customer = User::find($orderparam->customer_id);
-        $email=$customer->email;
-        $message->to($email)->subject('Your Order has been canceled');
+        Mail::send('email.ordercancellation',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($customer){
+        $message->to($customer->email)->subject('Your Order has been canceled');
         });
-
-
     }
 }
