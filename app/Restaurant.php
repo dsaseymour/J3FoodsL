@@ -40,4 +40,8 @@ class Restaurant extends Model
 			return $rating;
 		}
 	}
+
+	public function reviews(){
+		return $this->hasMany(Review::class, "restaurant_id")->where("is_displaying", 1);
+	}
 }

@@ -111,6 +111,72 @@ J3 Foods - Online Food Ordering
       cursor: pointer;
     }
 
+    #rest-img {
+      width: 200px;
+      height: 200px;
+    }
+
+    #rhdr-info {
+      padding: 12px;
+      background-color: #eeeeee;
+      border: 1px solid #dddddd;
+      margin-top: 16px;
+      margin-right: 16px;
+    }
+
+    #avgrating {
+      padding: 4px 0 0 2px;
+      background-color: #eeeeee;
+      margin-top: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+    }
+
+    #reviews {
+      margin: 16px 0 0 0;
+    }
+
+    .review {
+      width: 48%;
+      display: inline-block;
+      background-color: #eeeeee;
+      vertical-align: top;
+      padding: 4px 8px 0 8px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      float: right;
+    }
+
+    .review:first-child {
+      float: left;
+    }
+
+    .review .rating .material-icons {
+      font-size: 20px;
+    }
+
+    .review .name {
+      float: right;
+    }
+
+    .review .name::before {
+      content: "- ";
+    }
+
+    .review .body {
+      max-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .review .body::before {
+      content: open-quote;
+    }
+
+    .review .body::after {
+      content: close-quote;
+    }
   </style>
 @endsection
 
@@ -120,11 +186,12 @@ J3 Foods - Online Food Ordering
 <div class="container">
   <div id="restaurant-hdrcontainer" >
     <div class="row">
-      <div id="rhdr-left" class="col-sm-3">
-        <img src="{{$restaurantInfo->image}}" />
+      <div id="rhdr-left" class="col-sm-4 col-md-3">
+        <img id="rest-img" src="{{$restaurantInfo->image}}" />
       </div>
-      <div id="rhdr-center" class="col-sm-6 text-center">
+      <div id="rhdr-center" class="col-sm-5 col-md-6 text-center">
         <div id="avgrating">
+          <p>Average rating:</p>
           @for($i=0; $i<floor($restaurant->aveRating()); $i++)
             <i class="material-icons">star</i>
           @endfor
@@ -135,15 +202,34 @@ J3 Foods - Online Food Ordering
             <i class="material-icons">star_border</i>
           @endfor
         </div>
+        <div class="row" id="reviews">
+          <?php
+            $reviews = $restaurant->reviews;
+            if($reviews->count() >= 2){
+              $reviews = $reviews->random(2);
+            }
+          ?>
+          @foreach($reviews as $review)
+            <div class="review">
+              <div class="rating">
+                @for($i=0; $i<$review->rating; $i++)
+                  <i class="material-icons">star</i>
+                @endfor
+                @for($i=0; $i<5-$review->rating; $i++)
+                  <i class="material-icons">star_border</i>
+                @endfor
+              </div>
+              <p class="body">{{$review->comment}}</p>
+              <p class="name">{{$review->poster->user->name}}</p>
+            </div>
+          @endforeach
+        </div>
       </div>
       <div id="rhdr-right" class="col-sm-3">
         <div id="rhdr-info">
           <p>
           <span class="glyphicon glyphicon-map-marker"></span> 
-            <a href="http://maps.google.com/?q=
-              {{{ $restaurantInfo->address or '' }}},
-              {{{ $restaurantInfo->city or '' }}},
-              {{$restaurantInfo->province}}">
+            <a href="http://maps.google.com/?q={{{ $restaurantInfo->address or '' }}},{{{ $restaurantInfo->city or '' }}},{{$restaurantInfo->province}}">
               {{{ $restaurantInfo->address or 'N/A' }}}
             </a>
           </p>
