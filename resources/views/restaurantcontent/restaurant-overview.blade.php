@@ -9,17 +9,18 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
-@if(session('status'))
-                  <div class="alert alert-info">
-                      {{ session('status') }}
-                  </div>
-              @endif
 
 @include('includes.restaurant-nav')
 
 <section id="restaurantoverview-section">
   <div id="restaurant-overview-container" class="container">
     <div class="row ">
+      @if(session('status'))
+                        <div class="alert alert-info">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
       <div class="col-sm-12 text-center">
 
         <div class="panel panel-default">
@@ -112,6 +113,7 @@ J3 Foods - Online Food Ordering
   $(document).ready(function() {
     $("#restaurantnavlink-orders").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
+
     setTimeout(function(){
       $("#restaurantoverview-section").submit(function(){
         $.ajax({
@@ -121,6 +123,20 @@ J3 Foods - Online Food Ordering
         });
       });
     },300);
+
+    setInterval(pageRefreshCall, 5000);
+    function pageRefreshCall() {
+        $.ajax({
+           url: "/restaurantoverview",
+           cache: false,
+           type: 'GET',
+           success: function(response){
+        if(response){
+            $('#restaurant-overview-container').html(response);
+                    }
+           }
+        });
+    }
   });
 </script>
 @endsection

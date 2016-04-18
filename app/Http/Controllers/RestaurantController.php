@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Restaurant;
@@ -20,7 +19,7 @@ use DB;
 use Validator;
 use App\Events\OrderWasCanceled;
 use Event;
-
+use Request;
 
 class RestaurantController extends Controller
 {
@@ -187,7 +186,7 @@ class RestaurantController extends Controller
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
-      
+
       $updateRestaurant = Restaurant::find($id);
       $updateRestaurant->max_order_price = $request->max_price;
       $updateRestaurant->allow_guests = $request->allow_guests;
@@ -304,7 +303,7 @@ class RestaurantController extends Controller
             $comboOptions = new OptionChoice;
             $comboOptions2 = new OptionChoice;
           }
-          
+
           $comboOptions->option_id = $comboBox->id;
           $comboOptions->choice_id = 1;
           $comboOptions->name = $request->combo_1;
@@ -485,7 +484,7 @@ public function viewreviews(){
   $reviews = DB::table('customer_ratings')
   ->where('restaurant_id',$id)
   ->get();
-  
+
   return view('restaurantcontent.restaurant-view-reviews',compact('reviews'));
 
 }
@@ -506,7 +505,7 @@ public function toggleshowingreview(User $reviewer){
   ->where('customer_id',$reviewer->id)
   ->where('restaurant_id',$id)
   ->update(['is_displaying' => $isDisplaying]);
-  
+
   return redirect()->action('RestaurantController@viewreviews');
 
 }
@@ -581,15 +580,17 @@ public function showrestaurantoverview(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
   }
-
   $restaurant = Restaurant::where('id',$id)->first();
-
   $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
   $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
-  return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
 
+if(Request::ajax()){
+  return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
+    }
+  return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
 }
+
 
 public function showrestaurantprofile(){
   if(\Auth::check()) {
@@ -686,6 +687,6 @@ public function cancelorder($order_id){
   Event::fire(new OrderWasCanceled($orders));
 
   return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
-  
+
 }
 }
