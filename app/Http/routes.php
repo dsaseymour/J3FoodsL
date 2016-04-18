@@ -59,10 +59,10 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Login pages
 
-    Route::get('/loginRest', [
+   /* Route::get('/loginRest', [
         'uses'=>'LoginController@showrestaurantlogin',
         'as'=>'loginrest'
-        ]);
+        ]);*/
 
     Route::get('/loginCust', [
         'uses'=>'LoginController@showcustomerlogin',

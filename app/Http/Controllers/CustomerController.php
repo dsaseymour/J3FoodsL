@@ -245,9 +245,9 @@ class CustomerController extends Controller
        $user = \Auth::user();
     }
 
-   /* dd($user);
+   dd($user->confirmed);
 
-    if($user->confirmed != 1){ //if they havent confirmed their email
+   /* if($user->confirmed != 1){ //if they havent confirmed their email
       return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
     }*/
 
