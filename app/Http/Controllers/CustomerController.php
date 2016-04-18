@@ -14,6 +14,7 @@ use App\CustomerRatings;
 use App\CustomerFavourites;
 use App\User;
 use App\Orders;
+use Auth;
 use Carbon\Carbon;
 use DB;
 use Validator;
@@ -105,12 +106,15 @@ class CustomerController extends Controller
   }
 
   public function showcustomeroverview(){
-    $restaurants = Restaurant::get();
+		$restaurants = Restaurant::orderBy('is_open', 'desc')->get();
+
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
     public function sortrestaurantlistalphabetically(){
-    $restaurants = Restaurant::orderBy('companyname', 'desc')->get();
+    $restaurants = Restaurant::orderBy('is_open', 'desc')
+                   ->orderBy('companyname', 'asc')
+                   ->get();
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
@@ -130,7 +134,7 @@ class CustomerController extends Controller
         $restaurants->prepend($favouriteRestaurant);
     }
     $restaurants = $restaurants->unique();
-    //dd($restaurants);
+
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
@@ -166,25 +170,19 @@ class CustomerController extends Controller
 
   public function addItem(Request $request){
     $item = Item::find($_POST["itemid"]);
-
+    $restaurant = Restaurant::find($item->restaurant->id);
+    if($restaurant->is_open == 0){//if the restarant is closed
+     // return redirect('/customeroverview')->with('status', 'This restaurant is closed and cannot be ordered from.');
+      return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "YThis restaurant is closed and cannot be ordered from.");
+    }
     if(!\Auth::user()->isRestaurant){
       $currentCart = \Auth::user()->customer->cart;
       if(count($currentCart) > 0 && $currentCart[0]->restaurant_id != $item->restaurant->id){
         return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "You already have items in a cart with a different restaurant. Please clear your cart before adding items from this restaurant.");
       }
-    
 
       $o = new Orders;
 
-      if(count($currentCart) > 0){
-        $o->order_id = $currentCart[0]->order_id;
-      }
-
-      $o->customer_id = \Auth::user()->id;
-      $o->item_id = $item->item_id;
-      $o->restaurant_id = $item->restaurant->id;
-      $o->quantity = $_POST["qty"];
-      $o->option_id = $item->option_id;
       if(isset($_POST["item-option-combo"])){
         $o->choice = $_POST["item-option-combo"];
       } elseif(isset($_POST["item-option-check"]) && count($_POST["item-option-check"])>0){
@@ -198,9 +196,31 @@ class CustomerController extends Controller
         $o->choice = $_POST["item-option-text"];
       }
 
-      $o->save();
+      $updating = false;
+      foreach ($currentCart as $cartItem) {
+        if($cartItem->item_id == $item->item_id && $cartItem->choice == $o->choice){
+          $updating = true;
+          $cartItem->quantity = $cartItem->quantity + $_POST["qty"];
+          $cartItem->save();
+          return back();
+        }
+      }
+      if(!$updating){
+        if(count($currentCart) > 0){
+          $o->order_id = $currentCart[0]->order_id;
+        }
 
-      return back();
+        $o->customer_id = \Auth::user()->id;
+        $o->item_id = $item->item_id;
+        $o->restaurant_id = $item->restaurant->id;
+        $o->quantity = $_POST["qty"];
+        $o->option_id = $item->option_id;
+        
+
+        $o->save();
+
+        return back();
+      }
     } else {
       return redirect('error')->with('error-title', 'Restaurants cannot make orders')->with("error-message", "Please sign out of your restaurant account before attempting to make an order.");
     }
@@ -222,8 +242,14 @@ class CustomerController extends Controller
 
   public function submitOrder(){
     if(\Auth::check()) {
-       $user = \Auth::user()->id;
+       $user = \Auth::user();
     }
+
+   dd($user->confirmed);
+
+   /* if($user->confirmed != 1){ //if they havent confirmed their email
+      return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
+    }*/
 
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
     
@@ -241,6 +267,9 @@ class CustomerController extends Controller
 
 
   public function orderconfirmandnotify($order_id){
+    if(\Auth::check()) {
+       $user = \Auth::user();
+    }
 
     $order = Orders::where('order_id',$order_id)->get();
 

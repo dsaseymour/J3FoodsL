@@ -159,7 +159,7 @@ J3 Foods - Online Food Ordering
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
     $(".btn-lg").click(function() {
-      $request = $.ajax({
+      $request = $.post({
         url: "{{ route('submitorderlink') }}",
         type: "get",
         data: {}

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Restaurant extends Model
 {
@@ -28,5 +29,19 @@ class Restaurant extends Model
 
 	public function specials(){
 		return $this->hasMany(Special::class, 'rest_id');
+	}
+
+	public function aveRating(){
+		$aveRating = DB::table("restaurant_average_ratings")->where("restaurant_id", $this->id)->first();
+		if($aveRating == null){
+			return 0;
+		} else {
+			$rating = floor($aveRating->AVG_RATING * 2) / 2; //round to nearest half integer
+			return $rating;
+		}
+	}
+
+	public function reviews(){
+		return $this->hasMany(Review::class, "restaurant_id")->where("is_displaying", 1);
 	}
 }
