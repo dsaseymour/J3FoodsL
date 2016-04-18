@@ -612,10 +612,47 @@ public function showrestaurantrestrictions(){
 }
 
 public function showrestaurantprofilehours(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
   $dayNumbers = array(1,2,3,4,5,6,7);
   $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
   $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-  return view('restaurantcontent.restaurant-profile-hours', compact('dayNumbers', 'dayStrings', 'dayNames'));
+  $openFlags = array();
+  $open_times = array();
+  $close_times = array();
+
+  //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
+  foreach ($dayNumbers as $dayid){
+    $is_open = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('open');
+    $openFlags[] = $is_open;
+    if($is_open[0] == 1){
+      $open_time = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('open_time');
+      $close_time = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('close_time');
+      $open_times[] = intval($open_time[0]);
+      $close_times[] = intval($close_time[0]);          
+    } else{
+      $open_times[] = -1;
+      $close_times[] = -1;
+    }
+  }
+  //dd($open_times);
+  //$temp = array_pop($openFlags[0]);
+  //$temp = $openFlags[0][0];
+  //dd($temp);
+  
+  return view('restaurantcontent.restaurant-profile-hours', 
+              compact('dayNumbers', 'dayStrings', 'dayNames', 
+                      'openFlags', 'open_times','close_times'));
 }
 
 public function finishorder($order_id){
