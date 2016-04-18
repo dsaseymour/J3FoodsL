@@ -48,7 +48,7 @@
             <span class="glyphicon glyphicon-user"></span>
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Welcome</a></li>
+              <!--<li><a href="#">Welcome</a></li>-->
               <li><a href="{{ route('customeroverviewlink'  ) }}">Overview</a></li>
               <li><a href="{{ route('customerprofilelink'  ) }}">Edit Profile</a></li>
               <li><a href="#">Help</a></li>

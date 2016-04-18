@@ -29,8 +29,6 @@ class RestaurantController extends Controller
    $this->middleware('auth');
  }
 
-
-
     /**
     Updates the user info with the data eneterd in the update user info page
   */
@@ -604,7 +602,13 @@ public function showrestaurantprofile(){
 }
 
 public function showrestaurantrestrictions(){
-  return view('restaurantcontent.restaurant-profile-restrictions');
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+  $currentUser = User::where('id',$id)->first();
+  $currentRestaurant = Restaurant::where('id',$id)->first();
+
+  return view('restaurantcontent.restaurant-profile-restrictions',compact('currentUser','currentRestaurant'));
 }
 
 public function showrestaurantprofilehours(){

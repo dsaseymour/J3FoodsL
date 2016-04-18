@@ -34,6 +34,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', 'MasterController@showhome');
 
+    Route::get('/howtoregister', 'MasterController@showhotoregister');
+
     Route::get('/dbtest', [
         'uses'=>'CustomerController@showrestaurant',
         'as'=>'dbtest'
