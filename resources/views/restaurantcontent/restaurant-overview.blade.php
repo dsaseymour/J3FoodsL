@@ -9,17 +9,18 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
-@if(session('status'))
-                  <div class="alert alert-info">
-                      {{ session('status') }}
-                  </div>
-              @endif
 
 @include('includes.restaurant-nav')
 
 <section id="restaurantoverview-section">
   <div id="restaurant-overview-container" class="container">
     <div class="row ">
+      @if(session('status'))
+                        <div class="alert alert-info">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
       <div class="col-sm-12 text-center">
 
         <div class="panel panel-default">

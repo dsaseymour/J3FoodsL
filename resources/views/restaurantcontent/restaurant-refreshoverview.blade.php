@@ -1,4 +1,10 @@
 <div class="row ">
+  @if(session('status'))
+                    <div class="alert alert-info">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
   <div class="col-sm-12 text-center">
 
     <div class="panel panel-default">
