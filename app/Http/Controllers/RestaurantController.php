@@ -19,7 +19,7 @@ use DB;
 use Validator;
 use App\Events\OrderWasCanceled;
 use Event;
-use Request;
+use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
@@ -255,18 +255,11 @@ class RestaurantController extends Controller
 
 
     if ($request->are_options == "on"){
+      if($updateItem->option_id != null){
+        $updateItem->option->delete();
+      }
       if($request->option_type == "textbox"){
-
-        if($updateItem->option_id != null){
-          if($updateItem->option->type == "text"){
-              $textOption = Option::where('item_id',$item->item_id)->where('type',"text")->first(); //saving text option
-           }else{ //had a different option, need to remove it and create a new one
-            $textOption = new Option;
-            $updateItem->option->delete();
-          }
-        }else{
-           $textOption = new Option; //saving new text option
-         }
+         $textOption = new Option; //saving new text option
          $textOption->item_id = $updateItem->item_id;
          $textOption->type = "text";
          $textOption->name = $request->text_option;
@@ -274,35 +267,14 @@ class RestaurantController extends Controller
 
          $updateItem->option_id = $textOption->id;
        } else if($request->option_type == "combobox"){
-
-        if($updateItem->option_id != null){
-          if($updateItem->option->type == "combo"){
-            $comboBox =  Option::where('item_id',$item->item_id)->where('type',"combo")->first(); //saving combo option
-          }else{
-            $comboBox = new Option;
-            $updateItem->option->delete();
-          }
-        }else{
-            $comboBox = new Option; //saving combo option
-          }
-
+          $comboBox = new Option; //saving combo option
           $comboBox->item_id = $updateItem->item_id;
           $comboBox->type = "combo";
           $comboBox->name = $request->combo_name;
           $comboBox->save();
 
-          if($updateItem->option_id != null){
-            if($updateItem->option->type == "combo"){
-              $comboOptions =  OptionChoice::where('option_id',$comboBox->id)->where('choice_id',"1")->first();
-              $comboOptions2 = OptionChoice::where('option_id',$comboBox->id)->where('choice_id',"2")->first();
-            }else{
-              $comboOptions = new OptionChoice;
-              $comboOptions2 = new OptionChoice;
-            }
-          }else{
-            $comboOptions = new OptionChoice;
-            $comboOptions2 = new OptionChoice;
-          }
+          $comboOptions = new OptionChoice;
+          $comboOptions2 = new OptionChoice;
 
           $comboOptions->option_id = $comboBox->id;
           $comboOptions->choice_id = 1;
@@ -315,38 +287,17 @@ class RestaurantController extends Controller
           $comboOptions2->name = $request->combo_2;
           $comboOptions2->choice_order = 2;
           $comboOptions2->save();
-
           $updateItem->option_id = $comboBox->id;
         }else if($request->option_type == "checkbox"){
 
-          if($updateItem->option_id != null){
-            if($updateItem->option->type == "check"){
-              $checkOption =  Option::where('item_id',$item->item_id)->where('type',"check")->first(); //saving checkbox option
-            }else{
-              $checkOption = new Option;
-              $updateItem->option->delete();
-            }
-          }else{
-            $checkOption = new Option; //saving combo option
-          }
-
+          $checkOption = new Option; //saving combo option
           $checkOption->item_id = $updateItem->item_id;
           $checkOption->type = "check";
           $checkOption->name = $request->check_name;
           $checkOption->save();
 
-          if($updateItem->option_id != null){
-            if($updateItem->option->type == "check"){
-              $checkOptions = OptionChoice::where('option_id',$checkOption->id)->where('choice_id',"1")->first();
-              $checkOptions2 = OptionChoice::where('option_id',$checkOption->id)->where('choice_id',"2")->first();
-            }else{
-              $checkOptions = new OptionChoice;
-              $checkOptions2 = new OptionChoice;
-            }
-          }else{
-            $checkOptions = new OptionChoice;
-            $checkOptions2 = new OptionChoice;
-          }
+          $checkOptions = new OptionChoice;
+          $checkOptions2 = new OptionChoice;
 
           $checkOptions->option_id = $checkOption->id;
           $checkOptions->choice_id = 1;
@@ -366,7 +317,6 @@ class RestaurantController extends Controller
       }else if ($updateItem->option_id != null){//delete the saved option if they unchecked has options
         $updateItem->option->delete();
       }
-
       $updateItem->save();
       return redirect()->action('RestaurantController@showrestaurantmoverview');
     }
@@ -585,7 +535,7 @@ public function showrestaurantoverview(){
   $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
 
-if(Request::ajax()){
+if(\Request::ajax()){
   return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
     }
   return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
