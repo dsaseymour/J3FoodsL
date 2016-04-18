@@ -124,16 +124,16 @@ J3 Foods - Online Food Ordering
       });
     },300);
 
-    setInterval(pageRefreshCall, 5000);
+    setInterval(pageRefreshCall, 10000);
     function pageRefreshCall() {
         $.ajax({
-           url: "/restaurantoverview",
+           url: "{{ route('restaurantoverviewlink') }}",
            cache: false,
            type: 'GET',
            success: function(response){
         if(response){
             $('#restaurant-overview-container').html(response);
-                    }
+            }
            }
         });
     }
