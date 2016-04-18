@@ -11,11 +11,14 @@ J3 Foods - Online Food Ordering
   <style>
     .menu-items {
       display: block;
+      border: none;
     }
 
     .menu-item {
       position: relative;
       display: inline-block;
+      width: 250px;
+      vertical-align: top;
     }
 
     .menu-item:hover {
@@ -33,6 +36,13 @@ J3 Foods - Online Food Ordering
       color: white;
       background: rgb(75, 75, 75);
       padding: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .menu-item:hover .name {
+      white-space: normal;
     }
     
     .menu-item .price {
@@ -60,8 +70,112 @@ J3 Foods - Online Food Ordering
       width: auto;
     }
 
+    #filters .form-group:nth-child(2) {
+      vertical-align: top;
+    }
+
     #filters .form-group:first-child {
       padding-right: 16px;
+    }
+
+    .menu-category {
+      background-color: #f4f4f4;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      padding: 8px;
+    }
+
+    .menu-category:not(.menu-specials) {
+      margin-bottom: 8px;
+    }
+
+    .menu-category h1 {
+      font-size: 2em;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 0;
+    }
+
+    .menu-category hr {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-color: #dddddd;
+    }
+
+    .category-title {
+      padding-left: 4px;
+    }
+
+    .category-title:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    #rest-img {
+      width: 200px;
+      height: 200px;
+    }
+
+    #rhdr-info {
+      padding: 12px;
+      background-color: #eeeeee;
+      border: 1px solid #dddddd;
+      margin-top: 16px;
+      margin-right: 16px;
+    }
+
+    #avgrating {
+      padding: 4px 0 0 2px;
+      background-color: #eeeeee;
+      margin-top: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+    }
+
+    #reviews {
+      margin: 16px 0 0 0;
+    }
+
+    .review {
+      width: 48%;
+      display: inline-block;
+      background-color: #eeeeee;
+      vertical-align: top;
+      padding: 4px 8px 0 8px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      float: right;
+    }
+
+    .review:first-child {
+      float: left;
+    }
+
+    .review .rating .material-icons {
+      font-size: 20px;
+    }
+
+    .review .name {
+      float: right;
+    }
+
+    .review .name::before {
+      content: "- ";
+    }
+
+    .review .body {
+      max-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .review .body::before {
+      content: open-quote;
+    }
+
+    .review .body::after {
+      content: close-quote;
     }
   </style>
 @endsection
@@ -72,33 +186,57 @@ J3 Foods - Online Food Ordering
 <div class="container">
   <div id="restaurant-hdrcontainer" >
     <div class="row">
-      <div id="rhdr-left" class="col-sm-3">
-        <img src="{{$restaurantInfo->image}}" />
+      <div id="rhdr-left" class="col-sm-4 col-md-3">
+        <img id="rest-img" src="{{$restaurantInfo->image}}" />
       </div>
-      <div id="rhdr-center" class="col-sm-6 text-center">
+      <div id="rhdr-center" class="col-sm-5 col-md-6 text-center">
         <div id="avgrating">
-          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+          <p>Average rating:</p>
+          @for($i=0; $i<floor($restaurant->aveRating()); $i++)
+            <i class="material-icons">star</i>
+          @endfor
+          @if(floor($restaurant->aveRating()) != ceil($restaurant->aveRating()))
+            <i class="material-icons">star_half</i>
+          @endif
+          @for($i=0; $i<5-ceil($restaurant->aveRating()); $i++)
+            <i class="material-icons">star_border</i>
+          @endfor
+        </div>
+        <div class="row" id="reviews">
+          <?php
+            $reviews = $restaurant->reviews;
+            if($reviews->count() >= 2){
+              $reviews = $reviews->random(2);
+            }
+          ?>
+          @foreach($reviews as $review)
+            <div class="review">
+              <div class="rating">
+                @for($i=0; $i<$review->rating; $i++)
+                  <i class="material-icons">star</i>
+                @endfor
+                @for($i=0; $i<5-$review->rating; $i++)
+                  <i class="material-icons">star_border</i>
+                @endfor
+              </div>
+              <p class="body">{{$review->comment}}</p>
+              <p class="name">{{$review->poster->user->name}}</p>
+            </div>
+          @endforeach
         </div>
       </div>
       <div id="rhdr-right" class="col-sm-3">
-        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
-      <div id="rhdr-info">
-        <p>
-        <span class="glyphicon glyphicon-map-marker"></span> 
-          <a href="http://maps.google.com/?q=
-            {{{ $restaurantInfo->address or '' }}},
-            {{{ $restaurantInfo->city or '' }}},
-            {{$restaurantInfo->province}}">
-            {{{ $restaurantInfo->address or 'N/A' }}}
-          </a>
-        </p>
+        <div id="rhdr-info">
+          <p>
+          <span class="glyphicon glyphicon-map-marker"></span> 
+            <a href="http://maps.google.com/?q={{{ $restaurantInfo->address or '' }}},{{{ $restaurantInfo->city or '' }}},{{$restaurantInfo->province}}">
+              {{{ $restaurantInfo->address or 'N/A' }}}
+            </a>
+          </p>
 
-        <p>
-        <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
-        </p>
-
-      
+          <p>
+            <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+          </p>
       </div>
       </div>
   </div>
@@ -133,53 +271,60 @@ J3 Foods - Online Food Ordering
     $searchQuery = isset($_GET["search"]) ? $_GET["search"] : "";
   ?>
 
-  <div class="menu-category">
-    <h1>Specials</h1>
-    <div class="menu-specials">
-    <?php
-      //Get all specials for the restaurant and sort them appropriately
-      $specials = $restaurant->specials;
+  <div class="menu-category menu-specials">
+    <div class="category-title">
+      <span class="glyphicon glyphicon-plus hidden"></span>
+      <span class="glyphicon glyphicon-minus"></span>
+      <h1>Specials</h1>
+    </div>
+    <div class="category-body">
+      <hr/>
+      <div class="menu-items">
+      <?php
+        //Get all specials for the restaurant and sort them appropriately
+        $specials = $restaurant->specials;
 
-      if($searchQuery != ""){
-        $specials = $specials->filter(function($special) use ($searchQuery){
-          $pos = strpos(strtolower($special->item->name), strtolower($searchQuery));
-          return $pos !== false;
-        });
-      }
+        if($searchQuery != ""){
+          $specials = $specials->filter(function($special) use ($searchQuery){
+            $pos = strpos(strtolower($special->item->name), strtolower($searchQuery));
+            return $pos !== false;
+          });
+        }
 
-      if ($sortMethod == "alpha-des") {
-        //Sort by descending alphabetical order
-        $specials = $specials->sortBy(function($special){
-          return $special->item->name;
-        })->reverse();
+        if ($sortMethod == "alpha-des") {
+          //Sort by descending alphabetical order
+          $specials = $specials->sortBy(function($special){
+            return $special->item->name;
+          })->reverse();
 
-      } elseif ($sortMethod == "price-asc") {
-        //Sort by ascending price order, using special prices if appropriate
-        $specials = $specials->sortBy(function($special){
-          return $special->price;
-        });
+        } elseif ($sortMethod == "price-asc") {
+          //Sort by ascending price order, using special prices if appropriate
+          $specials = $specials->sortBy(function($special){
+            return $special->price;
+          });
 
-      } elseif ($sortMethod == "price-des") {
-        //Sort by descending price order, using special prices if appropriate
-        $specials = $specials->sortBy(function($special){
-          return $special->price;
-        })->reverse();
+        } elseif ($sortMethod == "price-des") {
+          //Sort by descending price order, using special prices if appropriate
+          $specials = $specials->sortBy(function($special){
+            return $special->price;
+          })->reverse();
 
-      } else{
-        //Sort by ascending alphabetical order
-        $specials = $specials->sortBy(function($special){
-          return $special->item->name;
-        });
+        } else{
+          //Sort by ascending alphabetical order
+          $specials = $specials->sortBy(function($special){
+            return $special->item->name;
+          });
 
-      }
-    ?>
-    @foreach ($specials as $special)
-      <div class="menu-item" data-itemid="{{$special->item->item_id}}">
-        <img src="{{$special->item->image}}"/>
-        <h3 class="name">{{$special->item->name}}</h3>
-        <h4 class="price"><span class="old-price">${{$special->item->price}}</span><span class="new-price">${{$special->spec_price}}</span></h4>
+        }
+      ?>
+      @foreach ($specials as $special)
+        <div class="menu-item" data-itemid="{{$special->item->item_id}}">
+          <img src="{{$special->item->image}}"/>
+          <h3 class="name">{{$special->item->name}}</h3>
+          <h4 class="price"><span class="old-price">${{$special->item->price}}</span><span class="new-price">${{$special->spec_price}}</span></h4>
+        </div>
+      @endforeach
       </div>
-    @endforeach
     </div>
   </div>
   <hr/>
@@ -192,69 +337,75 @@ J3 Foods - Online Food Ordering
   ?>
   @foreach($categories as $category)
     <div class="menu-category">
-      <h1>{{$category->category_name}}</h1>
-      <div class="menu-items">
+      <div class="category-title">
+        <span class="glyphicon glyphicon-plus hidden"></span>
+        <span class="glyphicon glyphicon-minus"></span>
+        <h1>{{$category->category_name}}</h1>
+      </div>
+      <div class="category-body">
+        <hr/>
+        <div class="menu-items">
 
-      <?php
-        //Get all items in category and sort them appropriately
-        $items = $category->items;
+        <?php
+          //Get all items in category and sort them appropriately
+          $items = $category->items;
 
-        if($searchQuery != ""){
-          $items = $items->filter(function($item) use ($searchQuery){
-            $pos = strpos(strtolower($item->name), strtolower($searchQuery));
-            return $pos !== false;
-          });
-        }
+          if($searchQuery != ""){
+            $items = $items->filter(function($item) use ($searchQuery){
+              $pos = strpos(strtolower($item->name), strtolower($searchQuery));
+              return $pos !== false;
+            });
+          }
 
-        if ($sortMethod == "alpha-des") {
-          //Sort by descending alphabetical order
-          $items = $items->sortBy(function($item){
-            return $item->name;
-          })->reverse();
+          if ($sortMethod == "alpha-des") {
+            //Sort by descending alphabetical order
+            $items = $items->sortBy(function($item){
+              return $item->name;
+            })->reverse();
 
-        } elseif ($sortMethod == "price-asc") {
-          //Sort by ascending price order, using special prices if appropriate
-          $items = $items->sortBy(function($item){
-            if($item->spec_id != NULL){
-              return $item->special->spec_price;
-            } else {
-              return $item->price;
-            }
-          });
+          } elseif ($sortMethod == "price-asc") {
+            //Sort by ascending price order, using special prices if appropriate
+            $items = $items->sortBy(function($item){
+              if($item->spec_id != NULL){
+                return $item->special->spec_price;
+              } else {
+                return $item->price;
+              }
+            });
 
-        } elseif ($sortMethod == "price-des") {
-          //Sort by descending price order, using special prices if appropriate
-          $items = $items->sortBy(function($item){
-            if($item->spec_id != NULL){
-              return $item->special->spec_price;
-            } else {
-              return $item->price;
-            }
-          })->reverse();
+          } elseif ($sortMethod == "price-des") {
+            //Sort by descending price order, using special prices if appropriate
+            $items = $items->sortBy(function($item){
+              if($item->spec_id != NULL){
+                return $item->special->spec_price;
+              } else {
+                return $item->price;
+              }
+            })->reverse();
 
-        } else{
-          //Sort by ascending alphabetical order
-          $items = $items->sortBy(function($item){
-            return $item->name;
-          });
+          } else{
+            //Sort by ascending alphabetical order
+            $items = $items->sortBy(function($item){
+              return $item->name;
+            });
 
-        }
-      ?>
+          }
+        ?>
 
-      @foreach ($items as $item)
-        <div class="menu-item" data-itemid="{{$item->item_id}}">
-          <img src="{{$item->image}}"/>
-          <h3 class="name">{{$item->name}}</h3>
-          @if($item->spec_id != NULL)
-            <h4 class="price"><span class="old-price">${{$item->price}}</span><span class="new-price">${{$item->special->spec_price}}</span></h4>
-          @else
-            <h4 class="price">${{$item->price}}</h4>
-          @endif
+        @foreach ($items as $item)
+          <div class="menu-item" data-itemid="{{$item->item_id}}">
+            <img src="{{$item->image}}"/>
+            <h3 class="name">{{$item->name}}</h3>
+            @if($item->spec_id != NULL)
+              <h4 class="price"><span class="old-price">${{$item->price}}</span><span class="new-price">${{$item->special->spec_price}}</span></h4>
+            @else
+              <h4 class="price">${{$item->price}}</h4>
+            @endif
+          </div>
+        @endforeach
         </div>
-      @endforeach
       </div>
     </div>
-    <hr/>
   @endforeach
 
   <!-- Modal -->
@@ -341,6 +492,15 @@ J3 Foods - Online Food Ordering
       //On click of item search button
       $("#item-search-btn").click(function(e){
         searchMenu();
+      });
+
+      $(".category-title").click(function(e){
+        target = $(e.target);
+        clickedTitle = (target.hasClass("category-title")) ? target : target.parents(".category-title");
+        plusMinus = clickedTitle.find(".glyphicon");
+        plusMinus.toggleClass("hidden");
+        categoryBody = clickedTitle.parent().find(".category-body");
+        categoryBody.slideToggle();
       });
     });
 
