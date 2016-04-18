@@ -210,6 +210,14 @@ class RestaurantController extends Controller
 
     }
 
+
+    public function deletecategory(Category $category){
+
+      $category->delete();
+      return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+    }
+
     public function deleteitem(Item $item){
 
       $item->delete();

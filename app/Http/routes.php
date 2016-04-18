@@ -194,6 +194,8 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Restuarant pages
 
+
+
     Route::get('/toggleshowingreview/{reviewer}',[
         'uses'=>'RestaurantController@toggleshowingreview',
         'as'=>'toggleshowingreview',
@@ -225,6 +227,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/edititem/{item}',[
         'uses'=>'RestaurantController@edititem',
         'as'=>'edititem',
+        ]);
+
+    Route::get('/deletecategory/{category}',[
+        'uses'=>'RestaurantController@deletecategory',
+        'as'=>'deletecategory',
         ]);
 
     Route::get('/deleteitem/{item}',[

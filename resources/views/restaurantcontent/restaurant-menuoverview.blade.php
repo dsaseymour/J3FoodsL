@@ -191,6 +191,11 @@ J3 Foods - Online Food Ordering
     cursor:move;
   }
 
+  .delete-category{
+    float:right;
+    margin-top:10px;
+  }
+
 </style>
 
 @endsection
@@ -299,10 +304,13 @@ J3 Foods - Online Food Ordering
 @foreach($categories as $category)
 <li class="menu-category move" id="{{$category->id}}">
   <div class="category-title">
-        <span class="glyphicon glyphicon-plus hidden"></span>
-        <span class="glyphicon glyphicon-minus"></span>
+        <span class="glyphicon glyphicon-plus hidden plus-minus"></span>
+        <span class="glyphicon glyphicon-minus plus-minus"></span>
         <h1>{{$category->category_name}}</h1>
-      </div>
+        <a class="btn btn-danger delete-category" href="{{ route('deletecategory' , ['category' => $category->id] ) }}">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+  </div>
   <div id="category_{{$category->category_name}}" class ="collapse in menu-section">
   <div class="menu-items" >
     @foreach ($category->items as $item)
@@ -347,7 +355,7 @@ J3 Foods - Online Food Ordering
 $(".category-title").click(function(e){
         target = $(e.target);
         clickedTitle = (target.hasClass("category-title")) ? target : target.parents(".category-title");
-        plusMinus = clickedTitle.find(".glyphicon");
+        plusMinus = clickedTitle.find(".plus-minus");
         plusMinus.toggleClass("hidden");
         categoryBody = clickedTitle.parent().find(".menu-items");
         categoryBody.slideToggle();
