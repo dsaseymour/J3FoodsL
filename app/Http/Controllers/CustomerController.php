@@ -248,10 +248,11 @@ class CustomerController extends Controller
     if(\Auth::check()) {
        $user = \Auth::user();
     }
-    if(($user->confirmed != 1) & ($user->is_guest != 1)){ //if they havent confirmed their email and not a guest
+
+    if(($user->confirmed != 1) && ($user->customer->is_guest != 1)){ //if they havent confirmed their email and not a guest
       return response('Unauthorized.', 401);
     } else {
-      $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
+      $orders = Orders::where('customer_id',$user->id)->where('completed','0')->get();
       
       foreach($orders as $items){
         $items->submit_time=Carbon::now();
@@ -261,7 +262,8 @@ class CustomerController extends Controller
         $items->save();
       }
 
-    Event::fire(new OrderWasSubmitted($orders));
+      Event::fire(new OrderWasSubmitted($orders));
+
     }
   }
   public function submitOrder(){

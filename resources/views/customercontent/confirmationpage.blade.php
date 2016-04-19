@@ -162,18 +162,20 @@ J3 Foods - Online Food Ordering
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
     $(".btn-lg").click(function() {
-      $request = $.post({
+      $request = $.ajax({
         url: "{{ route('submitorderlink') }}",
         type: "get",
         data: {},
         error: function(xhr, status) {            
           if(xhr.status=='401'){
             window.location.href = "{{ route('notconfirmed') }}"
+          } else if(xhr.status=='500') {
+            $("#confirmation-result").modal('show');
           }
         },
         success: function(xhr, status){
           $("#confirmation-result").modal('show');
-        } 
+        }
       });
       });
     });
