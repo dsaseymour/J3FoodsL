@@ -161,9 +161,7 @@ public function searchrestaurants(Request $request ){
       $updateCustomer->save();
     }
 
-<<<<<<< HEAD
-    protected function validatecustomerupdate(array $data)
-=======
+
   public function resendEmailConfirmationTo($email){
      $confirmation_code=str_random(30);
      $data=['confirmation_code'=>$confirmation_code];
@@ -176,7 +174,6 @@ public function searchrestaurants(Request $request ){
 
 
   protected function validatecustomerupdate(array $data)
->>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
     {
       if(\Auth::check()) {
         $email = \Auth::user()->email;
@@ -207,13 +204,6 @@ public function searchrestaurants(Request $request ){
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
-<<<<<<< HEAD
-  
-=======
-
-
-
->>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
 
   public function showcustomermenu(Restaurant $restaurant){
     $id = $restaurant->id;
@@ -299,19 +289,21 @@ public function searchrestaurants(Request $request ){
     }
   }
 
-  public function removeItem($item){
+  public function removeItem($item,$choice){
     if(\Auth::check()) {
-     $user = \Auth::user()->id;
-   }
+      $user = \Auth::user()->id;
+    }
 
-   $order = Orders::where('customer_id',$user)->where('completed','0')->where('item_id',$item)->get();
+    $item = DB::table('orders')
+        ->where('item_id',$item)
+        ->where('completed',0)
+        ->where('choice',$choice)
+        ->delete();
 
-   foreach($order as $items){
-    $items->delete();
+    return redirect()->action('CustomerController@showcustomerconfirmation');
+
   }
 
-  return redirect()->action('CustomerController@showcustomerconfirmation');
-}
   /**
     This function is called when the user is not confirmed and they try to order
   */ 
@@ -319,10 +311,11 @@ public function notConfirmed(){
   return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
 }
 
-public function checkConfirmed(){
-  if(\Auth::check()) {
-   $user = \Auth::user();
- }
+
+  public function checkConfirmed(){
+    if(\Auth::check()) {
+       $user = \Auth::user();
+    }
 
     if(($user->confirmed != 1) && ($user->customer->is_guest != 1)){ //if they havent confirmed their email and not a guest
       return response('Unauthorized.', 401);
@@ -355,21 +348,9 @@ public function checkConfirmed(){
     $items->save();
   }
 
-<<<<<<< HEAD
+
   Event::fire(new OrderWasSubmitted($orders));
 }
-=======
-    $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-
-    foreach($orders as $items){
-      $items->submit_time=Carbon::now();
-      $items->completed='1';
-      $items->quantity=$items->quantity;
-      $items->special_instructions=$items->special_instructions;
-      $items->save();
-    }
->>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
-
 
 public function orderconfirmandnotify($order_id){
   if(\Auth::check()) {

@@ -64,7 +64,7 @@ J3 Foods - Online Food Ordering
               <td>{{$currentitem->item->name}}</td>
               <td>{{$option.": ".$optionselection}}</td>
               <td>${{$currentitem->item->price}}</td>
-              <td><a class="btn btn-danger" href="{{route('removeitemlink', $currentitem->item_id)}}">
+              <td><a class="btn btn-danger" href="{{route('removeitemlink', [$currentitem->item_id, $currentitem->choice])}}">
                 <span class="glyphicon glyphicon-remove"></span></a></td>
             </tr>
             @endforeach
@@ -103,9 +103,11 @@ J3 Foods - Online Food Ordering
             <tr>
               <td>Delivery or Pickup</td>
               @if($order[0]->pickup_delivery=='1')
-              <td>Delivery</td>
+              <td><label class="radio-inline"><input type="radio" name="optradio" checked value="1">Delivery</label>
+              <label class="radio-inline"><input type="radio" name="optradio" value="0">Pickup</label></td>
               @else
-              <td>Pick-up</td>
+              <td><label class="radio-inline"><input type="radio" name="optradio" value="1">Delivery</label>
+              <label class="radio-inline"><input type="radio" name="optradio" checked value="0">Pickup</label></td>
               @endif
             </tr>
           </tbody>
@@ -161,19 +163,22 @@ J3 Foods - Online Food Ordering
 <script>
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
+    var p_d = $('#filterDay label.active input').val()
     $(".btn-lg").click(function() {
-      $request = $.post({
+      $request = $.ajax({
         url: "{{ route('submitorderlink') }}",
         type: "get",
         data: {},
         error: function(xhr, status) {            
           if(xhr.status=='401'){
             window.location.href = "{{ route('notconfirmed') }}"
+          } else if(xhr.status=='500') {
+            $("#confirmation-result").modal('show');
           }
         },
         success: function(xhr, status){
           $("#confirmation-result").modal('show');
-        } 
+        }
       });
       });
     });
