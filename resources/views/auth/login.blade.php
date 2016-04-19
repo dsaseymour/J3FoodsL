@@ -15,7 +15,7 @@ J3 Foods - Online Food Ordering
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                <!-- WE NEED THIS ACTION TO BE WORKING-->
+                    <!-- WE NEED THIS ACTION TO BE WORKING-->
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
@@ -26,9 +26,9 @@ J3 Foods - Online Food Ordering
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -40,9 +40,9 @@ J3 Foods - Online Food Ordering
                                 <input type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -50,13 +50,13 @@ J3 Foods - Online Food Ordering
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
+                                    <i class="fa fa-btn fa-sign-in"></i><span>Login</span>
                                 </button>
-								
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
@@ -65,11 +65,28 @@ J3 Foods - Online Food Ordering
                                     </label>
                                 </div>
                             </div>
+                        </div>    
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a class="btn btn-primary" href="{{ route('registercustomer') }}">Register As Customer</a>
+                                <a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register As Restaurant</a>
+                            </div>
                         </div>
                     </form>
-					
-                    <a class="btn btn-primary col-md-offset-4" href="{{ route('registercustomer') }}">Register As Customer</a>
-                    <a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register a Restaurant</a>
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                        {!! csrf_field() !!}
+                        <input type="hidden" class="form-control" name="isRestaurant" value="0">
+                        <input type="hidden" class="form-control" name="isGuest" value="1">
+                        <input type="hidden" class="form-control" name="name" value="guest">
+                        <input type="hidden" class="form-control" name="email" value={{$guestemail}}>
+                        <input type="hidden" class="form-control" name="password" value="password">
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn-link" href="">Enter as a Guest</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -9,11 +9,18 @@ J3 Foods - Online Food Ordering
 
 
 @section('content')
+
 @include('includes.restaurant-nav')
 
 <section id="restaurantoverview-section">
   <div id="restaurant-overview-container" class="container">
     <div class="row ">
+      @if(session('status'))
+                        <div class="alert alert-info">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
       <div class="col-sm-12 text-center">
 
         <div class="panel panel-default">
@@ -22,13 +29,13 @@ J3 Foods - Online Food Ordering
             <h1>{{$restaurant->companyname}} Orders
               <span class="badge">{{count($uniqueorders)}}</span>
               @if ($restaurant->is_open == 1)
-              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}">
                 <span class="glyphicon glyphicon-remove"></span> CLOSE
-              </a> 
+              </a>
               @else
-              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}"> 
+              <a class="btn btn-primary" href="{{ route('closerestaurant' , ['restaurant' => $restaurant->id] ) }}">
                 <span class="glyphicon glyphicon-plus"></span> OPEN
-              </a> 
+              </a>
               @endif
             </h1>
           </div>
@@ -75,9 +82,9 @@ J3 Foods - Online Food Ordering
                           </div>
                         </td>
                         <td>
-                          <a class="btn btn-success" href="{{ route('finishorder' , $id ) }}"> 
+                          <a class="btn btn-success" href="{{ route('finishorder' , $id ) }}">
                           <span class="glyphicon glyphicon-ok"></span> Order Completed</a>
-                          <a class="btn btn-danger" href="{{ route('cancelorder' , $id  ) }}"> 
+                          <a class="btn btn-danger" href="{{ route('cancelorder' , $id  ) }}">
                           <span class="glyphicon glyphicon-remove"></span> Cancel Order</a>
                         </td>
                       </tr>
@@ -106,6 +113,7 @@ J3 Foods - Online Food Ordering
   $(document).ready(function() {
     $("#restaurantnavlink-orders").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
+
     setTimeout(function(){
       $("#restaurantoverview-section").submit(function(){
         $.ajax({
@@ -115,6 +123,20 @@ J3 Foods - Online Food Ordering
         });
       });
     },300);
+
+    setInterval(pageRefreshCall, 10000);
+    function pageRefreshCall() {
+        $.ajax({
+           url: "{{ route('restaurantoverviewlink') }}",
+           cache: false,
+           type: 'GET',
+           success: function(response){
+        if(response){
+            $('#restaurant-overview-container').html(response);
+            }
+           }
+        });
+    }
   });
 </script>
 @endsection

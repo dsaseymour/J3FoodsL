@@ -30,13 +30,19 @@ class MasterController extends Controller
           return view('home');
   }
 
+public function showhotoregister(){
+  return view('howto-register');
+}
   public function postCustomerLogin(Request $request)
   {
 
 
   }
 
-
+  public function error(Request $request){
+  	$request->session()->reflash();
+  	return view('errors.error');
+  }
 
 
 

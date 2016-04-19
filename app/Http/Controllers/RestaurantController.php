@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Restaurant;
@@ -14,8 +13,13 @@ use App\Category;
 use App\Special;
 use App\Orders;
 use Carbon\Carbon;
+use App\Option;
+use App\OptionChoice;
 use DB;
 use Validator;
+use App\Events\OrderWasCanceled;
+use Event;
+use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
@@ -26,8 +30,8 @@ class RestaurantController extends Controller
 
     /**
     Updates the user info with the data eneterd in the update user info page
-  */  
-    public function updateinfo(Request $request){ 
+  */
+    public function updateinfo(Request $request){
       $validator = $this->validaterestaurantupdate($request->all());
 
       if ($validator->fails()) {
@@ -41,9 +45,9 @@ class RestaurantController extends Controller
 
   /**
     Updates the database with the updated info of the restaurant
-    
+
   */
-    protected function updateDatabaseWithNewInfo(Request $request){   
+    protected function updateDatabaseWithNewInfo(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
@@ -90,7 +94,7 @@ class RestaurantController extends Controller
           'city' => 'required',
           'postalcode' => 'required | max:7 | min:6',
           'phoneno' => 'required | max:13',
-          ]);      
+          ]);
       }
     }
 
@@ -156,8 +160,8 @@ class RestaurantController extends Controller
       $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
 
       $parameters = $request->request->all();
-      
-      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent 
+
+      //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
       foreach ($dayStrings as $day){
         DB::table('hours')
         ->where('rest_ID',$id)
@@ -170,6 +174,25 @@ class RestaurantController extends Controller
       }
     }
 
+    public function updaterestrictions(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+      $this->updateDatabaseWithNewResrtictions($request);
+      return redirect()->action('RestaurantController@showrestaurantoverview');
+    }
+
+    protected function updateDatabaseWithNewResrtictions(Request $request){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+
+      $updateRestaurant = Restaurant::find($id);
+      $updateRestaurant->max_order_price = $request->max_price;
+      $updateRestaurant->allow_guests = $request->allow_guests;
+      $updateRestaurant->save();
+    }
+
     public function addcategory(Request $request){
 
       if(\Auth::check()) {
@@ -180,6 +203,14 @@ class RestaurantController extends Controller
       $newCategory->category_name = $request->category;
       $newCategory->rest_id = $id;
       $newCategory->save();
+      return redirect()->action('RestaurantController@showrestaurantmoverview');
+
+    }
+
+
+    public function deletecategory(Category $category){
+
+      $category->delete();
       return redirect()->action('RestaurantController@showrestaurantmoverview');
 
     }
@@ -222,141 +253,390 @@ class RestaurantController extends Controller
       }
     }
 
-    $updateItem->save();
-    return redirect()->action('RestaurantController@showrestaurantmoverview');
 
-  }
+    if ($request->are_options == "on"){
+      if($updateItem->option_id != null){
+        $updateItem->option->delete();
+      }
+      if($request->option_type == "textbox"){
+         $textOption = new Option; //saving new text option
+         $textOption->item_id = $updateItem->item_id;
+         $textOption->type = "text";
+         $textOption->name = $request->text_option;
+         $textOption->save();
 
-  public function savecategoryorder(Request $request){
-    $categoryList = $request->testdata;
+         $updateItem->option_id = $textOption->id;
+       } else if($request->option_type == "combobox"){
+          $comboBox = new Option; //saving combo option
+          $comboBox->item_id = $updateItem->item_id;
+          $comboBox->type = "combo";
+          $comboBox->name = $request->combo_name;
+          $comboBox->save();
 
-    $count = 1;
+          $comboOptions = new OptionChoice;
+          $comboOptions2 = new OptionChoice;
 
-    foreach ($categoryList as $categoryID){
-      $category = Category::find($categoryID);
-      $category->category_order = $count;
-      $category->save();
-      $count++;
+          $comboOptions->option_id = $comboBox->id;
+          $comboOptions->choice_id = 1;
+          $comboOptions->name = $request->combo_1;
+          $comboOptions->choice_order = 1;
+          $comboOptions->save();
+
+          $comboOptions2->option_id = $comboBox->id;
+          $comboOptions2->choice_id = 2;
+          $comboOptions2->name = $request->combo_2;
+          $comboOptions2->choice_order = 2;
+          $comboOptions2->save();
+          $updateItem->option_id = $comboBox->id;
+        }else if($request->option_type == "checkbox"){
+
+          $checkOption = new Option; //saving combo option
+          $checkOption->item_id = $updateItem->item_id;
+          $checkOption->type = "check";
+          $checkOption->name = $request->check_name;
+          $checkOption->save();
+
+          $checkOptions = new OptionChoice;
+          $checkOptions2 = new OptionChoice;
+
+          $checkOptions->option_id = $checkOption->id;
+          $checkOptions->choice_id = 1;
+          $checkOptions->name = $request->check_1;
+          $checkOptions->choice_order = 1;
+          $checkOptions->save();
+
+          $checkOptions2->option_id = $checkOption->id;
+          $checkOptions2->choice_id = 2;
+          $checkOptions2->name = $request->check_2;
+          $checkOptions2->choice_order = 2;
+          $checkOptions2->save();
+
+          $updateItem->option_id = $checkOption->id;
+        }
+
+      }else if ($updateItem->option_id != null){//delete the saved option if they unchecked has options
+        $updateItem->option->delete();
+      }
+      $updateItem->save();
+      return redirect()->action('RestaurantController@showrestaurantmoverview');
     }
 
-  }
+    public function savecategoryorder(Request $request){
+      $categoryList = $request->testdata;
 
-  public function additemtomenu(Request $request){
+      $count = 1;
 
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
+      foreach ($categoryList as $categoryID){
+        $category = Category::find($categoryID);
+        $category->category_order = $count;
+        $category->save();
+        $count++;
+      }
+
     }
 
-    $newItem = new Item;
-    $newItem->price = $request->price;
-    $newItem->name = $request->name;
-    $newItem->image = $request->image;
-    $newItem->rest_id = $id;
-    $newItem->category_id = $request->category;
+    public function additemtomenu(Request $request){
+
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
+
+      $newItem = new Item;
+      $newItem->price = $request->price;
+      $newItem->name = $request->name;
+      $newItem->image = $request->image;
+      $newItem->rest_id = $id;
+      $newItem->category_id = $request->category;
+      $newItem->save();
+
+      if ($request->are_options == "on"){
+
+        if($request->option_type == "textbox"){
+      $textOption = new Option; //saving text option
+      $textOption->item_id = $newItem->item_id;
+      $textOption->type = "text";
+      $textOption->name = $request->text_option;
+      $textOption->save();
+
+      $newItem->option_id = $textOption->id;
+    }else if ($request->option_type == "combobox"){
+
+      $comboBox = new Option; //saving combo option
+      $comboBox->item_id = $newItem->item_id;
+      $comboBox->type = "combo";
+      $comboBox->name = $request->combo_name;
+      $comboBox->save();
+
+      $comboOptions = new OptionChoice;
+      $comboOptions->option_id = $comboBox->id;
+      $comboOptions->choice_id = 1;
+      $comboOptions->name = $request->combo_1;
+      $comboOptions->choice_order = 1;
+      $comboOptions->save();
+
+      $comboOptions2 = new OptionChoice;
+      $comboOptions2->option_id = $comboBox->id;
+      $comboOptions2->choice_id = 2;
+      $comboOptions2->name = $request->combo_2;
+      $comboOptions2->choice_order = 2;
+      $comboOptions2->save();
+
+      $newItem->option_id = $comboBox->id;
+    }else if ($request->option_type == "checkbox"){
+
+      $checkOption = new Option; //saving checkbox option
+      $checkOption->item_id = $newItem->item_id;
+      $checkOption->type = "check";
+      $checkOption->name = $request->check_name;
+      $checkOption->save();
+
+      $checkOptions = new OptionChoice;
+      $checkOptions->option_id = $checkOption->id;
+      $checkOptions->choice_id = 1;
+      $checkOptions->name = $request->check_1;
+      $checkOptions->choice_order = 1;
+      $checkOptions->save();
+
+      $checkOptions2 = new OptionChoice;
+      $checkOptions2->option_id = $checkOption->id;
+      $checkOptions2->choice_id = 2;
+      $checkOptions2->name = $request->check_2;
+      $checkOptions2->choice_order = 2;
+      $checkOptions2->save();
+      $newItem->option_id = $checkOption->id;
+    }
     $newItem->save();
-    return redirect()->action('RestaurantController@showrestaurantmoverview');
+  }
+  return redirect()->action('RestaurantController@showrestaurantmoverview');
+}
 
+
+public function showrestauranthistory(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
 
-  public function showrestaurantmoverview(){
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
+  $currentmonth = Carbon::now()->month;
+  $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
+  $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
+  $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
+  $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
+
+  return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
+}
+
+
+public function viewreviews(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+
+  }
+  $reviews = DB::table('customer_ratings')
+  ->where('restaurant_id',$id)
+  ->get();
+
+  return view('restaurantcontent.restaurant-view-reviews',compact('reviews'));
+
+}
+
+public function toggleshowingreview(User $reviewer){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+
+  $review = DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->first();
+
+  $isDisplaying = ($review->is_displaying == 0 ? 1 : 0);
+
+  DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->update(['is_displaying' => $isDisplaying]);
+
+  return redirect()->action('RestaurantController@viewreviews');
+
+}
+
+
+public function deletereview(User $reviewer){
+
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+
+
+  DB::table('customer_ratings')
+  ->where('customer_id',$reviewer->id)
+  ->where('restaurant_id',$id)
+  ->delete();
+
+  return redirect()->action('RestaurantController@viewreviews');
+}
+
+public function showrestaurantmoverview(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+  $restaurantInfo = Restaurant::where('id',$id)->first();
+  $restaurant = Restaurant::where('id',$id)->first();
+  $allReviews = DB::table('customer_ratings')
+  ->where('restaurant_id',$id)
+  ->where('is_displaying', 1)
+  ->get();
+
+
+  $numReviews = count($allReviews);
+  $reviews = array();
+  if($numReviews > 1){
+    foreach( array_rand($allReviews, 2) as $k ) {
+      $reviews[] = $allReviews[$k];
     }
-    $restaurantInfo = Restaurant::where('id',$id)->first();
-    $restaurant = Restaurant::where('id',$id)->first();
-    return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo'));
+  }else if($numReviews ==1){
+    $reviews[0] = $allReviews[0];
+  }else{
+
   }
 
-  public function restaurantlogin(Request $request){
-    return view('restaurantcontent.restaurant-login');
+  $average = DB::table('restaurant_average_ratings')
+  ->where('restaurant_id',$id)
+  ->first();
+
+  if($average != null){
+    $averageReview = round($average->AVG_RATING,1);
+  }else{
+    $averageReview = "N/A";
   }
 
-  public function showrestauranthistory(){
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
+  return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews','averageReview'));
+}
+
+public function restaurantlogin(Request $request){
+  return view('restaurantcontent.restaurant-login');
+}
+
+public function showrestaurantmadmin(){
+  return view('restaurantcontent.restaurant-menuadmin');
+}
+
+public function showrestaurantmedit(){
+
+  return view('restaurantcontent.restaurant-menuedit');
+}
+
+public function showrestaurantoverview(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
+  }
+  $restaurant = Restaurant::where('id',$id)->first();
+  $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
+  $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
+
+
+if(\Request::ajax()){
+  return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
     }
+  return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
+}
 
-    $currentmonth = Carbon::now()->month;
-    $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
-    $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
-    $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
-    $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
 
-    return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
+public function showrestaurantprofile(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
+  $currentUser = User::where('id',$id)->first();
+  $currentRestaurant = Restaurant::where('id',$id)->first();
 
-  public function showrestaurantmadmin(){
-    return view('restaurantcontent.restaurant-menuadmin');
+  return view('restaurantcontent.restaurant-profile',compact('currentUser','currentRestaurant'));
+}
+
+public function showrestaurantrestrictions(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
+  $currentUser = User::where('id',$id)->first();
+  $currentRestaurant = Restaurant::where('id',$id)->first();
 
-  public function showrestaurantmedit(){
+  return view('restaurantcontent.restaurant-profile-restrictions',compact('currentUser','currentRestaurant'));
+}
 
-    return view('restaurantcontent.restaurant-menuedit');
+public function showrestaurantprofilehours(){
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
+  $dayNumbers = array(1,2,3,4,5,6,7);
+  $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
+  $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+  $openFlags = array();
+  $open_times = array();
+  $close_times = array();
 
-  public function showrestaurantoverview(){
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
+  //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
+  foreach ($dayNumbers as $dayid){
+    $is_open = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('open');
+    $openFlags[] = $is_open;
+    if($is_open[0] == 1){
+      $open_time = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('open_time');
+      $close_time = DB::table('hours')
+                ->where('rest_ID',$id)
+                ->where('day_ID',$dayid)
+                ->pluck('close_time');
+      $open_times[] = intval($open_time[0]);
+      $close_times[] = intval($close_time[0]);          
+    } else{
+      $open_times[] = -1;
+      $close_times[] = -1;
     }
+  }
+  //dd($open_times);
+  //$temp = array_pop($openFlags[0]);
+  //$temp = $openFlags[0][0];
+  //dd($temp);
+  
+  return view('restaurantcontent.restaurant-profile-hours', 
+              compact('dayNumbers', 'dayStrings', 'dayNames', 
+                      'openFlags', 'open_times','close_times'));
+}
 
-    $restaurant = Restaurant::where('id',$id)->first();
+public function finishorder($order_id){
+  $orders = Orders::where('order_id',$order_id)->get();
 
-    $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
-    $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
-
-    return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
-
+  foreach($orders as $items){
+    $items->submit_time=$items->submit_time;
+    $items->completed=$items->completed;
+    $items->quantity=$items->quantity;
+    $items->special_instructions=$items->special_instructions;
+    $items->time_out=Carbon::now();
+    $items->save();
   }
 
-  public function showrestaurantprofile(){
-    if(\Auth::check()) {
-      $id = \Auth::user()->id;
-    }
-    $currentUser = User::where('id',$id)->first();
-    $currentRestaurant = Restaurant::where('id',$id)->first();
+  return redirect()->action('RestaurantController@showrestaurantoverview');
+}
 
-    return view('restaurantcontent.restaurant-profile',compact('currentUser','currentRestaurant'));
+
+public function cancelorder($order_id){
+  $orders = Orders::where('order_id',$order_id)->get();
+
+  foreach($orders as $items){
+    $items->submit_time=$items->submit_time;
+    $items->completed=$items->completed;
+    $items->quantity=$items->quantity;
+    $items->special_instructions=$items->special_instructions;
+    $items->time_out=Carbon::now();
+    $items->canceled='1';
+    $items->save();
   }
+  Event::fire(new OrderWasCanceled($orders));
 
-  public function showrestaurantrestrictions(){
-    return view('restaurantcontent.restaurant-profile-restrictions');
-  }
+  return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
 
-  public function showrestaurantprofilehours(){
-    $dayNumbers = array(1,2,3,4,5,6,7);
-    $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
-    $dayNames = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-    return view('restaurantcontent.restaurant-profile-hours', compact('dayNumbers', 'dayStrings', 'dayNames'));
-  }
-
-  public function finishorder($order_id){
-    $orders = Orders::where('order_id',$order_id)->get();
-
-    foreach($orders as $items){
-      $items->submit_time=$items->submit_time;
-      $items->completed=$items->completed;
-      $items->quantity=$items->quantity;
-      $items->special_instructions=$items->special_instructions;
-      $items->time_out=Carbon::now();
-      $items->save();
-    }
-
-    return redirect()->action('RestaurantController@showrestaurantoverview');
-  }
-
-  public function cancelorder($order_id){
-    $orders = Orders::where('order_id',$order_id)->get();
-
-    foreach($orders as $items){
-      $items->submit_time=$items->submit_time;
-      $items->completed=$items->completed;
-      $items->quantity=$items->quantity;
-      $items->special_instructions=$items->special_instructions;
-      $items->time_out=Carbon::now();
-      $items->canceled='1';
-      $items->save();
-    }
-
-    return redirect()->action('RestaurantController@showrestaurantoverview');
-  }
+}
 }

@@ -14,6 +14,7 @@
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/bootstrap-theme.min.css') }}" />
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/font-awesome.min.css') }}" />
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/style.css') }}" />
+              <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- javascript -->
             <script src="{{ URL::to('js/jquery-1.12.0.min.js') }}"></script>
             <script src="{{ URL::to('js/jquery-ui.min.js') }}"></script>

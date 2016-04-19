@@ -10,76 +10,191 @@ J3 Foods - Online Food Ordering
 @section("styles")
 <style>
   .menu-items {
-    display: block;
-  }
+      display: block;
+      border: none;
+    }
 
-  .menu-item {
-    position: relative;
-    display: inline-block;
-  }
+    .menu-item {
+      position: relative;
+      display: inline-block;
+      width: 250px;
+      vertical-align: top;
+    }
 
-  .menu-item:hover {
-    cursor: pointer;
-  }
+    .menu-item:hover {
+      cursor: pointer;
+    }
   
-  .menu-item img {
-    width: 250px;
-    height: 150px;
+    .menu-item img {
+      width: 250px;
+      height: 150px;
+    }
+    
+    .menu-item .name {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      color: white;
+      background: rgb(75, 75, 75);
+      padding: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .menu-item:hover .name {
+      white-space: normal;
+    }
+    
+    .menu-item .price {
+      margin-top: 0px;
+      color: white;
+      background: rgb(120, 120, 120);
+      padding: 4px;
+    }
+
+    .menu-category {
+      display: block;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: rgb(180, 180, 180);
+    }
+
+    .new-price {
+      padding-left: 8px;
+    }
+
+    #filters .form-group {
+      display: inline-block;
+      width: auto;
+    }
+
+    #filters .form-group:nth-child(2) {
+      vertical-align: top;
+    }
+
+    #filters .form-group:first-child {
+      padding-right: 16px;
+    }
+
+    .menu-category {
+      background-color: #f4f4f4;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      padding: 8px;
+    }
+
+    .menu-category:not(.menu-specials) {
+      margin-bottom: 8px;
+    }
+
+    .menu-category h1 {
+      font-size: 2em;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 0;
+    }
+
+    .menu-category hr {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-color: #dddddd;
+    }
+
+    .category-title {
+      padding-left: 4px;
+    }
+
+    .category-title:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    #rest-img {
+      width: 200px;
+      height: 200px;
+    }
+
+    #rhdr-info {
+      padding: 12px;
+      background-color: #eeeeee;
+      border: 1px solid #dddddd;
+      margin-top: 16px;
+      margin-right: 16px;
+    }
+
+    #avgrating {
+      padding: 4px 0 0 2px;
+      background-color: #eeeeee;
+      margin-top: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+    }
+
+    #reviews {
+      margin: 16px 0 0 0;
+    }
+
+    .review {
+      width: 48%;
+      display: inline-block;
+      background-color: #eeeeee;
+      vertical-align: top;
+      padding: 4px 8px 0 8px;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      float: right;
+    }
+
+    .review:first-child {
+      float: left;
+    }
+
+    .review .rating .material-icons {
+      font-size: 20px;
+    }
+
+    .review .name {
+      float: right;
+    }
+
+    .review .name::before {
+      content: "- ";
+    }
+
+    .review .body {
+      max-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .review .body::before {
+      content: open-quote;
+    }
+
+    .review .body::after {
+      content: close-quote;
+    }
+
+    .expand-category{
+    display: inline;
+    width: 20px;
+    height: 20px;
+    padding-right:100px;
+    background:url('images/check-box.png') no-repeat;
+
   }
 
-  .menu-item .name {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    color: white;
-    background: rgb(75, 75, 75);
-    padding: 4px;
+  .move{
+    cursor:move;
   }
 
-  .menu-item .price {
-    margin-top: 0px;
-    color: white;
-    background: rgb(120, 120, 120);
-    padding: 4px;
-  }
-
-  .menu-category {
-    display: block;
-  }
-
-  .old-price {
-    text-decoration: line-through;
-    color: rgb(180, 180, 180);
-  }
-
-  .new-price {
-    padding-left: 8px;
-  }
-
-  #sort-by {
-    display: inline-block;
-    width: auto;
-  }
-
-  h3.name > a.btn{
+  .delete-category{
     float:right;
+    margin-top:10px;
   }
-
-  .menu-category {
-    border-style: solid;
-    border-width: 1px;
-    background-color: rgb(38, 102, 177);
-  }
-
-  .menu-category > h1{
-     background-color: #f2f2f2;
-     padding-left: 25px;
-  }
-
-  .menu-category > .menu-items{
-    background-color: #f2f2f2;
-  }
-
-   
 
 </style>
 
@@ -93,38 +208,63 @@ J3 Foods - Online Food Ordering
 
   <div id="restaurant-hdrcontainer" >
     <div class="row">
-      <div id="rhdr-left" class="col-sm-3">
-        <img src="{{$restaurantInfo->image}}" />
+      <div id="rhdr-left" class="col-sm-4 col-md-3">
+        <img id="rest-img" src="{{$restaurantInfo->image}}" />
       </div>
-      <div id="rhdr-center" class="col-sm-6 text-center">
+      <div id="rhdr-center" class="col-sm-5 col-md-6 text-center">
         <div id="avgrating">
-          <span id="avgrating-emptystar" class="glyphicon glyphicon-star-empty"></span>
-          <span id="avgrating-star" class="glyphicon glyphicon-star"></span>
+          <p>Average rating:</p>
+          @for($i=0; $i<floor($restaurant->aveRating()); $i++)
+            <i class="material-icons">star</i>
+          @endfor
+          @if(floor($restaurant->aveRating()) != ceil($restaurant->aveRating()))
+            <i class="material-icons">star_half</i>
+          @endif
+          @for($i=0; $i<5-ceil($restaurant->aveRating()); $i++)
+            <i class="material-icons">star_border</i>
+          @endfor
+        </div>
+        <div class="row" id="reviews">
+          <?php
+            $reviews = $restaurant->reviews;
+            if($reviews->count() >= 2){
+              $reviews = $reviews->random(2);
+            }
+          ?>
+          @foreach($reviews as $review)
+            <div class="review">
+              <div class="rating">
+                @for($i=0; $i<$review->rating; $i++)
+                  <i class="material-icons">star</i>
+                @endfor
+                @for($i=0; $i<5-$review->rating; $i++)
+                  <i class="material-icons">star_border</i>
+                @endfor
+              </div>
+              <p class="body">{{$review->comment}}</p>
+              <p class="name">{{$review->poster->user->name}}</p>
+            </div>
+          @endforeach
         </div>
       </div>
       <div id="rhdr-right" class="col-sm-3">
-        <a data-toggle="collapse" data-target="#shopping-cart"><span class="glyphicon glyphicon-shopping-cart" id="rhdr-shoppingicon"  data-toggle="tooltip" title="Click to show Shopping Cart"></span></a> <?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
         <div id="rhdr-info">
           <p>
-            <span class="glyphicon glyphicon-map-marker"></span> 
-            <a href="http://maps.google.com/?q=
-            {{{ $restaurantInfo->address or '' }}},
-            {{{ $restaurantInfo->city or '' }}},
-            {{$restaurantInfo->province}}">
-            {{{ $restaurantInfo->address or 'N/A' }}}
-          </a>
-        </p>
+          <span class="glyphicon glyphicon-map-marker"></span> 
+            <a href="http://maps.google.com/?q={{{ $restaurantInfo->address or '' }}},{{{ $restaurantInfo->city or '' }}},{{$restaurantInfo->province}}">
+              {{{ $restaurantInfo->address or 'N/A' }}}
+            </a>
+          </p>
 
-        <p>
-          <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
-        </p>
-
+          <p>
+            <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+          </p>
       </div>
-
-
-    </div>
+      </div>
   </div>
 </div>
+
+
 <hr />
 
 <!-- Modals !-->
@@ -140,12 +280,38 @@ J3 Foods - Online Food Ordering
   @include('includes.add-category')
 </div>
 
+
+<button class="btn btn-primary " id="expand-all" > Expand All</button>
+
 <button class="btn btn-primary " id="savecategorylist" data-token="{{ csrf_token() }}"> Save Category List</button>
+
 <meta name="csrf_token" content="{{ csrf_token() }}" />
+
+
+
+  <?php
+    $categories = $restaurant->categories;
+    $categories = $categories->sortBy(function($category){
+      return $category->category_order;
+    });
+  ?>
+
+
+
+
+
 <ul id="sortable">
-@foreach($restaurant->categories as $category)
-<li class="menu-category" id="{{$category->id}}" >
-  <h1 >{{$category->category_name}}</h1>
+@foreach($categories as $category)
+<li class="menu-category move" id="{{$category->id}}">
+  <div class="category-title">
+        <span class="glyphicon glyphicon-plus hidden plus-minus"></span>
+        <span class="glyphicon glyphicon-minus plus-minus"></span>
+        <h1>{{$category->category_name}}</h1>
+        <a class="btn btn-danger delete-category" href="{{ route('deletecategory' , ['category' => $category->id] ) }}">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+  </div>
+  <div id="category_{{$category->category_name}}" class ="collapse in menu-section">
   <div class="menu-items" >
     @foreach ($category->items as $item)
     <div class="menu-item" data-itemid="{{$item->item_id}}">
@@ -185,10 +351,37 @@ J3 Foods - Online Food Ordering
 </div>
 @section('javascript')
 <script>
+
+$(".category-title").click(function(e){
+        target = $(e.target);
+        clickedTitle = (target.hasClass("category-title")) ? target : target.parents(".category-title");
+        plusMinus = clickedTitle.find(".plus-minus");
+        plusMinus.toggleClass("hidden");
+        categoryBody = clickedTitle.parent().find(".menu-items");
+        categoryBody.slideToggle();
+      });
+
+
+
   $(function() {
     $("#restaurantnavlink-menu").addClass("active");
     $('[data-toggle="tooltip"]').tooltip();
 
   });
+
+$('input[type=radio]').on('change', function () {
+    if (!this.checked) return
+    $('.options').not($('div.' + $(this).attr('class'))).slideUp();
+    $('.collapse.' + $(this).attr('class')).slideDown();
+});
+
+$('#expand-all').click(function() {
+  var x = document.getElementsByClassName("category-title");
+  for (index = 0; index < x.length; ++index) {
+    console.log(x[index])
+  }
+});
+
+
 </script>
 @endsection

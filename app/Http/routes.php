@@ -34,6 +34,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', 'MasterController@showhome');
 
+    Route::get('/howtoregister', 'MasterController@showhotoregister');
+
     Route::get('/dbtest', [
         'uses'=>'CustomerController@showrestaurant',
         'as'=>'dbtest'
@@ -46,7 +48,7 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
 	//Login pressed
-    
+
     Route::post('/validcustomerlogin',[
         'uses'=>'CustomerController@validatecustomerlogin',
         'as'=>'validcustomerloginlink'
@@ -59,10 +61,10 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Login pages
 
-    Route::get('/loginRest', [
+   /* Route::get('/loginRest', [
         'uses'=>'LoginController@showrestaurantlogin',
         'as'=>'loginrest'
-        ]);
+        ]);*/
 
     Route::get('/loginCust', [
         'uses'=>'LoginController@showcustomerlogin',
@@ -94,6 +96,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'registerrestaurantinfo'
         ]);
 
+    //Error page
+    Route::get('/error' ,[
+        'uses'=>'MasterController@error',
+        'as'=>'error'
+        ]);
 
 	//Customer pages
     Route::post('/customerupdateinfo',[
@@ -106,22 +113,20 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customeroverviewlink',
         ]);
 
+    Route::get('/sortfavouties',[
+        'uses'=>'CustomerController@sortbyfavourites',
+        'as'=>'sortbyfavourites'
+        ]);
+
     Route::get('/sortalphabetically',[
         'uses'=>'CustomerController@sortrestaurantlistalphabetically',
         'as'=>'sortalphabetically'
         ]);
 
     Route::get('/order/confirmed/{order_id}',[
-    'uses'=>'CustomerController@orderconfirmandnotify',
-    'as'=>'orderconfirmlink',
-    ]);
-
-   /* Route::get('/order/confirmed',[ // Danny Dummy Route
         'uses'=>'CustomerController@orderconfirmandnotify',
         'as'=>'orderconfirmlink',
-        ]);*/
-
-
+        ]);
 
     Route::get('/menu/{restaurant}',[
         'uses'=>'CustomerController@showcustomermenu',
@@ -139,14 +144,14 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::get('/submitorder',[
-    'uses'=>'CustomerController@submitOrder',
-    'as'=>'submitorderlink'
-    ]);
+        'uses'=>'CustomerController@submitOrder',
+        'as'=>'submitorderlink'
+        ]);
 
     Route::get('/removeitem/{item}',[
-    'uses'=>'CustomerController@removeItem',
-    'as'=>'removeitemlink'
-    ]);
+        'uses'=>'CustomerController@removeItem',
+        'as'=>'removeitemlink'
+        ]);
 
     Route::get('/cpeditaddress',[
         'uses'=>'CustomerController@showcpeditaddress',
@@ -174,21 +179,47 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
     Route::post('/feedback/submit',[
-    'uses'=>'CustomerController@addfeedback',
-    'as'=>'submitfeedback',
-    ]);
+        'uses'=>'CustomerController@addfeedback',
+        'as'=>'submitfeedback',
+        ]);
 
     Route::get('/feedback/{rest_id}',[
-    'uses'=>'CustomerController@showfeedbackpage',
-    'as'=>'showfeedback'
-    ]);
+
+        'uses'=>'CustomerController@showfeedbackpage',
+        'as'=>'showfeedback'
+        ]);
+
+    Route::post('/cart',[
+        'uses'=>'CustomerController@addItem',
+        'as'=>'addtocart'
+        ]);
+
 	//Restuarant pages
+
+
+
+    Route::get('/toggleshowingreview/{reviewer}',[
+        'uses'=>'RestaurantController@toggleshowingreview',
+        'as'=>'toggleshowingreview',
+        ]);
+
+    Route::get('/deletereview/{reviewer}',[
+        'uses'=>'RestaurantController@deletereview',
+        'as'=>'deletereview',
+        ]);
+
+    Route::get('/viewreviews',[
+        'uses'=>'RestaurantController@viewreviews',
+        'as'=>'viewreviews',
+        ]);
+
+
     Route::get('/sethours', 'RestaurantController@showsethours');
 
-     Route::post('/reordercategories',[
-    'uses'=>'RestaurantController@savecategoryorder',
-    'as'=>'reordercategories',
-    ]);
+    Route::post('/reordercategories',[
+        'uses'=>'RestaurantController@savecategoryorder',
+        'as'=>'reordercategories',
+        ]);
 
     Route::get('/closerestaurant/{restaurant}',[
         'uses'=>'RestaurantController@closerestaurant',
@@ -198,6 +229,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/edititem/{item}',[
         'uses'=>'RestaurantController@edititem',
         'as'=>'edititem',
+        ]);
+
+    Route::get('/deletecategory/{category}',[
+        'uses'=>'RestaurantController@deletecategory',
+        'as'=>'deletecategory',
         ]);
 
     Route::get('/deleteitem/{item}',[
@@ -224,6 +260,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'RestaurantController@updatehours',
         'as'=>'restaurantupdatehours',
         ]);
+
+    Route::post('/restaurantprofilerestrictions',[
+        'uses'=>'RestaurantController@updaterestrictions',
+        'as'=>'restaurantupdaterestrictions',
+    ]);
 
     Route::post('/restaurantprofile',[
         'uses'=>'RestaurantController@updateinfo',
@@ -285,35 +326,40 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'forgotpasswordlink'
         ]);
 
-//DEBUGGGING
-     /*
-     Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-
     Route::get('/finishorder/{order}',[
-    'uses'=>'RestaurantController@finishorder',
-    'as'=>'finishorder'
-    ]);
+        'uses'=>'RestaurantController@finishorder',
+        'as'=>'finishorder'
+        ]);
 
     Route::post('/createorder',[ //danny testing order confirmation
-    'uses'=>'CustomerController@createOrder',
-    'as'=>'createorder',
-    ]);
+        'uses'=>'CustomerController@createOrder',
+        'as'=>'createorder',
+        ]);
 
 
 
     Route::get('/test', function() //danny testing order confirmation
     {
       //  return view('email.ratingrequest');
-            return view('debugging');
+        return view('debugging');
     });
 
     Route::get('/cancelorder/{order}',[
-    'uses'=>'RestaurantController@cancelorder',
-    'as'=>'cancelorder'
-    ]);
+        'uses'=>'RestaurantController@cancelorder',
+        'as'=>'cancelorder'
+        ]);
+
+    //DEBUGGGING
+         /*
+     Route::post('/restaurantlogin',[
+         'uses'=>'RestaurantController@restaurantlogin',
+         'as'=>'restaurantlogin'
+         ]);*/
+            /* Route::get('/order/confirmed',[ // Danny Dummy Route
+        'uses'=>'CustomerController@orderconfirmandnotify',
+        'as'=>'orderconfirmlink',
+        ]);*/
+
 
     //Register Pages
    /* Route::get('/register/{user?}',[
