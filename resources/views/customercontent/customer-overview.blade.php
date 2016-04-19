@@ -80,6 +80,11 @@ J3 Foods - Online Food Ordering
   .restaurant .rating .material-icons {
     font-size: 18px;
   }
+
+  #filters .form-group {
+    display: inline-block;
+    width: auto;
+  }
   </style>
 @endsection
 
@@ -100,6 +105,16 @@ J3 Foods - Online Food Ordering
         </h1>
       </div>
       <div class="panel-body">
+        <div id="filters">
+          <div class="form-group">
+            <label for="sort-by">Sort by</label>
+            <select id="sort-by" class="form-control">
+              <option value="alpha-asc">Alphabetical A-Z</option>
+              <option value="alpha-des">Alphabetical Z-A</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
+        </div>
         <h3>For More Information Click on a Restaurant Below</h3>
         <div class="row">
           @foreach($restaurants as $rest)
@@ -107,9 +122,9 @@ J3 Foods - Online Food Ordering
               
               <a href="{{ route('customermenuoverviewlink' , ['restaurant' => $rest->id] ) }}">
                 @if($rest->is_open == 1 )
-                  <img class="open" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
+                  <img class="open" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=33&txt=No%20Image&w=200&h=200" @endif>
                 @else
-                  <img  class="closed" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=66&txt=700%C3%97400&w=700&h=400" @endif>
+                  <img  class="closed" @if($rest->image != null) src="{{$rest->image}}" @else src="https://placeholdit.imgix.net/~text?txtsize=33&txt=No%20Image&w=200&h=200" @endif>
                 @endif
               </a>
               <div class="name">
@@ -132,4 +147,27 @@ J3 Foods - Online Food Ordering
         </div>
       </div>
     </div>
+    @endsection
+
+    @section('javascript')
+      <script type="text/javascript">
+        //On page load
+        $(document).ready(function(){
+          //Set sort box to correct selection based on URL parameters
+          if(getUrlParameter("sort") != undefined){
+            $("#sort-by").val(getUrlParameter("sort"));
+          }
+
+          //Event handler for changing sort
+          $("#sort-by").change(function(e){
+            //Get current URL, without query string
+            currentUrl = window.location.href.split("?")[0];
+
+            //Redirect to this page with appropriate sort query
+            window.location.replace(currentUrl + "?sort=" + e.target.value);
+          });
+        });
+
+        @include('includes.js-get-url-params');
+      </script>
     @endsection
