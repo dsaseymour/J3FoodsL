@@ -106,12 +106,33 @@ class CustomerController extends Controller
   }
 
   public function showcustomeroverview(){
-		$restaurants = Restaurant::orderBy('is_open', 'desc')->get();
+		$openRests = Restaurant::where('is_open', 1)->get();
+    $closedRests = Restaurant::where('is_open', 0)->get();
+
+    if(\Auth::check()) {
+       $id = \Auth::user()->id;
+    }
+    $favouriteRestaurants = DB::table('customer_favourites')
+        ->where('customer_id',$id)
+        ->get();
+
+    foreach($favouriteRestaurants as $favRelation){
+        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
+        if($favouriteRestaurant->is_open){
+          $openRests->prepend($favouriteRestaurant);
+        } else {
+          $closedRests->prepend($favouriteRestaurant);
+        }
+    }
+    $openRests = $openRests->unique();
+    $closedRests = $closedRests->unique();
+
+    $restaurants = $openRests->merge($closedRests);
 
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
-    public function sortrestaurantlistalphabetically(){
+  public function sortrestaurantlistalphabetically(){
     $restaurants = Restaurant::orderBy('is_open', 'desc')
                    ->orderBy('companyname', 'asc')
                    ->get();

@@ -96,22 +96,12 @@ J3 Foods - Online Food Ordering
       <!-- Default panel contents -->
       <div class="panel-heading">
         <h1>Currently Open
-          <span class="badge">{{$restaurants->count()}}</span>
+          <span class="badge">{{$restaurants->where('is_open', 1)->count()}}</span>
         </h1>
       </div>
       <div class="panel-body">
         <h3>For More Information Click on a Restaurant Below</h3>
         <div class="row">
-          <!-- <div class="restaurant" data-itemid="40">
-            <div class="name">
-              <h3>The Testaurant 2: Electric Boogaloo</h3>
-              <a title="Add to favourites" href="{{ route('addtofavourites', ['restaurant' => 1] ) }}">
-                  <span class="glyphicon glyphicon-star-empty"></span> 
-              </a>
-            </div>
-            <img src="http://i.imgur.com/iCKb6ux.jpg">
-            <h4 class="rating"><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i></h4>
-          </div> -->
           @foreach($restaurants as $rest)
             <div class="restaurant" data-itemid="40">
               
