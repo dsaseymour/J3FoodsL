@@ -179,7 +179,7 @@ J3 Foods - Online Food Ordering
     }
 
     #restaurant-hdrcontainer{
-    background-image: url("http://twoleftforks.com/wp-content/uploads/2016/02/our-ownership-header.jpg");
+    background-image: url("http://ellementlife.com/wp-content/uploads/revslider/home-11/slide15-1200x500.jpg");
   }
   </style>
 @endsection

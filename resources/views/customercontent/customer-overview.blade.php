@@ -64,6 +64,7 @@ J3 Foods - Online Food Ordering
     color: #ffffff;
     text-align: right;
     font-size: 32px;
+    padding-top:5%;
   }
 
   .restaurant .name .fave:hover {
