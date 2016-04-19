@@ -537,15 +537,16 @@ public function showrestaurantoverview(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
   }
+  $user = \Auth::user();
   $restaurant = Restaurant::where('id',$id)->first();
   $completeorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->get();
   $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
+if(\Request::ajax()){
+  return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders', 'user'));
+    }
+  return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders', 'user'));
 
-  if(\Request::ajax()){
-    return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
-  }
-  return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
 }
 
 
