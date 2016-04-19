@@ -74,19 +74,6 @@ J3 Foods - Online Food Ordering
                             </div>
                         </div>
                     </form>
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
-                        <input type="hidden" class="form-control" name="isRestaurant" value="0">
-                        <input type="hidden" class="form-control" name="isGuest" value="1">
-                        <input type="hidden" class="form-control" name="name" value="guest">
-                        <input type="hidden" class="form-control" name="email" value={{$guestemail}}>
-                        <input type="hidden" class="form-control" name="password" value="password">
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn-link" href="">Enter as a Guest</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

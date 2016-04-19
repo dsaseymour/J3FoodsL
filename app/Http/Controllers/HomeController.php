@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $guestemail = 'temp' . rand() . '@temp.com';
+        return view('home',compact('guestemail'));
+
     }
 }
