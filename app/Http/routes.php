@@ -143,9 +143,14 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customerconfirmationlink'
         ]);
 
-    Route::get('/submitorder',[
-        'uses'=>'CustomerController@submitOrder',
+    Route::get('/submitifconfirmed',[
+        'uses'=>'CustomerController@checkConfirmed',
         'as'=>'submitorderlink'
+        ]);
+
+    Route::get('/submitnotconfirmed',[
+        'uses'=>'CustomerController@notConfirmed',
+        'as'=>'notconfirmed'
         ]);
 
     Route::get('/removeitem/{item}',[
