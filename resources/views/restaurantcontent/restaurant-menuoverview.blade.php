@@ -130,6 +130,8 @@ J3 Foods - Online Food Ordering
       margin-top: 16px;
       border: 1px solid #dddddd;
       border-radius: 2px;
+      width: 48%;
+      margin-left: 25%
     }
 
     #reviews {
@@ -194,6 +196,10 @@ J3 Foods - Online Food Ordering
   .delete-category{
     float:right;
     margin-top:10px;
+  }
+
+  #restaurant-hdrcontainer{
+    background-image: url("http://twoleftforks.com/wp-content/uploads/2016/02/our-ownership-header.jpg");
   }
 
 </style>

@@ -60,124 +60,124 @@ class CustomerController extends Controller
     }
 
     if(\Auth::check()) {
-       $id = \Auth::user()->id;
-    }
-    $favouriteRestaurants = DB::table('customer_favourites')
-        ->where('customer_id',$id)
-        ->get();
+     $id = \Auth::user()->id;
+   }
+   $favouriteRestaurants = DB::table('customer_favourites')
+   ->where('customer_id',$id)
+   ->get();
 
-    if(strpos($sortMethod, "-des") === false){
-      $sortDirection = -1;
-    } else {
-      $sortDirection = 1;
-    }
-
-    if($sortMethod == "rating"){
-      usort($favouriteRestaurants, function($a, $b){
-        $aScore = Restaurant::where('id',$a->restaurant_id)->first()->aveRating();
-        $bScore = Restaurant::where('id',$b->restaurant_id)->first()->aveRating();
-        return $aScore-$bScore;
-      });
-    } else {
-      usort($favouriteRestaurants, function($a, $b) use ($sortDirection){
-        $aName = Restaurant::where('id',$a->restaurant_id)->first()->companyname;
-        $bName = Restaurant::where('id',$b->restaurant_id)->first()->companyname;
-        return $sortDirection*strcmp(strtolower($aName), strtolower($bName));
-      });
-    }
-
-    foreach($favouriteRestaurants as $favRelation){
-        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
-        if($favouriteRestaurant->is_open){
-          $openRests->prepend($favouriteRestaurant);
-        } else {
-          $closedRests->prepend($favouriteRestaurant);
-        }
-    }
-    $openRests = $openRests->unique();
-    $closedRests = $closedRests->unique();
-
-    $restaurants = $openRests->merge($closedRests);
-    return $restaurants;
+   if(strpos($sortMethod, "-des") === false){
+    $sortDirection = -1;
+  } else {
+    $sortDirection = 1;
   }
 
-  public function searchrestaurants(Request $request ){
-      $term = $request->term;
-      if($term == ""){
-        return redirect()->action('CustomerController@showcustomeroverview');
-      }
-
-      $restaurants = $this->sortrestaurantlist();
-      $restaurants = $restaurants->filter(function($rest) use ($term){
-        return strpos(strtolower($rest->companyname), $term) !== false;
-      });
-      return view('customercontent.customer-overview',compact('restaurants'));
-
+  if($sortMethod == "rating"){
+    usort($favouriteRestaurants, function($a, $b){
+      $aScore = Restaurant::where('id',$a->restaurant_id)->first()->aveRating();
+      $bScore = Restaurant::where('id',$b->restaurant_id)->first()->aveRating();
+      return $aScore-$bScore;
+    });
+  } else {
+    usort($favouriteRestaurants, function($a, $b) use ($sortDirection){
+      $aName = Restaurant::where('id',$a->restaurant_id)->first()->companyname;
+      $bName = Restaurant::where('id',$b->restaurant_id)->first()->companyname;
+      return $sortDirection*strcmp(strtolower($aName), strtolower($bName));
+    });
   }
+
+  foreach($favouriteRestaurants as $favRelation){
+    $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
+    if($favouriteRestaurant->is_open){
+      $openRests->prepend($favouriteRestaurant);
+    } else {
+      $closedRests->prepend($favouriteRestaurant);
+    }
+  }
+  $openRests = $openRests->unique();
+  $closedRests = $closedRests->unique();
+
+  $restaurants = $openRests->merge($closedRests);
+  return $restaurants;
+}
+
+public function searchrestaurants(Request $request ){
+  $term = $request->term;
+  if($term == ""){
+    return redirect()->action('CustomerController@showcustomeroverview');
+  }
+
+  $restaurants = $this->sortrestaurantlist();
+  $restaurants = $restaurants->filter(function($rest) use ($term){
+    return strpos(strtolower($rest->companyname), $term) !== false;
+  });
+  return view('customercontent.customer-overview',compact('restaurants'));
+
+}
 
 
   /**
     Updates the user info with the data eneterd in the update user info page
   */
-  public function updateinfo(Request $request){
+    public function updateinfo(Request $request){
 
-    $validator = $this->validatecustomerupdate($request->all());
+      $validator = $this->validatecustomerupdate($request->all());
 
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-    $this->updateDatabaseWithNewInfo($request);
-    return redirect()->action('CustomerController@showcustomeroverview');
-  }
+      if ($validator->fails()) {
+        $this->throwValidationException(
+          $request, $validator
+          );
+      }
+      $this->updateDatabaseWithNewInfo($request);
+      return redirect()->action('CustomerController@showcustomeroverview');
+    }
 
   /**
     Updates the database with the updated info of the customer
 
   */
-  protected function updateDatabaseWithNewInfo(Request $request){
+    protected function updateDatabaseWithNewInfo(Request $request){
 
-    if(\Auth::check()) {
-            $id = \Auth::user()->id;
-        }
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+      }
 
-    $updateUser = User::find($id);
-    $updateUser->name = $request->name;
-    $updateUser->email = $request->email;
-    $updateUser->address = $request->address;
-    $updateUser->save();
+      $updateUser = User::find($id);
+      $updateUser->name = $request->name;
+      $updateUser->email = $request->email;
+      $updateUser->address = $request->address;
+      $updateUser->save();
 
 
-    $updateCustomer = Customer::find($id);
-    $updateCustomer->phoneno = $request->phoneno;
-    $updateCustomer->save();
-  }
+      $updateCustomer = Customer::find($id);
+      $updateCustomer->phoneno = $request->phoneno;
+      $updateCustomer->save();
+    }
 
-  protected function validatecustomerupdate(array $data)
+    protected function validatecustomerupdate(array $data)
     {
-    if(\Auth::check()) {
-            $email = \Auth::user()->email;
-        }
+      if(\Auth::check()) {
+        $email = \Auth::user()->email;
+      }
 
     if($data['email'] != $email){ //need to check if they didnt change email
       return Validator::make($data, [
-                'email' => 'email|max:255|unique:users',
+        'email' => 'email|max:255|unique:users',
         'phoneno' => 'max:13',
         'address' => 'max:60',
-            ]);
+        ]);
     }else{
       return Validator::make($data, [
         'phoneno' => 'max:13',
-            ]);
+        ]);
     }
 
 
-    }
+  }
 
 
   public function validatecustomerlogin(Request $request){//Why does this redirect to the method directly below? I remeber it had somethign to do with the url
-        return redirect()->action('CustomerController@showcustomeroverview');
+    return redirect()->action('CustomerController@showcustomeroverview');
   }
 
   public function showcustomeroverview(){
@@ -205,20 +205,20 @@ class CustomerController extends Controller
 
   public function showcustomerconfirmation(){
     if(\Auth::check()) {
-       $user = \Auth::user()->id;
-    }
+     $user = \Auth::user()->id;
+   }
 
-    $order = Orders::where('customer_id',$user)->where('completed','0')->get();
+   $order = Orders::where('customer_id',$user)->where('completed','0')->get();
 
-    return view('customercontent.confirmationpage', compact('order'));
-  }
+   return view('customercontent.confirmationpage', compact('order'));
+ }
 
-  public function addItem(Request $request){
-    $item = Item::find($_POST["itemid"]);
-    $restaurant = Restaurant::find($item->restaurant->id);
+ public function addItem(Request $request){
+  $item = Item::find($_POST["itemid"]);
+  $restaurant = Restaurant::find($item->restaurant->id);
     if($restaurant->is_open == 0){//if the restarant is closed
      // return redirect('/customeroverview')->with('status', 'This restaurant is closed and cannot be ordered from.');
-      return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "YThis restaurant is closed and cannot be ordered from.");
+      return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "This restaurant is closed and cannot be ordered from.");
     }
     if(!\Auth::user()->isRestaurant){
       $currentCart = \Auth::user()->customer->cart;
@@ -273,72 +273,99 @@ class CustomerController extends Controller
 
   public function removeItem($item){
     if(\Auth::check()) {
-       $user = \Auth::user()->id;
+     $user = \Auth::user()->id;
+   }
+
+   $order = Orders::where('customer_id',$user)->where('completed','0')->where('item_id',$item)->get();
+
+   foreach($order as $items){
+    $items->delete();
+  }
+
+  return redirect()->action('CustomerController@showcustomerconfirmation');
+}
+  /**
+    This function is called when the user is not confirmed and they try to order
+  */ 
+public function notConfirmed(){
+  return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
+}
+
+public function checkConfirmed(){
+  if(\Auth::check()) {
+   $user = \Auth::user();
+ }
+
+    if(($user->confirmed != 1) && ($user->customer->is_guest != 1)){ //if they havent confirmed their email and not a guest
+      return response('Unauthorized.', 401);
+    } else {
+      $orders = Orders::where('customer_id',$user->id)->where('completed','0')->get();
+      
+      foreach($orders as $items){
+        $items->submit_time=Carbon::now();
+        $items->completed='1';
+        $items->quantity=$items->quantity;
+        $items->special_instructions=$items->special_instructions;
+        $items->save();
+      }
+      Event::fire(new OrderWasSubmitted($orders));
     }
-
-    $order = Orders::where('customer_id',$user)->where('completed','0')->where('item_id',$item)->get();
-
-    foreach($order as $items){
-      $items->delete();
-    }
-
-    return redirect()->action('CustomerController@showcustomerconfirmation');
   }
 
   public function submitOrder(){
     if(\Auth::check()) {
-       $user = \Auth::user();
-    }
+     $user = \Auth::user();
+   }
 
-   dd($user->confirmed);
+   $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
 
-   /* if($user->confirmed != 1){ //if they havent confirmed their email
-      return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
-    }*/
-
-    $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-    
-    foreach($orders as $items){
-      $items->submit_time=Carbon::now();
-      $items->completed='1';
-      $items->quantity=$items->quantity;
-      $items->special_instructions=$items->special_instructions;
-      $items->save();
-    }
-
-    Event::fire(new OrderWasSubmitted($orders));
-
-    }
-
-
-  public function orderconfirmandnotify($order_id){
-    if(\Auth::check()) {
-       $user = \Auth::user();
-    }
-
-    $order = Orders::where('order_id',$order_id)->get();
-
-     return view('customercontent.orderconfirmed', compact('order'));
+   foreach($orders as $items){
+    $items->submit_time=Carbon::now();
+    $items->completed='1';
+    $items->quantity=$items->quantity;
+    $items->special_instructions=$items->special_instructions;
+    $items->save();
   }
 
-  public function showcpeditaddress(){
-          return view('customercontent.customer-profile-editaddress');
+  Event::fire(new OrderWasSubmitted($orders));
+}
+
+
+public function orderconfirmandnotify($order_id){
+  if(\Auth::check()) {
+   $user = \Auth::user();
+ }
+
+ $order = Orders::where('order_id',$order_id)->get();
+
+ return view('customercontent.orderconfirmed', compact('order'));
+}
+
+public function showcpeditaddress(){
+  return view('customercontent.customer-profile-editaddress');
+}
+
+public function showcpeditorders(){
+  return view('customercontent.customer-profile-editorders');
+}
+
+public function showcustomerprofile(){
+
+  if(\Auth::check()) {
+    $id = \Auth::user()->id;
   }
 
-  public function showcpeditorders(){
-          return view('customercontent.customer-profile-editorders');
+
+  $currentUser = User::where('id',$id)->first();
+  $currentCustomer = Customer::where('id',$id)->first();
+
+
+  if($currentCustomer->is_guest ==1 ){
+    return redirect('error')->with('error-title', 'Error')->with("error-message", "Guests cannot edit their profile information");
+  }else{
+    return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
   }
-
-  public function showcustomerprofile(){
-
-    if(\Auth::check()) {
-            $id = \Auth::user()->id;
-       }
-    $currentUser = User::where('id',$id)->first();
-    $currentCustomer = Customer::where('id',$id)->first();
-
-        return view('customercontent.customer-profile',compact('currentUser','currentCustomer'));
-  }
+}
 
   //Add restaurant to favourites
   public function addcustomerfavourite(User $restaurant){
@@ -370,30 +397,30 @@ class CustomerController extends Controller
 
 
 
-public function addfeedback(Request $request){
-  if(\Auth::check()) {
-          $id = \Auth::user()->id;
-     }
+  public function addfeedback(Request $request){
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
 //if the user is recorded as having made an order at this restaurant he/she can write a review
-if(Orders::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()>0 && CustomerRatings::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()==0 )
-{
-  $currentUser = CustomerRatings::create([
-          'restaurant_id' =>$request->restaurant_id ,
-          'customer_id' => $id,
-          'rating' => $request->rating,
-          'comment' => $request->comment,
-      ]);
+    if(Orders::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()>0 && CustomerRatings::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()==0 )
+    {
+      $currentUser = CustomerRatings::create([
+        'restaurant_id' =>$request->restaurant_id ,
+        'customer_id' => $id,
+        'rating' => $request->rating,
+        'comment' => $request->comment,
+        ]);
       return redirect('/customeroverview')->with('status', 'Thanks for your time your Rating was successfully recorded');
-}
-else{
-  return redirect('/customeroverview')->with('status', 'Our records either cannot confirm your previous experiences with this restaurant or have already recorded your rating for this restaurant ');
-}
+    }
+    else{
+      return redirect('/customeroverview')->with('status', 'Our records either cannot confirm your previous experiences with this restaurant or have already recorded your rating for this restaurant ');
+    }
 
-}
+  }
 
-public function showfeedbackpage($rest_id){
-  $data['rest_id'] = $rest_id;
-  return view('rating.restaurantfeedback',$data);
-}
+  public function showfeedbackpage($rest_id){
+    $data['rest_id'] = $rest_id;
+    return view('rating.restaurantfeedback',$data);
+  }
 
 }
