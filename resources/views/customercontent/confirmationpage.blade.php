@@ -102,13 +102,8 @@ J3 Foods - Online Food Ordering
 
             <tr>
               <td>Delivery or Pickup</td>
-              @if($order[0]->pickup_delivery=='1')
-              <td><label class="radio-inline"><input type="radio" name="optradio" checked value="1">Delivery</label>
-              <label class="radio-inline"><input type="radio" name="optradio" value="0">Pickup</label></td>
-              @else
-              <td><label class="radio-inline"><input type="radio" name="optradio" value="1">Delivery</label>
-              <label class="radio-inline"><input type="radio" name="optradio" checked value="0">Pickup</label></td>
-              @endif
+              <td><label class="radio-inline"><input type="radio" name="pickup" value="1">Delivery</label>
+              <label class="radio-inline"><input type="radio" name="pickup" value="0" checked="">Pickup</label></td>
             </tr>
           </tbody>
         </table>
@@ -163,12 +158,13 @@ J3 Foods - Online Food Ordering
 <script>
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
-    var p_d = $('#filterDay label.active input').val()
     $(".btn-lg").click(function() {
+      var p_d = $('input[name=pickup]:checked').val();
+      console.log(p_d);
       $request = $.ajax({
-        url: "{{ route('submitorderlink') }}",
+        url: "{{ route('submitorderlink' ) }}",
         type: "get",
-        data: {},
+        data: {pickup: p_d},
         error: function(xhr, status) {            
           if(xhr.status=='401'){
             window.location.href = "{{ route('notconfirmed') }}"

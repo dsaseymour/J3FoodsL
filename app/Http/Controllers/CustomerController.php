@@ -249,6 +249,8 @@ class CustomerController extends Controller
        $user = \Auth::user();
     }
 
+    $pickup_delv=$_GET['pickup'];
+
     if(($user->confirmed != 1) && ($user->customer->is_guest != 1)){ //if they havent confirmed their email and not a guest
       return response('Unauthorized.', 401);
     } else {
@@ -259,6 +261,7 @@ class CustomerController extends Controller
         $items->completed='1';
         $items->quantity=$items->quantity;
         $items->special_instructions=$items->special_instructions;
+        $items->pickup_delivery=$pickup_delv;
         $items->save();
       }
 
@@ -266,26 +269,6 @@ class CustomerController extends Controller
 
     }
   }
-  public function submitOrder(){
-    if(\Auth::check()) {
-       $user = \Auth::user();
-    }
-
-   //dd($user->confirmed);
-
-    $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-      
-    foreach($orders as $items){
-      $items->submit_time=Carbon::now();
-      $items->completed='1';
-      $items->quantity=$items->quantity;
-      $items->special_instructions=$items->special_instructions;
-      $items->save();
-    }
-
-    Event::fire(new OrderWasSubmitted($orders));
-  }
-
 
   public function orderconfirmandnotify($order_id){
     if(\Auth::check()) {
