@@ -226,16 +226,16 @@ class CustomerController extends Controller
     }
   }
 
-  public function removeItem($item){
+  public function removeItem($item,$choice){
     if(\Auth::check()) {
-       $user = \Auth::user()->id;
+      $user = \Auth::user()->id;
     }
 
-    $order = Orders::where('customer_id',$user)->where('completed','0')->where('item_id',$item)->get();
-
-    foreach($order as $items){
-      $items->delete();
-    }
+    $item = DB::table('orders')
+        ->where('item_id',$item)
+        ->where('completed',0)
+        ->where('choice',$choice)
+        ->delete();
 
     return redirect()->action('CustomerController@showcustomerconfirmation');
   }

@@ -153,7 +153,7 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'notconfirmed'
         ]);
 
-    Route::get('/removeitem/{item}',[
+    Route::get('/removeitem/{item}/choice/{choice}',[
         'uses'=>'CustomerController@removeItem',
         'as'=>'removeitemlink'
         ]);
