@@ -26,6 +26,9 @@ J3 Foods - Online Food Ordering
         <div class="panel panel-default">
           <!-- Default panel contents -->
           <div class="panel-heading">
+          @if ($user->confirmed == 0)
+            <p> <b>Please confirm your email so that customer can place orders to your restaurant.</b></p>
+          @endif
             <h1>{{$restaurant->companyname}} Orders
               <span class="badge">{{count($uniqueorders)}}</span>
               @if ($restaurant->is_open == 1)
