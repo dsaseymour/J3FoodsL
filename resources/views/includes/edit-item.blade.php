@@ -71,7 +71,7 @@
               </label>
             </div>
             <div>
-              <div id="text_option"  @if($item->option_id != null) @if($item->option->type == "check") class="options collapse in text-input" @else class="options collapse text-input" @endif @else class="options collapse text-input" @endif  >
+              <div id="text_option"  @if($item->option_id != null) @if($item->option->type == "text") class="options collapse in text-input" @else class="options collapse text-input" @endif @else class="options collapse text-input" @endif  >
                 <label class="list-group-item-heading">Text option</label>
                 <input type="text" class="form-control" name="text_option" @if($item->option_id != null) @if($item->option->type == "text") value="{{$item->option->name}}" @endif @endif  >
               </div>
@@ -100,7 +100,7 @@
                 @if($item->option_id != null) 
                   @if($item->option->type == "check")
                     @foreach($item->option->choices as $choice)
-                    <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                    <input type="text" class="form-control" name="check_{{$choice->choice_id}}" value="{{$choice->name}}">
                     @endforeach
                     @else
                       <input type="text" class="form-control" name="check_1">

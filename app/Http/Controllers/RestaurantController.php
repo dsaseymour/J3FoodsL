@@ -267,6 +267,7 @@ class RestaurantController extends Controller
 
          $updateItem->option_id = $textOption->id;
        } else if($request->option_type == "combobox"){
+          if($request->combo_1 "" && $request->combo_2 == "")        
           $comboBox = new Option; //saving combo option
           $comboBox->item_id = $updateItem->item_id;
           $comboBox->type = "combo";
@@ -287,6 +288,7 @@ class RestaurantController extends Controller
           $comboOptions2->name = $request->combo_2;
           $comboOptions2->choice_order = 2;
           $comboOptions2->save();
+
           $updateItem->option_id = $comboBox->id;
         }else if($request->option_type == "checkbox"){
 
@@ -317,6 +319,7 @@ class RestaurantController extends Controller
       }else if ($updateItem->option_id != null){//delete the saved option if they unchecked has options
         $updateItem->option->delete();
       }
+
       $updateItem->save();
       return redirect()->action('RestaurantController@showrestaurantmoverview');
     }

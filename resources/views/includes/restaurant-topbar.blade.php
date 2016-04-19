@@ -13,7 +13,6 @@
             <span class="glyphicon glyphicon-user"></span>
             <span class="glyphicon glyphicon-menu-down"></span>
             <ul class="dropdown-menu">
-              <li><a href="#">Welcome</a></li>
               <li><a href="{{ route('restaurantoverviewlink'  ) }}">Overview</a></li>
               <li><a href="{{ route('restaurantprofilelink'  ) }}">Edit Profile</a></li>
               <li class="separator"> </li>
