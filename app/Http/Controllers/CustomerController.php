@@ -21,7 +21,7 @@ use Validator;
 use Event;
 use App\Events\OrderWasSubmitted;
 use App\Events\OrderWasCanceled;
-
+use Mail;
 
 class CustomerController extends Controller
 {
@@ -69,6 +69,12 @@ class CustomerController extends Controller
 
     $updateUser = User::find($id);
     $updateUser->name = $request->name;
+    if($updateUser->email != $request->email){
+      $updateUser->confirmed=0;
+      $ccode=$this->resendEmailConfirmationTo($request->email);
+      $updateUser->confirmation_code=$ccode;
+
+    }
     $updateUser->email = $request->email;
     $updateUser->address = $request->address;
     $updateUser->save();
@@ -78,6 +84,17 @@ class CustomerController extends Controller
     $updateCustomer->phoneno = $request->phoneno;
     $updateCustomer->save();
   }
+
+  public function resendEmailConfirmationTo($email){
+     $confirmation_code=str_random(30);
+     $data=['confirmation_code'=>$confirmation_code];
+     Mail::send('email.registrationconfirmation',$data, function($message) use ($email){
+         $message->to($email)->subject('Verify your email address');
+     });
+     return $confirmation_code;
+ }
+
+
 
   protected function validatecustomerupdate(array $data)
     {
@@ -139,7 +156,7 @@ class CustomerController extends Controller
   }
 
 
- 
+
 
 
   public function showcustomermenu(Restaurant $restaurant){
@@ -215,7 +232,7 @@ class CustomerController extends Controller
         $o->restaurant_id = $item->restaurant->id;
         $o->quantity = $_POST["qty"];
         $o->option_id = $item->option_id;
-        
+
 
         $o->save();
 
@@ -252,7 +269,7 @@ class CustomerController extends Controller
     }*/
 
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-    
+
     foreach($orders as $items){
       $items->submit_time=Carbon::now();
       $items->completed='1';

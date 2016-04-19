@@ -41,7 +41,6 @@ public function confirm($confirmation_code){
   $user->confirmed = 1;
   $user->confirmation_code = null;
   $user->save();
-  if($user->isRestaurant==1){return Redirect::route('loginrest');}
   return Redirect::route('logincust');
 }
 
