@@ -435,7 +435,6 @@ J3 Foods - Online Food Ordering
             <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
-        
       </div>
     </div>
   </div>
