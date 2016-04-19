@@ -222,6 +222,16 @@ class RestaurantController extends Controller
 
     }
 
+    public function validateitemupdate(Request $data){
+
+      if($data->option_type == "textbox"){
+        return Validator::make($data->all(), [
+          'text_option' => 'required',
+          ]);
+      }
+
+    }
+
     public function edititem(Item $item, Request $request ){
 
       if(\Auth::check()) {
@@ -259,6 +269,7 @@ class RestaurantController extends Controller
         $updateItem->option->delete();
       }
       if($request->option_type == "textbox"){
+        if($request->text_option != ""){
          $textOption = new Option; //saving new text option
          $textOption->item_id = $updateItem->item_id;
          $textOption->type = "text";
@@ -266,55 +277,53 @@ class RestaurantController extends Controller
          $textOption->save();
 
          $updateItem->option_id = $textOption->id;
-       } else if($request->option_type == "combobox"){
-          if($request->combo_1 "" && $request->combo_2 == "")        
+       }
+     } else if($request->option_type == "combobox"){
+
+      if($request->combo_name != ""){
+        if($request->combo_2 != "" || $request->combo_1 != ""){
           $comboBox = new Option; //saving combo option
           $comboBox->item_id = $updateItem->item_id;
           $comboBox->type = "combo";
           $comboBox->name = $request->combo_name;
           $comboBox->save();
 
-          $comboOptions = new OptionChoice;
-          $comboOptions2 = new OptionChoice;
-
-          $comboOptions->option_id = $comboBox->id;
-          $comboOptions->choice_id = 1;
-          $comboOptions->name = $request->combo_1;
-          $comboOptions->choice_order = 1;
-          $comboOptions->save();
-
-          $comboOptions2->option_id = $comboBox->id;
-          $comboOptions2->choice_id = 2;
-          $comboOptions2->name = $request->combo_2;
-          $comboOptions2->choice_order = 2;
-          $comboOptions2->save();
-
+          for($boxnum = 1; $boxnum < 7 ; $boxnum++){
+            if($request->{'combo_' . $boxnum} != ""){
+              $comboOptions = new OptionChoice;
+              $comboOptions->option_id = $comboBox->id;
+              $comboOptions->choice_id = $boxnum;
+              $comboOptions->name = $request->{'combo_' . $boxnum};
+              $comboOptions->choice_order = $boxnum;
+              $comboOptions->save();
+            }
+          }
           $updateItem->option_id = $comboBox->id;
-        }else if($request->option_type == "checkbox"){
-
+        }
+      }
+    }else if($request->option_type == "checkbox"){
+      if($request->check_name != ""){
+        if($request->check_2 != "" || $request->check_1 != ""){
           $checkOption = new Option; //saving combo option
           $checkOption->item_id = $updateItem->item_id;
           $checkOption->type = "check";
           $checkOption->name = $request->check_name;
           $checkOption->save();
 
-          $checkOptions = new OptionChoice;
-          $checkOptions2 = new OptionChoice;
-
-          $checkOptions->option_id = $checkOption->id;
-          $checkOptions->choice_id = 1;
-          $checkOptions->name = $request->check_1;
-          $checkOptions->choice_order = 1;
-          $checkOptions->save();
-
-          $checkOptions2->option_id = $checkOption->id;
-          $checkOptions2->choice_id = 2;
-          $checkOptions2->name = $request->check_2;
-          $checkOptions2->choice_order = 2;
-          $checkOptions2->save();
-
+          for($boxnum = 1; $boxnum < 7 ; $boxnum++){
+            if($request->{'check_' . $boxnum} != ""){
+              $checkOptions = new OptionChoice;
+              $checkOptions->option_id = $checkOption->id;
+              $checkOptions->choice_id = $boxnum;
+              $checkOptions->name = $request->{'check_' . $boxnum};
+              $checkOptions->choice_order = $boxnum;
+              $checkOptions->save();
+            }
+          }
           $updateItem->option_id = $checkOption->id;
         }
+      }
+    }
 
       }else if ($updateItem->option_id != null){//delete the saved option if they unchecked has options
         $updateItem->option->delete();
@@ -370,19 +379,16 @@ class RestaurantController extends Controller
       $comboBox->name = $request->combo_name;
       $comboBox->save();
 
-      $comboOptions = new OptionChoice;
-      $comboOptions->option_id = $comboBox->id;
-      $comboOptions->choice_id = 1;
-      $comboOptions->name = $request->combo_1;
-      $comboOptions->choice_order = 1;
-      $comboOptions->save();
-
-      $comboOptions2 = new OptionChoice;
-      $comboOptions2->option_id = $comboBox->id;
-      $comboOptions2->choice_id = 2;
-      $comboOptions2->name = $request->combo_2;
-      $comboOptions2->choice_order = 2;
-      $comboOptions2->save();
+      for($boxnum = 1; $boxnum < 7 ; $boxnum++){
+        if($request->{'combo_' . $boxnum} != ""){
+          $comboOptions = new OptionChoice;
+          $comboOptions->option_id = $comboBox->id;
+          $comboOptions->choice_id = $boxnum;
+          $comboOptions->name = $request->{'combo_' . $boxnum};
+          $comboOptions->choice_order = $boxnum;
+          $comboOptions->save();
+        }
+      }
 
       $newItem->option_id = $comboBox->id;
     }else if ($request->option_type == "checkbox"){
@@ -393,23 +399,21 @@ class RestaurantController extends Controller
       $checkOption->name = $request->check_name;
       $checkOption->save();
 
-      $checkOptions = new OptionChoice;
-      $checkOptions->option_id = $checkOption->id;
-      $checkOptions->choice_id = 1;
-      $checkOptions->name = $request->check_1;
-      $checkOptions->choice_order = 1;
-      $checkOptions->save();
-
-      $checkOptions2 = new OptionChoice;
-      $checkOptions2->option_id = $checkOption->id;
-      $checkOptions2->choice_id = 2;
-      $checkOptions2->name = $request->check_2;
-      $checkOptions2->choice_order = 2;
-      $checkOptions2->save();
-      $newItem->option_id = $checkOption->id;
+      for($boxnum = 1; $boxnum < 7 ; $boxnum++){
+        if($request->{'check_' . $boxnum} != ""){
+          $checkOptions = new OptionChoice;
+          $checkOptions->option_id = $checkOption->id;
+          $checkOptions->choice_id = $boxnum;
+          $checkOptions->name = $request->{'check_' . $boxnum};
+          $checkOptions->choice_order = $boxnum;
+          $checkOptions->save();
+        }
+      }
+      
     }
-    $newItem->save();
   }
+
+  $newItem->save();
   return redirect()->action('RestaurantController@showrestaurantmoverview');
 }
 
@@ -538,9 +542,9 @@ public function showrestaurantoverview(){
   $uniqueorders = Orders::where('restaurant_id',$id)->whereNull('time_out')->where('completed','1')->groupBy('order_id')->orderBy('submit_time','ASC')->get();
 
 
-if(\Request::ajax()){
-  return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
-    }
+  if(\Request::ajax()){
+    return view('restaurantcontent.restaurant-refreshoverview',compact('restaurant','completeorders', 'uniqueorders'));
+  }
   return view('restaurantcontent.restaurant-overview',compact('restaurant','completeorders', 'uniqueorders'));
 }
 
@@ -579,19 +583,19 @@ public function showrestaurantprofilehours(){
   //Using DB query because eloquent doesn't support composite keys. Can't fetch the correct Hours object with eloquent
   foreach ($dayNumbers as $dayid){
     $is_open = DB::table('hours')
-                ->where('rest_ID',$id)
-                ->where('day_ID',$dayid)
-                ->pluck('open');
+    ->where('rest_ID',$id)
+    ->where('day_ID',$dayid)
+    ->pluck('open');
     $openFlags[] = $is_open;
     if($is_open[0] == 1){
       $open_time = DB::table('hours')
-                ->where('rest_ID',$id)
-                ->where('day_ID',$dayid)
-                ->pluck('open_time');
+      ->where('rest_ID',$id)
+      ->where('day_ID',$dayid)
+      ->pluck('open_time');
       $close_time = DB::table('hours')
-                ->where('rest_ID',$id)
-                ->where('day_ID',$dayid)
-                ->pluck('close_time');
+      ->where('rest_ID',$id)
+      ->where('day_ID',$dayid)
+      ->pluck('close_time');
       $open_times[] = intval($open_time[0]);
       $close_times[] = intval($close_time[0]);          
     } else{
@@ -603,10 +607,10 @@ public function showrestaurantprofilehours(){
   //$temp = array_pop($openFlags[0]);
   //$temp = $openFlags[0][0];
   //dd($temp);
-  
+
   return view('restaurantcontent.restaurant-profile-hours', 
-              compact('dayNumbers', 'dayStrings', 'dayNames', 
-                      'openFlags', 'open_times','close_times'));
+    compact('dayNumbers', 'dayStrings', 'dayNames', 
+      'openFlags', 'open_times','close_times'));
 }
 
 public function finishorder($order_id){
