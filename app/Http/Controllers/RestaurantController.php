@@ -20,6 +20,7 @@ use Validator;
 use App\Events\OrderWasCanceled;
 use Event;
 use Illuminate\Http\Request;
+use Mail;
 
 class RestaurantController extends Controller
 {
@@ -54,6 +55,11 @@ class RestaurantController extends Controller
 
       $updateUser = User::find($id);
       $updateUser->name = $request->name;
+      if($updateUser->email != $request->email){
+        $updateUser->confirmed=0;
+        $ccode=$this->resendEmailConfirmationTo($request->email);
+        $updateUser->confirmation_code=$ccode;
+      }
       $updateUser->email = $request->email;
       $updateUser->save();
 
@@ -97,6 +103,16 @@ class RestaurantController extends Controller
           ]);
       }
     }
+
+    public function resendEmailConfirmationTo($email){
+         $confirmation_code=str_random(30);
+         $data=['confirmation_code'=>$confirmation_code];
+         Mail::send('email.registrationconfirmation',$data, function($message) use ($email){
+             $message->to($email)->subject('Verify your email address');
+         });
+         return $confirmation_code;
+     }
+
 
     public function closerestaurant(Restaurant $restaurant){
       $open_value = $restaurant->is_open;
@@ -598,7 +614,7 @@ public function showrestaurantprofilehours(){
       ->where('day_ID',$dayid)
       ->pluck('close_time');
       $open_times[] = intval($open_time[0]);
-      $close_times[] = intval($close_time[0]);          
+      $close_times[] = intval($close_time[0]);
     } else{
       $open_times[] = -1;
       $close_times[] = -1;
@@ -612,6 +628,7 @@ public function showrestaurantprofilehours(){
   return view('restaurantcontent.restaurant-profile-hours', 
     compact('dayNumbers', 'dayStrings', 'dayNames', 
       'openFlags', 'open_times','close_times'));
+
 }
 
 public function finishorder($order_id){

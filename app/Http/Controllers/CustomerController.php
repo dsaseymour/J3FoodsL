@@ -21,7 +21,7 @@ use Validator;
 use Event;
 use App\Events\OrderWasSubmitted;
 use App\Events\OrderWasCanceled;
-
+use Mail;
 
 class CustomerController extends Controller
 {
@@ -142,8 +142,15 @@ public function searchrestaurants(Request $request ){
         $id = \Auth::user()->id;
       }
 
+
       $updateUser = User::find($id);
       $updateUser->name = $request->name;
+      if($updateUser->email != $request->email){
+        $updateUser->confirmed=0;
+        $ccode=$this->resendEmailConfirmationTo($request->email);
+        $updateUser->confirmation_code=$ccode;
+
+      }
       $updateUser->email = $request->email;
       $updateUser->address = $request->address;
       $updateUser->save();
@@ -154,7 +161,22 @@ public function searchrestaurants(Request $request ){
       $updateCustomer->save();
     }
 
+<<<<<<< HEAD
     protected function validatecustomerupdate(array $data)
+=======
+  public function resendEmailConfirmationTo($email){
+     $confirmation_code=str_random(30);
+     $data=['confirmation_code'=>$confirmation_code];
+     Mail::send('email.registrationconfirmation',$data, function($message) use ($email){
+         $message->to($email)->subject('Verify your email address');
+     });
+     return $confirmation_code;
+ }
+
+
+
+  protected function validatecustomerupdate(array $data)
+>>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
     {
       if(\Auth::check()) {
         $email = \Auth::user()->email;
@@ -185,7 +207,13 @@ public function searchrestaurants(Request $request ){
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
+<<<<<<< HEAD
   
+=======
+
+
+
+>>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
 
   public function showcustomermenu(Restaurant $restaurant){
     $id = $restaurant->id;
@@ -260,7 +288,7 @@ public function searchrestaurants(Request $request ){
         $o->restaurant_id = $item->restaurant->id;
         $o->quantity = $_POST["qty"];
         $o->option_id = $item->option_id;
-        
+
 
         $o->save();
 
@@ -327,8 +355,20 @@ public function checkConfirmed(){
     $items->save();
   }
 
+<<<<<<< HEAD
   Event::fire(new OrderWasSubmitted($orders));
 }
+=======
+    $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
+
+    foreach($orders as $items){
+      $items->submit_time=Carbon::now();
+      $items->completed='1';
+      $items->quantity=$items->quantity;
+      $items->special_instructions=$items->special_instructions;
+      $items->save();
+    }
+>>>>>>> 5378705a092eda99d86d054123ec207e8b56fcf5
 
 
 public function orderconfirmandnotify($order_id){
