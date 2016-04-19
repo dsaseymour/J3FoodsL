@@ -32,10 +32,78 @@ class CustomerController extends Controller
     $this->middleware('auth');
   }
 
-  public function searchrestaurants(Request $request ){
+  public function sortrestaurantlist(){
+    $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "alpha-asc";
 
+    $openRests = Restaurant::where('is_open', 1)->orderBy("companyname")->get();
+    $closedRests = Restaurant::where('is_open', 0)->orderBy("companyname")->get();
+
+    if($sortMethod == "rating"){
+      $openRests = $openRests->sortBy(function($rest){
+        return -1*($rest->aveRating());
+      });
+      $closedRests = $closedRests->sortBy(function($rest){
+        return -1*($rest->aveRating());
+      });
+    }
+
+    if($sortMethod == "alpha-des"){
+      $openRests = $openRests->reverse();
+      $closedRests = $closedRests->reverse();
+    }
+
+    if(\Auth::check()) {
+       $id = \Auth::user()->id;
+    }
+    $favouriteRestaurants = DB::table('customer_favourites')
+        ->where('customer_id',$id)
+        ->get();
+
+    if(strpos($sortMethod, "-des") === false){
+      $sortDirection = -1;
+    } else {
+      $sortDirection = 1;
+    }
+
+    if($sortMethod == "rating"){
+      usort($favouriteRestaurants, function($a, $b){
+        $aScore = Restaurant::where('id',$a->restaurant_id)->first()->aveRating();
+        $bScore = Restaurant::where('id',$b->restaurant_id)->first()->aveRating();
+        return $aScore-$bScore;
+      });
+    } else {
+      usort($favouriteRestaurants, function($a, $b) use ($sortDirection){
+        $aName = Restaurant::where('id',$a->restaurant_id)->first()->companyname;
+        $bName = Restaurant::where('id',$b->restaurant_id)->first()->companyname;
+        return $sortDirection*strcmp(strtolower($aName), strtolower($bName));
+      });
+    }
+
+    foreach($favouriteRestaurants as $favRelation){
+        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
+        if($favouriteRestaurant->is_open){
+          $openRests->prepend($favouriteRestaurant);
+        } else {
+          $closedRests->prepend($favouriteRestaurant);
+        }
+    }
+    $openRests = $openRests->unique();
+    $closedRests = $closedRests->unique();
+
+    $restaurants = $openRests->merge($closedRests);
+    return $restaurants;
+  }
+
+  public function searchrestaurants(Request $request ){
       $term = $request->term;
-      $restaurants =  Restaurant::where('companyname', 'LIKE', "%$term%")->get();
+      if($term == ""){
+        return redirect()->action('CustomerController@showcustomeroverview');
+      }
+
+      $restaurants = $this->sortrestaurantlist();
+      $restaurants = $restaurants->filter(function($rest) use ($term){
+        return strpos(strtolower($rest->companyname), $term) !== false;
+      });
       return view('customercontent.customer-overview',compact('restaurants'));
 
   }
@@ -106,41 +174,11 @@ class CustomerController extends Controller
   }
 
   public function showcustomeroverview(){
-		$restaurants = Restaurant::orderBy('is_open', 'desc')->get();
-
+    $restaurants = $this->sortrestaurantlist();
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
-    public function sortrestaurantlistalphabetically(){
-    $restaurants = Restaurant::orderBy('is_open', 'desc')
-                   ->orderBy('companyname', 'asc')
-                   ->get();
-    return view('customercontent.customer-overview',compact('restaurants'));
-  }
-
-
-  public function sortbyfavourites(){
-    $restaurants = Restaurant::get();
-
-    if(\Auth::check()) {
-       $id = \Auth::user()->id;
-    }
-    $favouriteRestaurants = DB::table('customer_favourites')
-        ->where('customer_id',$id)
-        ->get();
-
-    foreach($favouriteRestaurants as $favRelation){
-        $favouriteRestaurant = Restaurant::where('id',$favRelation->restaurant_id)->first();
-        $restaurants->prepend($favouriteRestaurant);
-    }
-    $restaurants = $restaurants->unique();
-
-    return view('customercontent.customer-overview',compact('restaurants'));
-  }
-
-
- 
-
+  
 
   public function showcustomermenu(Restaurant $restaurant){
     $id = $restaurant->id;

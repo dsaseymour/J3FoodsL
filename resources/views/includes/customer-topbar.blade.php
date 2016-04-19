@@ -27,17 +27,6 @@
             </button>
           </form>
         </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span>Sort</span>
-            <span class="caret"></span></a>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="{{route('sortalphabetically')}}">Alphabetically</a></li>
-            <li><a href="{{route('sortbyfavourites')}}">Favourites</a></li>
-          </ul>
-        </li>
         <li>
           <a href="{{route('customerconfirmationlink')}}" >
             <span class="glyphicon glyphicon-shopping-cart"></span><?php //TODO: add a popover to explain what the button does clicking activates a popoutmenu  ?>
