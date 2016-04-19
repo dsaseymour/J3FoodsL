@@ -120,7 +120,7 @@ J3 Foods - Online Food Ordering
     <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#" disabled>
     <div data-toggle="tooltip" title="The Restaurant does not allow guest orders"  >
     @else
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">
+    <div method="PUT" class="btn btn-default btn-lg">
     @endif
     Order
     <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
@@ -165,9 +165,17 @@ J3 Foods - Online Food Ordering
       $request = $.post({
         url: "{{ route('submitorderlink') }}",
         type: "get",
-        data: {}
+        data: {},
+        error: function(xhr, status) {            
+          if(xhr.status=='401'){
+            window.location.href = "{{ route('notconfirmed') }}"
+          }
+        },
+        success: function(xhr, status){
+          $("#confirmation-result").modal('show');
+        } 
+      });
       });
     });
-  });
 </script>
 @endsection

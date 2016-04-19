@@ -173,7 +173,7 @@ class CustomerController extends Controller
     $restaurant = Restaurant::find($item->restaurant->id);
     if($restaurant->is_open == 0){//if the restarant is closed
      // return redirect('/customeroverview')->with('status', 'This restaurant is closed and cannot be ordered from.');
-      return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "YThis restaurant is closed and cannot be ordered from.");
+      return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "This restaurant is closed and cannot be ordered from.");
     }
     if(!\Auth::user()->isRestaurant){
       $currentCart = \Auth::user()->customer->cart;
@@ -240,19 +240,39 @@ class CustomerController extends Controller
     return redirect()->action('CustomerController@showcustomerconfirmation');
   }
 
+  public function notConfirmed(){
+    return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
+  }
+
+  public function checkConfirmed(){
+    if(\Auth::check()) {
+       $user = \Auth::user();
+    }
+    if(($user->confirmed != 1) & ($user->is_guest != 1)){ //if they havent confirmed their email and not a guest
+      return response('Unauthorized.', 401);
+    } else {
+      $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
+      
+      foreach($orders as $items){
+        $items->submit_time=Carbon::now();
+        $items->completed='1';
+        $items->quantity=$items->quantity;
+        $items->special_instructions=$items->special_instructions;
+        $items->save();
+      }
+
+    Event::fire(new OrderWasSubmitted($orders));
+    }
+  }
   public function submitOrder(){
     if(\Auth::check()) {
        $user = \Auth::user();
     }
 
-   dd($user->confirmed);
-
-   /* if($user->confirmed != 1){ //if they havent confirmed their email
-      return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
-    }*/
+   //dd($user->confirmed);
 
     $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-    
+      
     foreach($orders as $items){
       $items->submit_time=Carbon::now();
       $items->completed='1';
@@ -262,8 +282,7 @@ class CustomerController extends Controller
     }
 
     Event::fire(new OrderWasSubmitted($orders));
-
-    }
+  }
 
 
   public function orderconfirmandnotify($order_id){
