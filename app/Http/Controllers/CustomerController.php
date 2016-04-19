@@ -38,6 +38,13 @@ class CustomerController extends Controller
     $openRests = Restaurant::where('is_open', 1)->orderBy("companyname")->get();
     $closedRests = Restaurant::where('is_open', 0)->orderBy("companyname")->get();
 
+    $openRests = $openRests->filter(function($rest){
+      return $rest->user->confirmed;
+    });
+    $closedRests = $closedRests->filter(function($rest){
+      return $rest->user->confirmed;
+    });
+
     if($sortMethod == "rating"){
       $openRests = $openRests->sortBy(function($rest){
         return -1*($rest->aveRating());

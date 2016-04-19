@@ -7,6 +7,15 @@ J3 Foods - Online Food Ordering
 @include('includes.restaurant-topbar')
 @endsection
 
+@section('styles')
+  <style>
+    .show-details {
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+@endsection
 
 @section('content')
 
@@ -61,7 +70,7 @@ J3 Foods - Online Food Ordering
                     @foreach($uniqueorders as $currentorder)
                       <tr>
                         <td>{{date('D, M j Y H:i:s', strtotime($currentorder->submit_time))}}</td>
-                        <td>{{$currentorder->order_id}}</td>
+                        <td><span class="order-id">{{$currentorder->order_id}}</span> </br> <span class="show-details">Click for order details</span></td>
                         <td>
                           <p>{{$currentorder->user->name}}</p>
                           @if($currentorder->user->address)
@@ -75,8 +84,8 @@ J3 Foods - Online Food Ordering
                           <p>{{$currentorder->customer->phoneno}}</p>
                         </td>
                         {{-- */$id = $currentorder->order_id;/* --}}
-                        <td data-toggle="collapse" data-target="#orderdropdown{{$id}}" data-value="{{$id}}">
-                          <div data-toggle="tooltip" title="Click to show Items of Order"  >
+                        <td>
+                          <div>
                             @if($currentorder->pickup_delivery=='1')
                             Delivery
                             @else
@@ -109,6 +118,21 @@ J3 Foods - Online Food Ordering
   </div>
 </section>
 
+  <!-- Modal -->
+  <div id="order-details-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Order details</h4>
+        </div>
+        <div id="details-body" class="modal-body">
+            
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('javascript')
@@ -126,6 +150,19 @@ J3 Foods - Online Food Ordering
         });
       });
     },300);
+
+    //Open details window when clicking on an order
+      $("#restaurant-overview-container").on("click", ".show-details", function(e){
+        orderid = $(e.target).parent().find(".order-id").text();
+        console.log(orderid);
+        $.get("{{route("showdetails", ["order"=>""])}}/"+orderid, function(response){
+          if(response != null){
+            console.log($("#restaurant-overview-container .modal-body"));
+            $("#details-body").html(response);
+          }
+          $("#order-details-modal").modal("show");
+        });
+      });
 
     setInterval(pageRefreshCall, 10000);
     function pageRefreshCall() {

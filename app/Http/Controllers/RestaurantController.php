@@ -647,4 +647,8 @@ public function cancelorder($order_id){
   return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
 
 }
+  public function showDetails($order_id){
+    $orders = Orders::where("order_id", $order_id)->get();
+    return view("includes.order-details-modal", compact("orders"));
+  }
 }

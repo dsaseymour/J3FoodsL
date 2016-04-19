@@ -18,9 +18,9 @@ J3 Foods - Online Food Ordering
    margin:auto;
  }
 
- h3 {
+ #login {
   position: absolute; 
-   top: 500px; 
+   top: 45%; 
    left: 25%; 
    width: 100%;
  }
@@ -30,19 +30,6 @@ J3 Foods - Online Food Ordering
    top: 400px; 
    left: 0; 
    width: 100%; 
- }
-
- h2 span { 
-   color: white; 
-   font: bold 18px/34px Helvetica, Sans-Serif; 
-   letter-spacing: -1px;  
-   background: rgb(0, 0, 0); /* fallback color */
-   background: rgba(0, 0, 0, 0.7);
-   padding: 10px; 
- }
-
- h2 span.spacer {
-   padding:0 5px;
  }
 
  .btn-login{
@@ -62,15 +49,14 @@ J3 Foods - Online Food Ordering
 
   <div class ="image">
     <img src="http://www.letsgotospain-event.net/wp-content/uploads/2015/04/food-and-wine-tours-spain.jpg"/>
-    <h2>
-      <span>
-        Are you  hungry but don't want to leave the house?<span class='spacer'></span><br /><span class='spacer'></span> Here at J3 foods, we ensure that you can order delicious food right to your door!
-      </span>
-    </h2>
-    <h3>
-    <a href= "{{ route('logincust')    }}"> <button type="button" class="button btn-login" id="landinglogin-cus" >Login</button> 
-    <h3>
+    <span id="login">
+      <a href= "{{ route('logincust')    }}"> 
+        <button type="button" class="button btn-login btn-primary" id="landinglogin-cus" >Login</button>
+      </a> 
+    </span>
+    
   </div>
+ 
 
 
 
