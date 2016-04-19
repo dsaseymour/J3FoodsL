@@ -37,19 +37,24 @@ class OrderConfirmation
      */
     public function handle(OrderWasSubmitted $event)
     {
+
+
         $orderparam=$event->order->first();
         $orderset=$event->order;
         $customer = User::find($orderparam->customer_id);
+
         $restaurant=Restaurant::find($orderparam->restaurant_id);
-        $data=array('restaurant'=>$restaurant, 'orderparam'=>$orderparam);
+
+         $restaurantUser=User::find($orderparam->restaurant_id);
+
         Mail::send('email.orderconfirmation',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($customer){
         $message->to($customer->email)->subject('Your Order has been processed');
         });
         Mail::send('email.ratingrequest',['order'=>$orderparam,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($customer){
 		$message->to($customer->email)->subject($customer->name."".' Will You Rate Your Experience At J3Foods?');
 		});
-        Mail::send('email.ordernotification',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($data){
-        $message->to($data['restaurant']->email)->subject('New Order#'.$data['orderparam']->order_id." ".'Has Been Submitted');
+        Mail::send('email.ordernotification',['order'=>$orderset,'customer'=>$customer,'restaurant'=>$restaurant], function($message) use ($restaurantUser){
+        $message->to($restaurantUser->email)->subject('New Order has been submitted');
         });
     }
 

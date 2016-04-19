@@ -64,7 +64,7 @@ J3 Foods - Online Food Ordering
               <td>{{$currentitem->item->name}}</td>
               <td>{{$option.": ".$optionselection}}</td>
               <td>${{$currentitem->item->price}}</td>
-              <td><a class="btn btn-danger" href="{{route('removeitemlink', $currentitem->item_id)}}">
+              <td><a class="btn btn-danger" href="{{route('removeitemlink', [$currentitem->item_id, $currentitem->choice])}}">
                 <span class="glyphicon glyphicon-remove"></span></a></td>
             </tr>
             @endforeach
@@ -103,9 +103,11 @@ J3 Foods - Online Food Ordering
             <tr>
               <td>Delivery or Pickup</td>
               @if($order[0]->pickup_delivery=='1')
-              <td>Delivery</td>
+              <td><label class="radio-inline"><input type="radio" name="optradio" checked value="1">Delivery</label>
+              <label class="radio-inline"><input type="radio" name="optradio" value="0">Pickup</label></td>
               @else
-              <td>Pick-up</td>
+              <td><label class="radio-inline"><input type="radio" name="optradio" value="1">Delivery</label>
+              <label class="radio-inline"><input type="radio" name="optradio" checked value="0">Pickup</label></td>
               @endif
             </tr>
           </tbody>
@@ -113,11 +115,14 @@ J3 Foods - Online Food Ordering
       </div><!-- End table container -->
     </div>
     <div  class="list-group-item text-right" id="confirm-page-btn">
-    @if(($totalprice>($order[0]->restaurant->max_order_price)) && ($order[0]->customer->is_guest))
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result" disabled>
+    @if($totalprice>($order[0]->restaurant->max_order_price))
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#" disabled>
     <div data-toggle="tooltip" title="Your order total is above the Restaurants' limit"  >
+    @elseif((($order[0]->customer->is_guest)==1) && (($order[0]->restaurant->allow_guests)==0))
+    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#" disabled>
+    <div data-toggle="tooltip" title="The Restaurant does not allow guest orders"  >
     @else
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#confirmation-result">
+    <div method="PUT" class="btn btn-default btn-lg">
     @endif
     Order
     <input type="hidden" value="{{Session::token()}}" name="_token" /></div>
@@ -158,13 +163,24 @@ J3 Foods - Online Food Ordering
 <script>
   $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
+    var p_d = $('#filterDay label.active input').val()
     $(".btn-lg").click(function() {
-      $request = $.post({
+      $request = $.ajax({
         url: "{{ route('submitorderlink') }}",
         type: "get",
-        data: {}
+        data: {},
+        error: function(xhr, status) {            
+          if(xhr.status=='401'){
+            window.location.href = "{{ route('notconfirmed') }}"
+          } else if(xhr.status=='500') {
+            $("#confirmation-result").modal('show');
+          }
+        },
+        success: function(xhr, status){
+          $("#confirmation-result").modal('show');
+        }
+      });
       });
     });
-  });
 </script>
 @endsection

@@ -96,7 +96,11 @@ class AuthController extends Controller
           $customer->phoneno = "";
           $customer->is_guest = $isGuestHolder;
           $customer->save();
+          if($customer->is_guest == 1){
+            return redirect()->action('CustomerController@showcustomeroverview');
+          }else{
           return redirect()->action('CustomerController@showcustomerprofile');
+        }
         }
 
       }

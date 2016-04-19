@@ -1,6 +1,7 @@
 <style>
   .list-group-item-heading {
     color:black;
+    font-size: 1em;
   }
 </style>
 
@@ -20,7 +21,7 @@
       </ul>
       <div class="tab-content">
         <div id="item{{$item->item_id}}" class="tab-pane fade in active">
-         <form method="POST" role="form" action="{{ route('edititem' , ['item' => $item->item_id] ) }}">
+         <form method="POST"  role="form" action="{{ route('edititem' , ['item' => $item->item_id] ) }}">
           {!! csrf_field() !!}
           <label class="list-group-item-heading">Category</label>
           <select class="form-control" name="category">
@@ -71,7 +72,7 @@
               </label>
             </div>
             <div>
-              <div id="text_option"  @if($item->option_id != null) @if($item->option->type == "check") class="options collapse in text-input" @else class="options collapse text-input" @endif @else class="options collapse text-input" @endif  >
+              <div id="text_option"  @if($item->option_id != null) @if($item->option->type == "text") class="options collapse in text-input" @else class="options collapse text-input" @endif @else class="options collapse text-input" @endif  >
                 <label class="list-group-item-heading">Text option</label>
                 <input type="text" class="form-control" name="text_option" @if($item->option_id != null) @if($item->option->type == "text") value="{{$item->option->name}}" @endif @endif  >
               </div>
@@ -80,17 +81,25 @@
                 <input type="text" class="form-control" name="combo_name" @if($item->option_id != null) @if($item->option->type == "combo") value="{{$item->option->name}}" @endif @endif>
                 <label class="list-group-item-heading">Choose one of</label>
                 @if($item->option_id != null) 
-                @if($item->option->type == "combo")
-                @foreach($item->option->choices as $choice)
-                <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
-                @endforeach
+                  @if($item->option->type == "combo")
+                    @foreach($item->option->choices as $choice)
+                      <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                    @endforeach
+                  @else
+                  <input type="text" class="form-control" name="combo_1">
+                  <input type="text" class="form-control" name="combo_2">
+                  <input type="text" class="form-control" name="combo_3">
+                  <input type="text" class="form-control" name="combo_4">
+                  <input type="text" class="form-control" name="combo_5">
+                  <input type="text" class="form-control" name="combo_6">
+                  @endif
                 @else
-                <input type="text" class="form-control" name="combo_1">
-                <input type="text" class="form-control" name="combo_2">
-                @endif
-                @else
-                <input type="text" class="form-control" name="combo_1">
-                <input type="text" class="form-control" name="combo_2">
+                  <input type="text" class="form-control" name="combo_1">
+                  <input type="text" class="form-control" name="combo_2">
+                  <input type="text" class="form-control" name="combo_3">
+                  <input type="text" class="form-control" name="combo_4">
+                  <input type="text" class="form-control" name="combo_5">
+                  <input type="text" class="form-control" name="combo_6">
                 @endif
               </div>
               <div id="check_option" @if($item->option_id != null) @if($item->option->type == "check") class="options collapse in select-many"  @else class="options collapse select-many" @endif @else class="options collapse select-many" @endif>
@@ -100,15 +109,23 @@
                 @if($item->option_id != null) 
                   @if($item->option->type == "check")
                     @foreach($item->option->choices as $choice)
-                    <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                    <input type="text" class="form-control" name="check_{{$choice->choice_id}}" value="{{$choice->name}}">
                     @endforeach
                     @else
                       <input type="text" class="form-control" name="check_1">
                       <input type="text" class="form-control" name="check_2">
+                      <input type="text" class="form-control" name="check_3">
+                      <input type="text" class="form-control" name="check_4">
+                      <input type="text" class="form-control" name="check_5">
+                      <input type="text" class="form-control" name="check_6">
                   @endif
                   @else
-                    <input type="text" class="form-control" name="check_1">
-                    <input type="text" class="form-control" name="check_2">
+                      <input type="text" class="form-control" name="check_1">
+                      <input type="text" class="form-control" name="check_2">
+                      <input type="text" class="form-control" name="check_3">
+                      <input type="text" class="form-control" name="check_4">
+                      <input type="text" class="form-control" name="check_5">
+                      <input type="text" class="form-control" name="check_6">
                 @endif
               </div>
             </div>

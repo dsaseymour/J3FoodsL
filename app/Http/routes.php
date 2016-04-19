@@ -143,12 +143,17 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customerconfirmationlink'
         ]);
 
-    Route::get('/submitorder',[
-        'uses'=>'CustomerController@submitOrder',
+    Route::get('/submitifconfirmed',[
+        'uses'=>'CustomerController@checkConfirmed',
         'as'=>'submitorderlink'
         ]);
 
-    Route::get('/removeitem/{item}',[
+    Route::get('/submitnotconfirmed',[
+        'uses'=>'CustomerController@notConfirmed',
+        'as'=>'notconfirmed'
+        ]);
+
+    Route::get('/removeitem/{item}/choice/{choice}',[
         'uses'=>'CustomerController@removeItem',
         'as'=>'removeitemlink'
         ]);
@@ -336,7 +341,10 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'createorder',
         ]);
 
-
+    Route::get('/orderdetails/{order}',[
+        'uses'=>'RestaurantController@showDetails',
+        'as'=>'showdetails'
+        ]);
 
     Route::get('/test', function() //danny testing order confirmation
     {

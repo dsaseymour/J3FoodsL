@@ -81,7 +81,7 @@
                         @yield('content')
                   </main>
 
-              <footer>
+              <!--<footer>
                     <div class="container-fluid" id="footer">
                       <div class="row">
                        <div class="f-content">
@@ -96,7 +96,7 @@
                       </div>
                      </div>
                     </div>
-              </footer>
+              </footer>!-->
               @yield('javascript')
       </body>
 </html>
