@@ -282,6 +282,16 @@ class CustomerController extends Controller
 
     }
 
+    public function userprofileresendfunction(){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+        $updateUser = User::find($id);
+       $ccode=$this->resendEmailConfirmationTo($updateUser->email);
+       $updateUser->confirmation_code=$ccode;
+       $updateUser->save();
+       return redirect('/customerprofile')->with('status', 'Your Account Verification Email was successfully sent. Be sure to check your spam folder. ');
+       }
+    }
 
   public function orderconfirmandnotify($order_id){
     if(\Auth::check()) {

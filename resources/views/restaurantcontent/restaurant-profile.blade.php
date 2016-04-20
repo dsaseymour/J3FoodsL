@@ -17,6 +17,11 @@ J3 Foods - Online Food Ordering
           @include('includes.restaurant-profilecontentbar')
         </div>
   <div class="panel-body">
+    @if(session('status'))
+    <div class="alert alert-success">
+    {{ session('status') }}
+    </div>
+    @endif
     <!-- Do I need something in the action? Seems to update the db without it-->
     <form id="restaurant-signup-form" action="" accept-charset="utf-8" method="POST" role="form" >
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" >
@@ -82,7 +87,7 @@ J3 Foods - Online Food Ordering
             </span>
           @endif
         </div>
-        <div class="form-group{{ $errors->has('phoneno') ? ' has-error' : '' }}" > 
+        <div class="form-group{{ $errors->has('phoneno') ? ' has-error' : '' }}" >
           <label class="col-md-6 control-label">Phone Number</label>
           <input type="tel" name="phoneno" class="input-fieldformat form-control"  value="{{$currentRestaurant->phoneno}}"/>
           @if ($errors->has('phoneno'))

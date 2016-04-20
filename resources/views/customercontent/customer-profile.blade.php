@@ -18,6 +18,11 @@ J3 Foods - Online Food Ordering
 					@include('includes.customer-profilecontentbar')
 				</div>
 				<div class="panel-body">
+					@if(session('status'))
+					<div class="alert alert-success">
+					{{ session('status') }}
+					</div>
+					@endif
 					<form class="form-horizontal" role="form" method="POST" action="{{ route('customerupdateinfo')    }}">
 						{!! csrf_field() !!}
 						<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -29,12 +34,12 @@ J3 Foods - Online Food Ordering
 							</span>
 							@endif
 						</div>
-						
+
 						<div class="form-group">
 							<label class="col-md-0 control-label">Name of Owner:</label>
 							<input type="text" class="form-control" name="name" id="name"  value="{{$currentUser->name}}"/>
 						</div>
-						
+
 						<div class="form-group{{ $errors->has('phoneno') ? ' has-error' : '' }}">
 							<label class="col-md-0 control-label">Phone Number:</label>
 							<input type="text" class="form-control" name="phoneno" id="phoneno"  value="{{$currentCustomer->phoneno}}"/>

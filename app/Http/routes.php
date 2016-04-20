@@ -168,6 +168,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customerprofilelink'
         ]);
 
+        Route::get('/customerprofileresend',[
+           'uses'=>'CustomerController@userprofileresendfunction',
+           'as'=>'customerprofileresend'
+            ]);
+
     Route::get('/addtofavourites/{restaurant}',[
         'uses'=>'CustomerController@addcustomerfavourite',
         'as'=>'addtofavourites'
@@ -260,6 +265,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses'=>'RestaurantController@updatehours',
         'as'=>'restaurantupdatehours',
         ]);
+
+        Route::get('/restaurantprofileresend',[
+            'uses'=>'RestaurantController@userprofileresendfunction',
+           'as'=>'restaurantprofileresend'
+           ]);
 
     Route::post('/restaurantprofilerestrictions',[
         'uses'=>'RestaurantController@updaterestrictions',
