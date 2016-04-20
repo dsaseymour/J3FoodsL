@@ -204,6 +204,11 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'addtocart'
         ]);
 
+    Route::get('/hours/{restaurant}',[
+        'uses'=>'CustomerController@restHours',
+        'as'=>'restHours'
+        ]);
+
 	//Restuarant pages
 
 

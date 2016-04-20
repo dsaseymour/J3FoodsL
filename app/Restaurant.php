@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Datetime;
 
 class Restaurant extends Model
 {
@@ -43,5 +44,35 @@ class Restaurant extends Model
 
 	public function reviews(){
 		return $this->hasMany(Review::class, "restaurant_id")->where("is_displaying", 1);
+	}
+
+	public function hours(){
+		return $this->hasMany(Hours::class, "rest_ID");
+	}
+
+	public function todayHours(){
+		$todayHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+1 AND rest_ID = '".$this->id."'");
+		if(sizeOf($todayHours) > 0){
+			$openTime = (new Datetime($todayHours[0]->open_time))->getTimestamp();
+			$closeTime = (new DateTime($todayHours[0]->close_time))->getTimestamp();
+			$openTimeS = date("G:i", $openTime);
+			$closeTimeS = date("G:i", $closeTime);
+			return $openTimeS."-".$closeTimeS;
+		} else {
+			return "Unknown";
+		}
+	}
+
+	public function tomorrowHours(){
+		$todayHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+2 AND rest_ID = '".$this->id."'");
+		if(sizeOf($todayHours) > 0){
+			$openTime = (new Datetime($todayHours[0]->open_time))->getTimestamp();
+			$closeTime = (new DateTime($todayHours[0]->close_time))->getTimestamp();
+			$openTimeS = date("G:i", $openTime);
+			$closeTimeS = date("G:i", $closeTime);
+			return $openTimeS."-".$closeTimeS;
+		} else {
+			return "Unknown";
+		}
 	}
 }
