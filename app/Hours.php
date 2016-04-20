@@ -11,7 +11,7 @@ class Hours extends Model
 	protected $fillable = ['rest_ID','day_ID','open','open_time','close_time'];
 
     public function restaurant() {
-    	return $this->belongsTo('Restaurant');
+    	return $this->belongsTo('Restaurant', "rest_ID");
     }
     
 }

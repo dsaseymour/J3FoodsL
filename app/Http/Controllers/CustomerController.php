@@ -444,4 +444,12 @@ public function showcustomerprofile(){
     return view('rating.restaurantfeedback',$data);
   }
 
+  public function restHours(Restaurant $restaurant){
+    $hours = $restaurant->hours;
+    if($hours->count() > 0){
+      return view('customercontent.all-hours', compact("hours"));
+    } else {
+      return "No hours set";
+    }
+  }
 }

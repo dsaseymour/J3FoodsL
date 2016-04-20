@@ -186,6 +186,10 @@ J3 Foods - Online Food Ordering
       margin: 10px 0 10px 0;
     }
 
+    #rhdr-info .hours {
+      margin-bottom: 0;
+    }
+
     #all-hours {
       font-size: 12px;
       color: #78C3AE;
@@ -193,6 +197,10 @@ J3 Foods - Online Food Ordering
       cursor: pointer;
       float: right;
       padding-top: 4px;
+    }
+
+    #hours-table thead tr {
+      font-weight: bold;
     }
   </style>
 @endsection
@@ -262,13 +270,13 @@ J3 Foods - Online Food Ordering
             <span id="all-hours">See all</span>
           </h4>
 
-          <p>
+          <p class="hours">
             <strong>Today:</strong>
             &nbsp;
             <span id="today-hours">{{$restaurant->todayHours()}}</span>
           </p>
 
-          <p>
+          <p class="hours">
             <strong>Tomorrow:</strong>
             &nbsp;
             <span id="tomorrow-hours">{{$restaurant->tomorrowHours()}}</span>
@@ -471,6 +479,30 @@ J3 Foods - Online Food Ordering
     </div>
   </div>
 
+  <div id="hours-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>Restaurant hours</h4>
+        </div>
+        <div class="modal-body">
+          <table id="hours-table" class="table table-striped">
+            <thead>
+              <th>Day</th>
+              <th>Open time</th>
+              <th>Close time</th>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 @include('includes.shoppingcart')
@@ -536,6 +568,15 @@ J3 Foods - Online Food Ordering
         plusMinus.toggleClass("hidden");
         categoryBody = clickedTitle.parent().find(".category-body");
         categoryBody.slideToggle();
+      });
+
+      $("#all-hours").click(function(e){
+        $.get("{{route("restHours", ["restaurant"=>$restaurant->id])}}", function(response){
+          if(response != null){
+            $("#hours-table tbody").html(response);
+          }
+          $("#hours-modal").modal("show");
+        });
       });
     });
 
