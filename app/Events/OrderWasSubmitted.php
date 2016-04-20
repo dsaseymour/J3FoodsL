@@ -7,6 +7,13 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
+
+/**
+  * This Event is linked to the
+  * OrderConfirmation listener
+  * which sends the relevant emails once an
+  * order has been submitted
+ */
 class OrderWasSubmitted extends Event
 {
     use SerializesModels;

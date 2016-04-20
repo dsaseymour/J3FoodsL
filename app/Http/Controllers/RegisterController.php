@@ -29,6 +29,11 @@ class RegisterController extends Controller
           return view('registration.registrationconfirmation');
   }
 
+/**
+ * [confirm when this function is called the user is confirmed ]
+ * @param  String $confirmation_code the confirmation code the user was given in their email
+ * @return View     redirects to login page
+ */
 public function confirm($confirmation_code){
   $user = User::where('confirmation_code',$confirmation_code)->first();
   if(!$confirmation_code)

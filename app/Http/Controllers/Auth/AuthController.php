@@ -77,7 +77,7 @@ class AuthController extends Controller
           $restaurant->province = $request->province;
           $restaurant->city = $request->city;
           $restaurant->postalcode = $request->postalcode;
-          $restaurant->phoneno = $request->phoneno;           
+          $restaurant->phoneno = $request->phoneno;
           $restaurant->save();
 
           for ($day = 1; $day <= 7; $day++ ){
@@ -89,7 +89,7 @@ class AuthController extends Controller
             $updateHours->close_time = "1:00:00";
             $updateHours->save();
           }
-          return redirect()->action('RestaurantController@showrestaurantprofilehours'); 
+          return redirect()->action('RestaurantController@showrestaurantprofilehours');
         } else{ //register a customer, linked by an id.
           $customer = new Customer;
           $customer->id = $idOfUser;
@@ -105,6 +105,12 @@ class AuthController extends Controller
 
       }
 
+/**
+* [sendEmailConfirmationTo sends an account verification email to the entered address ]
+* @param  String $email the email address of the user whose account is to be confirmed
+* @return String $confirmation_code the confirmation code that is used in the account verification email
+
+ */
       public function sendEmailConfirmationTo($email){
         $confirmation_code=str_random(30);
         $data=['confirmation_code'=>$confirmation_code];
@@ -129,7 +135,7 @@ class AuthController extends Controller
 
     if (method_exists($this, 'authenticated')) {
       return $this->authenticated($request, Auth::guard($this->getGuard())->user());
-    } 
+    }
 
     $results = DB::select("SELECT  `isRestaurant` FROM  `users` WHERE email =  ?",[$request->email]);
 
