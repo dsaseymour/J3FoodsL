@@ -91,6 +91,16 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'registerrestaurant'
         ]);
 
+      Route::get('/customerprofileresend',[
+         'uses'=>'CustomerController@userprofileresendfunction',
+         'as'=>'customerprofileresend'
+          ]);
+
+      Route::get('//restaurantprofileresend',[
+          'uses'=>'RestaurantController@userprofileresendfunction',
+         'as'=>'restaurantprofileresend'
+         ]);
+
     Route::get('/restaurantregisterinfo',[
         'uses'=>'RegisterController@showrestaurantregisterinfo',
         'as'=>'registerrestaurantinfo'

@@ -113,6 +113,16 @@ class RestaurantController extends Controller
          return $confirmation_code;
      }
 
+     public function userprofileresendfunction(){
+       if(\Auth::check()) {
+         $id = \Auth::user()->id;
+         $updateUser = User::find($id);
+        $ccode=$this->resendEmailConfirmationTo($updateUser->email);
+        $updateUser->confirmation_code=$ccode;
+        $updateUser->save();
+        return redirect('/restaurantprofile')->with('status', 'Your Account Verification Email was successfully sent. Be sure to check your spam folder. ');
+        }
+     }
 
     public function closerestaurant(Restaurant $restaurant){
       $open_value = $restaurant->is_open;
@@ -425,7 +435,7 @@ class RestaurantController extends Controller
           $checkOptions->save();
         }
       }
-      
+
     }
   }
 
@@ -625,8 +635,8 @@ public function showrestaurantprofilehours(){
   //$temp = $openFlags[0][0];
   //dd($temp);
 
-  return view('restaurantcontent.restaurant-profile-hours', 
-    compact('dayNumbers', 'dayStrings', 'dayNames', 
+  return view('restaurantcontent.restaurant-profile-hours',
+    compact('dayNumbers', 'dayStrings', 'dayNames',
       'openFlags', 'open_times','close_times'));
 
 }
