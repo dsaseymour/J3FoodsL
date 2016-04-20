@@ -53,6 +53,12 @@ J3 Foods - Online Food Ordering
 							<label class="col-md-0 control-label">Address:</label>
 							<input type="text" class="form-control" name="address" id="address"  value="{{$currentUser->address}}"/>
 						</div>
+
+						<div class="form-group">
+												<label class="col-md-0 control-label">Resend My Verification Email:</label>
+														<a href="{{ route('customerprofileresend')}}"><div class="btn btn-primary"> <span class="glyphicon glyphicon-envelope"></span></div></a>
+											</div>
+
 						<div class="input-row row text-right" >
 							<button type='submit' class="btn btn-primary"/>Save Changes</button>
 						</div>

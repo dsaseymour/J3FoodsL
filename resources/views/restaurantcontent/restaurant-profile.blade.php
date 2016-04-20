@@ -99,6 +99,11 @@ J3 Foods - Online Food Ordering
         <label class="col-md-6 control-label">Image URL</label>
         <input type="text" name="image" class="input-fieldformat form-control"  value="{{$currentRestaurant->image}}" />
 
+        <div class="form-group input-row ">
+            <label class="col-md-0 control-label">Resend My Verification Email:</label>
+                <a href="{{ route('restaurantprofileresend')}}"><div class="btn btn-primary"> <span class="glyphicon glyphicon-envelope"></span></div></a>
+          </div>
+
         <div class="input-row row text-right" >
           <button type='submit' class="btn  btn-primary"/>Save Changes</button>
         </div>
