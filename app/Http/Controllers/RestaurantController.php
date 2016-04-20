@@ -133,6 +133,16 @@ class RestaurantController extends Controller
       return view('restaurantcontent.restaurant-sethours',compact('dayNumbers','dayStrings', 'dayNames'));
     }
 
+    public function userprofileresendfunction(){
+      if(\Auth::check()) {
+        $id = \Auth::user()->id;
+        $updateUser = User::find($id);
+       $ccode=$this->resendEmailConfirmationTo($updateUser->email);
+       $updateUser->confirmation_code=$ccode;
+       $updateUser->save();
+       return redirect('/restaurantprofile')->with('status', 'Your Account Verification Email was successfully sent. Be sure to check your spam folder. ');
+       }
+    }
 
     public function storehours(Request $request){
       if(\Auth::check()) {
