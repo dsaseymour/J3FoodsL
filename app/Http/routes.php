@@ -61,11 +61,6 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Login pages
 
-   /* Route::get('/loginRest', [
-        'uses'=>'LoginController@showrestaurantlogin',
-        'as'=>'loginrest'
-        ]);*/
-
     Route::get('/loginCust', [
         'uses'=>'LoginController@showcustomerlogin',
         'as'=>'logincust'
@@ -173,10 +168,10 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'customerprofilelink'
         ]);
 
-        Route::get('/customerprofileresend',[
-           'uses'=>'CustomerController@userprofileresendfunction',
-           'as'=>'customerprofileresend'
-            ]);
+    Route::get('/customerprofileresend',[
+       'uses'=>'CustomerController@userprofileresendfunction',
+       'as'=>'customerprofileresend'
+        ]);
 
     Route::get('/addtofavourites/{restaurant}',[
         'uses'=>'CustomerController@addcustomerfavourite',
@@ -210,8 +205,6 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
 	//Restuarant pages
-
-
 
     Route::get('/toggleshowingreview/{reviewer}',[
         'uses'=>'RestaurantController@toggleshowingreview',
@@ -276,10 +269,10 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'restaurantupdatehours',
         ]);
 
-        Route::get('/restaurantprofileresend',[
-            'uses'=>'RestaurantController@userprofileresendfunction',
-           'as'=>'restaurantprofileresend'
-           ]);
+    Route::get('/restaurantprofileresend',[
+        'uses'=>'RestaurantController@userprofileresendfunction',
+       'as'=>'restaurantprofileresend'
+       ]);
 
     Route::post('/restaurantprofilerestrictions',[
         'uses'=>'RestaurantController@updaterestrictions',
@@ -351,7 +344,7 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'finishorder'
         ]);
 
-    Route::post('/createorder',[ //danny testing order confirmation
+    Route::post('/createorder',[ 
         'uses'=>'CustomerController@createOrder',
         'as'=>'createorder',
         ]);
@@ -363,7 +356,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/test', function() 
     {
-      //  return view('email.ratingrequest');
         return view('debugging');
     });
 
@@ -372,52 +364,5 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'cancelorder'
         ]);
 
-    //DEBUGGGING
-         /*
-     Route::post('/restaurantlogin',[
-         'uses'=>'RestaurantController@restaurantlogin',
-         'as'=>'restaurantlogin'
-         ]);*/
-            /* Route::get('/order/confirmed',[ // Danny Dummy Route
-        'uses'=>'CustomerController@orderconfirmandnotify',
-        'as'=>'orderconfirmlink',
-        ]);*/
-
-
-    //Register Pages
-   /* Route::get('/register/{user?}',[
-    'uses'=>'RegisterController@register',
-    'as'=>'registerlink'
-    ]);*/
-
-    /*Route::get('/customerlogin',[
-    'uses'=>'LoginController@showcustomerlogin',
-    'as'=>'customerloginlink'
-    ]);
-
-    Route::get('/restaurantlogin',[
-    'uses'=>'LoginController@showrestaurantlogin',
-    'as'=>'restaurantloginlink'
-    ]);*/
-    /*
-Route::get('/test', function()
-{
-    return view('restaurantcontent.restaurant-profile-restrictions');
+    
 });
-
-
-Route::get('/customer', 'CustomerController@index');
-//Route::post('/customer', 'CustomerController@store');
-Route::delete('/customer', 'CustomerController@destroy');
-
-
-Route::post('/customerregister',[
-'uses'=>'CustomerController@dummycreate',
-'as'=>'addCustomer'
-]);
-*/
-});
-
-//DEBUGGING
-
-	//Route::get('/login/{user}', 'AuthController@login');

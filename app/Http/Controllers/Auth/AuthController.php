@@ -1,5 +1,8 @@
 <?php
 
+/*
+  Handles all of the authorization for the restaurants and customers
+*/
 namespace App\Http\Controllers\Auth;
 
 
@@ -50,6 +53,10 @@ class AuthController extends Controller
     }
 
 
+    /**
+    * Handles the authorization of the regitering of a customer/restaurant
+    * @param $request The register information
+    */
     public function register(Request $request)
     {
 
@@ -105,12 +112,12 @@ class AuthController extends Controller
 
       }
 
-/**
-* [sendEmailConfirmationTo sends an account verification email to the entered address ]
-* @param  String $email the email address of the user whose account is to be confirmed
-* @return String $confirmation_code the confirmation code that is used in the account verification email
+      /**
+      * [sendEmailConfirmationTo sends an account verification email to the entered address ]
+      * @param  String $email the email address of the user whose account is to be confirmed
+      * @return String $confirmation_code the confirmation code that is used in the account verification email
 
- */
+       */
       public function sendEmailConfirmationTo($email){
         $confirmation_code=str_random(30);
         $data=['confirmation_code'=>$confirmation_code];
@@ -148,6 +155,10 @@ class AuthController extends Controller
     }
   }
 
+  /**
+  * Gets the credentials of the user
+  * @param $request Request holding the credentials
+  */
   protected function getCredentials(Request $request)
   {
     return $request->only($this->loginUsername(), 'password');
