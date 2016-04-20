@@ -14,24 +14,38 @@ class Restaurant extends Model
 	protected $primaryKey = 'id';
 	protected $fillable = ['id','companyname','address','province','city','postalcode','phoneno','max_order_price','allow_guests'];
 
+	/**
+		User associated with this restaurant
+	*/
     public function user()
      {
          return $this->belongsTo(User::class, 'id');
      }
 
-
+    /**
+    	List of items in this restaurant's menu
+    */
     public function menu(){
 		return $this->hasMany(Item::class, 'rest_id');
 	}
 
+	/**
+		Categories for this restaurant's menu
+	*/
 	public function categories(){
 		return $this->hasMany(Category::class, 'rest_id');
 	}
 
+	/**
+		Items currently on special for this restaurant
+	*/
 	public function specials(){
 		return $this->hasMany(Special::class, 'rest_id');
 	}
 
+	/**
+		Average customer rating for this restaurant
+	*/
 	public function aveRating(){
 		$aveRating = DB::table("restaurant_average_ratings")->where("restaurant_id", $this->id)->first();
 		if($aveRating == null){
@@ -42,14 +56,23 @@ class Restaurant extends Model
 		}
 	}
 
+	/**
+		List of reviews that are approved for display for this restaurant
+	*/
 	public function reviews(){
 		return $this->hasMany(Review::class, "restaurant_id")->where("is_displaying", 1);
 	}
 
+	/**
+		Set of operating hours for this restaurant
+	*/
 	public function hours(){
 		return $this->hasMany(Hours::class, "rest_ID");
 	}
 
+	/**
+		Restaurant's hours for the current day
+	*/
 	public function todayHours(){
 		$todayHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+1 AND rest_ID = '".$this->id."'");
 		if(sizeOf($todayHours) > 0){
@@ -66,6 +89,9 @@ class Restaurant extends Model
 		}
 	}
 
+	/**
+		Restaurant's hours for the next day
+	*/
 	public function tomorrowHours(){
 		$tomorrowHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+2 AND rest_ID = '".$this->id."'");
 		if(sizeOf($tomorrowHours) > 0){

@@ -11,18 +11,30 @@ class Orders extends Model
 	protected $fillable = ['submit_time','completed','quantity','special_instructions','item_id','restaurant_id', 'customer_id'];
 	public $timestamps = false;
 
+    /**
+        Restaurant this order is to
+    */
     public function restaurant(){
     	return $this->belongsTo(Restaurant::class);
     }
 
+    /**
+        Customer this order belongs to
+    */
     public function customer(){
     	return $this->belongsTo(Customer::class,'customer_id');
     }
 
+    /**
+        User this order belongs to
+    */
     public function user(){
     	return $this->belongsTo(User::class,'customer_id');
     }
 
+    /**
+        Item in this order
+    */
     public function item(){
     	return $this->belongsTo(Item::Class, 'item_id');
     }

@@ -10,10 +10,16 @@ class Option extends Model
 	public $timestamps = false;
 	protected $primaryKey = 'id';
 
+	/**
+		Item this option belongs to
+	*/
 	public function item(){
 		return $this->belongsTo(Item::class);
 	}
 
+	/**
+		Choices for this option
+	*/
 	public function choices(){
 		return $this->hasMany(OptionChoice::class);
 	}

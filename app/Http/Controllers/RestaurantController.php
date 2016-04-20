@@ -513,6 +513,7 @@ public function showrestaurantmoverview(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
   }
+
   $restaurantInfo = Restaurant::where('id',$id)->first();
   $restaurant = Restaurant::where('id',$id)->first();
   $allReviews = DB::table('customer_ratings')

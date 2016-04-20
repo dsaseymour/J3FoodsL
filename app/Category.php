@@ -9,10 +9,16 @@ class Category extends Model{
 	public $timestamps = false;
 	protected $fillable = ['category_order'];
 
+	/**
+		Restaurant that this category belongs to
+	*/
 	public function restaurant(){
 		return $this->belongsTo(Restaurant::class);
 	}
 
+	/**
+		Items in this category
+	*/
 	public function items(){
 		return $this->hasMany(Item::class);
 	}

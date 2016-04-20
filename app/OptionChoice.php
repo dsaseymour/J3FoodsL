@@ -10,7 +10,17 @@ class OptionChoice extends Model
 	public $timestamps = false;
 	protected $primaryKey = 'option_id';
 
+	/**
+		Item this choice is for
+	*/
 	public function item(){
 		return $this->belongsTo(Item::class);
+	}
+
+	/**
+		Option this choice is for
+	*/
+	public function option(){
+		return $this->belongsTo(Option::class);
 	}
 }

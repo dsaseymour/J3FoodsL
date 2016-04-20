@@ -12,20 +12,29 @@ class Customer extends Model
 	protected $fillable = ['id','phoneno','is_guest'];
 	public $timestamps = false;
 
-    //a customer has many restaurant favorites
+    /**
+        Customer's favourites
+    */
     public function favourites(){
         return $this->hasMany('App\CustomerFavourites');
     }
 
+    /*
     public function restaurant()
      {
         return $this->belongsToMany('App\Restaurant');
-     }
+     }*/
 
+    /**
+        Orders in the customer's cart
+    */
     public function cart(){
         return $this->hasMany('App\Orders', 'customer_id')->where('completed', 0);
     }
 
+    /**
+        User associated with this customer
+    */
     public function user(){
         return $this->belongsTo('app\User', 'id');
     }

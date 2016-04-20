@@ -29,10 +29,14 @@ class User extends Authenticatable
 		return $this->hasMany(Item::class, 'rest_id');
 	}*/
 
+    //Moved to customer
     public function favourites(){
         return $this->hasMany('App\CustomerFavourites', 'customer_id');
     }
 
+    /**
+        Customer for this user, if user is customer
+    */
     public function customer(){
         if($this->isRestaurant){
             return null;
@@ -41,6 +45,9 @@ class User extends Authenticatable
         }
     }
 
+    /**
+        Restaurant for this user, user is restaurant
+    */
     public function restaurant(){
         if(!$this->isRestaurant){
             return null;

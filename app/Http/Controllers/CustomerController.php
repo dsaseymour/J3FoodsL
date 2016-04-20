@@ -32,6 +32,10 @@ class CustomerController extends Controller
     $this->middleware('auth');
   }
 
+  /**
+    Returns a sorted list of restaurants based on the set sort method.
+    Closed restaurants will always be sorted to the bottom, and favourites will be sorted to the top of open/closed
+  */
   public function sortrestaurantlist(){
     $sortMethod = isset($_GET["sort"]) ? $_GET["sort"] : "alpha-asc";
 
@@ -101,6 +105,9 @@ class CustomerController extends Controller
   return $restaurants;
 }
 
+/**
+  Filter list of restaurants based on search query
+*/
 public function searchrestaurants(Request $request ){
   $term = $request->term;
   if($term == ""){
@@ -162,6 +169,8 @@ public function searchrestaurants(Request $request ){
     }
 
 
+
+    
   public function resendEmailConfirmationTo($email){
      $confirmation_code=str_random(30);
      $data=['confirmation_code'=>$confirmation_code];
@@ -199,12 +208,17 @@ public function searchrestaurants(Request $request ){
     return redirect()->action('CustomerController@showcustomeroverview');
   }
 
+  /**
+    Display list of restaurants, sorted appropriately
+  */
   public function showcustomeroverview(){
     $restaurants = $this->sortrestaurantlist();
     return view('customercontent.customer-overview',compact('restaurants'));
   }
 
-
+  /**
+    Show menu of restaurant
+  */
   public function showcustomermenu(Restaurant $restaurant){
     $id = $restaurant->id;
     $restaurantInfo = Restaurant::where('id',$id)->first();
@@ -212,6 +226,9 @@ public function searchrestaurants(Request $request ){
 
   }
 
+  /**
+    Get the options for the given item
+  */
   public function itemOptions(Item $item){
     if($item->option_id != null){
       $option = $item->option;
@@ -231,11 +248,13 @@ public function searchrestaurants(Request $request ){
    return view('customercontent.confirmationpage', compact('order'));
  }
 
+  /**
+    Adds an item to the cart
+  */
  public function addItem(Request $request){
   $item = Item::find($_POST["itemid"]);
   $restaurant = Restaurant::find($item->restaurant->id);
     if($restaurant->is_open == 0){//if the restarant is closed
-     // return redirect('/customeroverview')->with('status', 'This restaurant is closed and cannot be ordered from.');
       return redirect('error')->with('error-title', 'Error adding item')->with("error-message", "This restaurant is closed and cannot be ordered from.");
     }
     if(!\Auth::user()->isRestaurant){
@@ -289,6 +308,9 @@ public function searchrestaurants(Request $request ){
     }
   }
 
+  /**
+    Remove an item from the cart
+  */
   public function removeItem($item,$choice){
     if(\Auth::check()) {
       $user = \Auth::user()->id;
@@ -447,6 +469,9 @@ public function showcustomerprofile(){
     return view('rating.restaurantfeedback',$data);
   }
 
+  /**
+    Get restaurant hours
+  */
   public function restHours(Restaurant $restaurant){
     $hours = $restaurant->hours;
     if($hours->count() > 0){

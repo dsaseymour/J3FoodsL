@@ -100,7 +100,6 @@ J3 Foods - Online Food Ordering
                           <span class="glyphicon glyphicon-remove"></span> Cancel Order</a>
                         </td>
                       </tr>
-                      @include('includes.orderdropdown')
                       @endforeach()
                     </tbody>
                   </table>

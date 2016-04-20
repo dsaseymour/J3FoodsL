@@ -22,8 +22,12 @@
 					No options selected
 				@endif
 			@elseif($order->item->option->type == "combo")
+				@if($order->choice != null)
 				{{-- */  $query = DB::table('option_choices')->where('option_id',$order->item->option->id)->where('choice_id',$order->choice)->first(); /* --}}
 				{{$query->name}}
+				@else
+					No Option Selected
+				@endif
 			@else
 				{{$order->choice}}
 			@endif

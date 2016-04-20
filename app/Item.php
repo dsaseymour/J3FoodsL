@@ -11,18 +11,30 @@ class Item extends Model
 	protected $fillable = ['name','price','image','rest_id','category_id'];
 	public $timestamps = false;
 
+	/**
+		Restaurant this item belongs to
+	*/
 	public function restaurant(){
 		return $this->belongsTo(Restaurant::class, 'rest_id');
 	}
 
+	/**
+		Category this item belongs to
+	*/
 	public function category(){
 		return $this->belongsTo(Category::class);
 	}
 
+	/**
+		Special for this item
+	*/
 	public function special(){
 		return $this->belongsTo(Special::class, 'spec_id');
 	}
 
+	/**
+		Option for this item
+	*/
 	public function option(){
 		return $this->hasOne(Option::class, 'item_id');
 	}
