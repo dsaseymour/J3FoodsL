@@ -332,31 +332,11 @@ public function notConfirmed(){
         $items->pickup_delivery=$pickup_delv;
         $items->save();
       }
+
       Event::fire(new OrderWasSubmitted($orders));
     }
   }
-<<<<<<< HEAD
-=======
 
-  public function submitOrder(){
-    if(\Auth::check()) {
-     $user = \Auth::user();
-   }
-
-   $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-
-   foreach($orders as $items){
-    $items->submit_time=Carbon::now();
-    $items->completed='1';
-    $items->quantity=$items->quantity;
-    $items->special_instructions=$items->special_instructions;
-    $items->save();
-  }
-
->>>>>>> refs/remotes/origin/master
-
-  Event::fire(new OrderWasSubmitted($orders));
-}
 
 public function orderconfirmandnotify($order_id){
   if(\Auth::check()) {
