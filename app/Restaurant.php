@@ -13,9 +13,9 @@ class Restaurant extends Model
 	protected $primaryKey = 'id';
 	protected $fillable = ['id','companyname','address','province','city','postalcode','phoneno','max_order_price','allow_guests'];
 
-    public function customer()
+    public function user()
      {
-         //return $this->belongsToMany('Customer');
+         return $this->belongsTo(User::class, 'id');
      }
 
 

@@ -56,13 +56,22 @@
                   <label class="list-group-item-heading">Choose one of</label>
                   <input type="text" class="form-control" name="combo_1">
                   <input type="text" class="form-control" name="combo_2">
+                  <input type="text" class="form-control" name="combo_3">
+                  <input type="text" class="form-control" name="combo_4">
+                  <input type="text" class="form-control" name="combo_5">
+                  <input type="text" class="form-control" name="combo_6">
                 </div>
                 <div id="check_option" class="options collapse select-many">
                   <label class="list-group-item-heading">Checkbox name</label>
                   <input type="text" class="form-control" name="check_name">
                   <label class="list-group-item-heading">Choose any of</label>
+            
                   <input type="text" class="form-control" name="check_1">
                   <input type="text" class="form-control" name="check_2">
+                  <input type="text" class="form-control" name="check_3">
+                  <input type="text" class="form-control" name="check_4">
+                  <input type="text" class="form-control" name="check_5">
+                  <input type="text" class="form-control" name="check_6">
                 </div>
               </div>
             </div>

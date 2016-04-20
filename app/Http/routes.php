@@ -341,7 +341,10 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'createorder',
         ]);
 
-
+    Route::get('/orderdetails/{order}',[
+        'uses'=>'RestaurantController@showDetails',
+        'as'=>'showdetails'
+        ]);
 
     Route::get('/test', function() //danny testing order confirmation
     {

@@ -27,7 +27,8 @@ class MasterController extends Controller
 
 
   public function showhome(){
-          return view('home');
+    $guestemail = 'temp' . rand() . '@temp.com';
+    return view('home',compact('guestemail'));
   }
 
 public function showhotoregister(){

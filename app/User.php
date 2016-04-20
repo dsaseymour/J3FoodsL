@@ -40,4 +40,12 @@ class User extends Authenticatable
             return $this->hasOne('App\Customer', 'id');
         }
     }
+
+    public function restaurant(){
+        if(!$this->isRestaurant){
+            return null;
+        } else {
+            return $this->hasOne(Restaurant::class, "id");
+        }
+    }
 }

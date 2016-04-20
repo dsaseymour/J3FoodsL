@@ -10,8 +10,6 @@ class OptionChoice extends Model
 	public $timestamps = false;
 	protected $primaryKey = 'option_id';
 
-
-
 	public function item(){
 		return $this->belongsTo(Item::class);
 	}

@@ -177,6 +177,10 @@ J3 Foods - Online Food Ordering
     .review .body::after {
       content: close-quote;
     }
+
+    #restaurant-hdrcontainer{
+    background-image: url("http://ellementlife.com/wp-content/uploads/revslider/home-11/slide15-1200x500.jpg");
+  }
   </style>
 @endsection
 
@@ -431,7 +435,6 @@ J3 Foods - Online Food Ordering
             <input type="hidden" value="{{Session::token()}}" name="_token" />
           </form>
         </div>
-        
       </div>
     </div>
   </div>
