@@ -185,7 +185,11 @@ public function searchrestaurants(Request $request ){
  }
 
 
-
+    /**
+     * Validator to validate that the customer updated information is valid
+     *
+     * @param $data Holds the data that needs to be validated
+    */
   protected function validatecustomerupdate(array $data)
     {
       if(\Auth::check()) {
@@ -207,8 +211,10 @@ public function searchrestaurants(Request $request ){
 
   }
 
-
-  public function validatecustomerlogin(Request $request){//Why does this redirect to the method directly below? I remeber it had somethign to do with the url
+  /**
+    Display list of restaurants, sorted appropriately
+  */
+  public function validatecustomerlogin(Request $request){
     return redirect()->action('CustomerController@showcustomeroverview');
   }
 
@@ -241,6 +247,10 @@ public function searchrestaurants(Request $request ){
       return null;
     }
   }
+
+  /*
+   * Shows the customer confirmation page to the customer
+   */
 
   public function showcustomerconfirmation(){
     if(\Auth::check()) {
@@ -344,7 +354,9 @@ public function notConfirmed(){
   return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
 }
 
-
+    /**
+    * Check if the user is confirmed before they place the order
+    */
   public function checkConfirmed(){
     if(\Auth::check()) {
        $user = \Auth::user();
@@ -395,25 +407,31 @@ public function userprofileresendfunction(){
        }
     }
 
+
+/**
+*Shows the addresses for the customer
+**/
 public function showcpeditaddress(){
   return view('customercontent.customer-profile-editaddress');
 }
 
+/**
+* Shows old orders
+*/
 public function showcpeditorders(){
   return view('customercontent.customer-profile-editorders');
 }
 
+/**
+* Displasy the customers profile information to the user
+*/
 public function showcustomerprofile(){
 
   if(\Auth::check()) {
     $id = \Auth::user()->id;
   }
-
-
   $currentUser = User::where('id',$id)->first();
   $currentCustomer = Customer::where('id',$id)->first();
-
-
   if($currentCustomer->is_guest ==1 ){
     return redirect('error')->with('error-title', 'Error')->with("error-message", "Guests cannot edit their profile information");
   }else{
@@ -421,7 +439,9 @@ public function showcustomerprofile(){
   }
 }
 
-  //Add restaurant to favourites
+  /*
+  *Add restaurant to favourites
+  */
   public function addcustomerfavourite(User $restaurant){
     if(\Auth::check()) {
       $cust_id = \Auth::user()->id;
@@ -436,7 +456,9 @@ public function showcustomerprofile(){
     return redirect()->action('CustomerController@showcustomeroverview');
   }
 
-  //Remove restaurant from favourites
+  /*
+  *Remove restaurant from favourites
+  */
   public function deletecustomerfavourite(User $restaurant){
     if(\Auth::check()) {
       $cust_id = \Auth::user()->id;
