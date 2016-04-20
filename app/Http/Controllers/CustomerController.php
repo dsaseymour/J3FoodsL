@@ -317,6 +317,8 @@ public function notConfirmed(){
        $user = \Auth::user();
     }
 
+    $pickup_delv=$_GET['pickup'];
+
     if(($user->confirmed != 1) && ($user->customer->is_guest != 1)){ //if they havent confirmed their email and not a guest
       return response('Unauthorized.', 401);
     } else {
@@ -327,30 +329,14 @@ public function notConfirmed(){
         $items->completed='1';
         $items->quantity=$items->quantity;
         $items->special_instructions=$items->special_instructions;
+        $items->pickup_delivery=$pickup_delv;
         $items->save();
       }
+
       Event::fire(new OrderWasSubmitted($orders));
     }
   }
 
-  public function submitOrder(){
-    if(\Auth::check()) {
-     $user = \Auth::user();
-   }
-
-   $orders = Orders::where('customer_id',$user)->where('completed','0')->get();
-
-   foreach($orders as $items){
-    $items->submit_time=Carbon::now();
-    $items->completed='1';
-    $items->quantity=$items->quantity;
-    $items->special_instructions=$items->special_instructions;
-    $items->save();
-  }
-
-
-  Event::fire(new OrderWasSubmitted($orders));
-}
 
 public function orderconfirmandnotify($order_id){
   if(\Auth::check()) {
