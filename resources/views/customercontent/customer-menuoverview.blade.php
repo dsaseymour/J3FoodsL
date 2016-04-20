@@ -120,8 +120,7 @@ J3 Foods - Online Food Ordering
       padding: 12px;
       background-color: #eeeeee;
       border: 1px solid #dddddd;
-      margin-top: 16px;
-      margin-right: 16px;
+      margin: 16px;
     }
 
     #avgrating {
@@ -179,8 +178,22 @@ J3 Foods - Online Food Ordering
     }
 
     #restaurant-hdrcontainer{
-    background-image: url("http://ellementlife.com/wp-content/uploads/revslider/home-11/slide15-1200x500.jpg");
-  }
+      background-image: url("http://ellementlife.com/wp-content/uploads/revslider/home-11/slide15-1200x500.jpg");
+    }
+
+    #rhdr-info hr {
+      border-color: #888888;
+      margin: 10px 0 10px 0;
+    }
+
+    #all-hours {
+      font-size: 12px;
+      color: #78C3AE;
+      text-decoration: underline;
+      cursor: pointer;
+      float: right;
+      padding-top: 4px;
+    }
   </style>
 @endsection
 
@@ -240,6 +253,25 @@ J3 Foods - Online Food Ordering
 
           <p>
             <span class="glyphicon glyphicon-earphone"></span> {{$restaurantInfo->phoneno}}
+          </p>
+
+          <hr/>
+
+          <h4>
+            Hours
+            <span id="all-hours">See all</span>
+          </h4>
+
+          <p>
+            <strong>Today:</strong>
+            &nbsp;
+            <span id="today-hours">{{$restaurant->todayHours()}}</span>
+          </p>
+
+          <p>
+            <strong>Tomorrow:</strong>
+            &nbsp;
+            <span id="tomorrow-hours">{{$restaurant->tomorrowHours()}}</span>
           </p>
       </div>
       </div>
