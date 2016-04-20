@@ -53,6 +53,9 @@ class Restaurant extends Model
 	public function todayHours(){
 		$todayHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+1 AND rest_ID = '".$this->id."'");
 		if(sizeOf($todayHours) > 0){
+			if(!$todayHours[0]->open){
+				return "Closed";
+			}
 			$openTime = (new Datetime($todayHours[0]->open_time))->getTimestamp();
 			$closeTime = (new DateTime($todayHours[0]->close_time))->getTimestamp();
 			$openTimeS = date("G:i", $openTime);
@@ -64,10 +67,13 @@ class Restaurant extends Model
 	}
 
 	public function tomorrowHours(){
-		$todayHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+2 AND rest_ID = '".$this->id."'");
-		if(sizeOf($todayHours) > 0){
-			$openTime = (new Datetime($todayHours[0]->open_time))->getTimestamp();
-			$closeTime = (new DateTime($todayHours[0]->close_time))->getTimestamp();
+		$tomorrowHours = DB::select("select * from hours where day_ID = WEEKDAY(NOW())+2 AND rest_ID = '".$this->id."'");
+		if(sizeOf($tomorrowHours) > 0){
+			if(!$tomorrowHours[0]->open){
+				return "Closed";
+			}
+			$openTime = (new Datetime($tomorrowHours[0]->open_time))->getTimestamp();
+			$closeTime = (new DateTime($tomorrowHours[0]->close_time))->getTimestamp();
 			$openTimeS = date("G:i", $openTime);
 			$closeTimeS = date("G:i", $closeTime);
 			return $openTimeS."-".$closeTimeS;
