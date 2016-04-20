@@ -118,10 +118,10 @@ J3 Foods - Online Food Ordering
     </div>
     <div  class="list-group-item text-right" id="confirm-page-btn">
     @if($totalprice>($order[0]->restaurant->max_order_price))
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#" disabled>
+    <div method="PUT" class="btn btn-default btn-disabled" data-toggle="modal" data-target="#" disabled>
     <div data-toggle="tooltip" title="Your order total is above the Restaurants' limit"  >
     @elseif((($order[0]->customer->is_guest)==1) && (($order[0]->restaurant->allow_guests)==0))
-    <div method="PUT" class="btn btn-default btn-lg" data-toggle="modal" data-target="#" disabled>
+    <div method="PUT" class="btn btn-default btn-disabled" data-toggle="modal" data-target="#" disabled>
     <div data-toggle="tooltip" title="The Restaurant does not allow guest orders"  >
     @else
     <div method="PUT" class="btn btn-default btn-lg">
