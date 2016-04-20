@@ -1,5 +1,9 @@
 <?php
 
+/**
+  This controller handles all server side interaction which relates to the customer flow
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -481,7 +485,7 @@ public function showcustomerprofile(){
     if(\Auth::check()) {
       $id = \Auth::user()->id;
     }
-//if the user is recorded as having made an order at this restaurant he/she can write a review
+      //if the user is recorded as having made an order at this restaurant he/she can write a review
     if(Orders::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()>0 && CustomerRatings::where('customer_id',\Auth::user()->id)->where('restaurant_id',$request->restaurant_id )->count()==0 )
     {
       $currentUser = CustomerRatings::create([

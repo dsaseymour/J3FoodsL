@@ -1,5 +1,9 @@
 <?php
 
+/*
+  Handles all the server side interaction which has to do with the restaurant flow
+*/
+
 namespace App\Http\Controllers;
 
 
@@ -74,6 +78,10 @@ class RestaurantController extends Controller
       $updateRestaurant->save();
     }
 
+    /**
+    * Validates the restaurants profile update
+    * @param $data the data which holds the profile update information
+    */
     protected function validaterestaurantupdate(array $data){
       if(\Auth::check()) {
         $email = \Auth::user()->email;
@@ -118,7 +126,10 @@ class RestaurantController extends Controller
          return $confirmation_code;
      }
 
-
+    /**
+     * Closes the given restaurant
+     * @param $restaurant the restaurant to close
+     */
     public function closerestaurant(Restaurant $restaurant){
       $open_value = $restaurant->is_open;
       if ($open_value == 0){
@@ -131,6 +142,9 @@ class RestaurantController extends Controller
 
     }
 
+    /**
+    * Shows the set hours page to the restaurant
+    */
     public function showsethours(){
       $dayNumbers = array(1,2,3,4,5,6,7);
       $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
@@ -138,10 +152,10 @@ class RestaurantController extends Controller
       return view('restaurantcontent.restaurant-sethours',compact('dayNumbers','dayStrings', 'dayNames'));
     }
 
-/**
- * [userprofileresendfunction calls the resendEmailConfirmation function to send an email and updates the user to have the newly generated confirmation code]
- * @return View redirects the user to the restaurant profile page after the account verification email has been sent
- */
+    /**
+     * [userprofileresendfunction calls the resendEmailConfirmation function to send an email and updates the user to have the newly generated confirmation code]
+     * @return View redirects the user to the restaurant profile page after the account verification email has been sent
+     */
     public function userprofileresendfunction(){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -153,33 +167,10 @@ class RestaurantController extends Controller
        }
     }
 
-    public function storehours(Request $request){
-      if(\Auth::check()) {
-        $id = \Auth::user()->id;
-      }
-      $this->setDatabaseWithNewHours($request);
-      return redirect()->action('RestaurantController@showrestaurantoverview');
-    }
-
-    protected function setDatabaseWithNewHours(Request $request){
-      if(\Auth::check()) {
-        $id = \Auth::user()->id;
-      }
-      $dayStrings = array("mon","tue","wed","thur","fri","sat","sun");
-
-      $parameters = $request->request->all();
-      //fetched the parameters array from the request object that can take a string as an argument
-      foreach ($dayStrings as $day){
-        $updateHours = new Hours;
-        $updateHours->rest_ID = $id;
-        $updateHours->day_ID = $parameters[$day];
-        $updateHours->open = $parameters[$day . '_open'];
-        $updateHours->open_time = $parameters[$day . '_open_time'] + $parameters[$day . '_open_XM'] . ":00:00";
-        $updateHours->close_time = $parameters[$day . '_close_time'] + $parameters[$day . '_close_XM'] . ":00:00";
-        $updateHours->save();
-      }
-    }
-
+    /**
+    * Stores the restaurants hours
+    * @param $request The hours to set on the restaurant
+    */
     public function updatehours(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -187,6 +178,11 @@ class RestaurantController extends Controller
       $this->updateDatabaseWithNewHours($request);
       return redirect()->action('RestaurantController@showrestaurantoverview');
     }
+
+    /**
+    * Stores the updated store hours in the database
+    * @param $request The updated hours to store
+    */
 
     protected function updateDatabaseWithNewHours(Request $request){
       if(\Auth::check()) {
@@ -209,6 +205,10 @@ class RestaurantController extends Controller
       }
     }
 
+    /**
+    * Updates the order restrictions of the restaurant
+    * @param $request The new restrictions of the restaurant
+    */
     public function updaterestrictions(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -217,6 +217,10 @@ class RestaurantController extends Controller
       return redirect()->action('RestaurantController@showrestaurantoverview');
     }
 
+    /**
+    * Updates the database with the new restrictions
+    * @param $request The new order restrictions
+    */
     protected function updateDatabaseWithNewResrtictions(Request $request){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -228,8 +232,11 @@ class RestaurantController extends Controller
       $updateRestaurant->save();
     }
 
+    /**
+    * Add a new category to the restaurant list
+    * @param $request Holds the category to add
+    */
     public function addcategory(Request $request){
-
       if(\Auth::check()) {
         $id = \Auth::user()->id;
       }
@@ -242,7 +249,10 @@ class RestaurantController extends Controller
 
     }
 
-
+    /**
+    * Deletes the given category from the database
+    * @param $category The category to delete from the database
+    */
     public function deletecategory(Category $category){
 
       $category->delete();
@@ -250,6 +260,10 @@ class RestaurantController extends Controller
 
     }
 
+    /**
+    * Deletes an item from the database
+    * @param $item The item to delete from the database
+    */
     public function deleteitem(Item $item){
 
       $item->delete();
@@ -257,16 +271,11 @@ class RestaurantController extends Controller
 
     }
 
-    public function validateitemupdate(Request $data){
-
-      if($data->option_type == "textbox"){
-        return Validator::make($data->all(), [
-          'text_option' => 'required',
-          ]);
-      }
-
-    }
-
+    /**
+    * Edits the given item with the new given values
+    * @param $item The item to update
+    * @param $request The request which holds the new information for the item
+    */
     public function edititem(Item $item, Request $request ){
 
       if(\Auth::check()) {
@@ -368,6 +377,11 @@ class RestaurantController extends Controller
       return redirect()->action('RestaurantController@showrestaurantmoverview');
     }
 
+
+    /**
+    * Saves the order of the categories
+    * @param $request The requets which holds the information about the category order
+    */
     public function savecategoryorder(Request $request){
       $categoryList = $request->testdata;
 
@@ -381,6 +395,12 @@ class RestaurantController extends Controller
       }
 
     }
+
+
+    /**
+    * Adds the given item to the menu
+    * @param $request Holds the informtion of the item to add to the database
+    */
 
     public function additemtomenu(Request $request){
 
@@ -452,22 +472,26 @@ class RestaurantController extends Controller
   return redirect()->action('RestaurantController@showrestaurantmoverview');
 }
 
+  /**
+  * Shows the history of the restaurant which gives an overview of how the business is doing
+  */
+  public function showrestauranthistory(){
+    if(\Auth::check()) {
+      $id = \Auth::user()->id;
+    }
 
-public function showrestauranthistory(){
-  if(\Auth::check()) {
-    $id = \Auth::user()->id;
+    $currentmonth = Carbon::now()->month;
+    $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
+    $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
+    $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
+    $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
+
+    return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
   }
 
-  $currentmonth = Carbon::now()->month;
-  $currentmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth)->get();
-  $lastmonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-1)->get();
-  $twomonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-2)->get();
-  $threemonthorders=Orders::where('restaurant_id',$id)->whereNotNull('time_out')->where('canceled','0')->whereMonth('time_out','=',$currentmonth-3)->get();
-
-  return view('restaurantcontent.restaurant-history', compact('currentmonthorders','lastmonthorders','twomonthorders','threemonthorders'));
-}
-
-
+  /**
+  * Shows the view which has all the restaurants reviews
+  */
 public function viewreviews(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
@@ -481,6 +505,10 @@ public function viewreviews(){
 
 }
 
+/**
+* Toggles whether a review should be included on the restaurants page
+* @param $reviewer The review that should be seen or unseen
+*/
 public function toggleshowingreview(User $reviewer){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
@@ -503,6 +531,10 @@ public function toggleshowingreview(User $reviewer){
 }
 
 
+/**
+* Deletes a review from the database
+* @param $reviewer The review to delete
+*/
 public function deletereview(User $reviewer){
 
   if(\Auth::check()) {
@@ -517,6 +549,10 @@ public function deletereview(User $reviewer){
 
   return redirect()->action('RestaurantController@viewreviews');
 }
+
+/**
+* Shows the restaurant menu to the restaurant user
+*/
 
 public function showrestaurantmoverview(){
   if(\Auth::check()) {
@@ -556,18 +592,31 @@ public function showrestaurantmoverview(){
   return view('restaurantcontent.restaurant-menuoverview',compact('restaurant','restaurantInfo','reviews','averageReview'));
 }
 
+/**
+* Shows the login page to the restaurant
+*/
 public function restaurantlogin(Request $request){
   return view('restaurantcontent.restaurant-login');
 }
 
+/**
+* Shows the admin page for the restaurant
+*/
 public function showrestaurantmadmin(){
   return view('restaurantcontent.restaurant-menuadmin');
 }
 
+/**
+* Shows the restaurant edit menu
+*/
 public function showrestaurantmedit(){
 
   return view('restaurantcontent.restaurant-menuedit');
 }
+
+/**
+* Shows the restaurant menu overview
+*/
 
 public function showrestaurantoverview(){
   if(\Auth::check()) {
@@ -586,6 +635,9 @@ if(\Request::ajax()){
 }
 
 
+/**
+* Shows the restuarant edit information page
+*/
 public function showrestaurantprofile(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
@@ -596,6 +648,9 @@ public function showrestaurantprofile(){
   return view('restaurantcontent.restaurant-profile',compact('currentUser','currentRestaurant'));
 }
 
+/**
+* Shows the view which lets the restaurant set order restrictions
+*/
 public function showrestaurantrestrictions(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
@@ -606,6 +661,9 @@ public function showrestaurantrestrictions(){
   return view('restaurantcontent.restaurant-profile-restrictions',compact('currentUser','currentRestaurant'));
 }
 
+/**
+* Shows the restaurants hours of operation
+*/
 public function showrestaurantprofilehours(){
   if(\Auth::check()) {
     $id = \Auth::user()->id;
@@ -640,10 +698,6 @@ public function showrestaurantprofilehours(){
       $close_times[] = -1;
     }
   }
-  //dd($open_times);
-  //$temp = array_pop($openFlags[0]);
-  //$temp = $openFlags[0][0];
-  //dd($temp);
 
   return view('restaurantcontent.restaurant-profile-hours',
     compact('dayNumbers', 'dayStrings', 'dayNames',
@@ -651,6 +705,10 @@ public function showrestaurantprofilehours(){
 
 }
 
+/**
+* Completed the given order 
+* @param $order_id The order to complete
+*/
 public function finishorder($order_id){
   $orders = Orders::where('order_id',$order_id)->get();
 
@@ -666,7 +724,10 @@ public function finishorder($order_id){
   return redirect()->action('RestaurantController@showrestaurantoverview');
 }
 
-
+  /**
+  * Cancels the given order
+  * @param $order_id the order to cancel
+  */
 public function cancelorder($order_id){
   $orders = Orders::where('order_id',$order_id)->get();
 
@@ -684,6 +745,11 @@ public function cancelorder($order_id){
   return redirect()->action('RestaurantController@showrestaurantoverview')->with('status', 'Your Order has been canceled ');
 
 }
+
+  /**
+  *Shows the details of the given order
+  *@param $order_id The order to view more details of
+  */
   public function showDetails($order_id){
     $orders = Orders::where("order_id", $order_id)->get();
     return view("includes.order-details-modal", compact("orders"));

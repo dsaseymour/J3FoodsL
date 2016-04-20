@@ -1,5 +1,9 @@
 <?php
 
+/*
+  This controller handles all the registration requests
+*/  
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,16 +14,22 @@ use DB;
 
 class RegisterController extends Controller
 {
+
+  /*
+  * Displays the registration page to the customer
+  */
     public function showcustomerregister(){
-          //return view('auth.register',['isRest' => false]);
           return view('auth.register');
   }
-
+  /*
+  * Displays the registration page to the restaurant
+  */
    public function showrestaurantregister(){
-          //return view('auth.register',['isRest' => true]);
           return view('auth.restaurantRegister');
   }
-
+  /*
+  * returns the view of the restaurant registration information
+  */
   public function showrestaurantregisterinfo(){
           return view('restaurantcontent.restaurant-registration');
   }

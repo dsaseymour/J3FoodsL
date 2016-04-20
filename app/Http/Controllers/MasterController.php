@@ -1,4 +1,8 @@
 <?php
+/*
+  This controller handles the error page aswell as guest access to the website
+*/
+
 
 namespace App\Http\Controllers;
 
@@ -25,21 +29,25 @@ class MasterController extends Controller
           return view('login.forgottenpassword');
   }
 
-
+  /*
+  * handle guest logins
+  */
   public function showhome(){
     $guestemail = 'temp' . rand() . '@temp.com';
     return view('home',compact('guestemail'));
   }
 
-public function showhotoregister(){
-  return view('howto-register');
-}
-  public function postCustomerLogin(Request $request)
-  {
-
-
+  /**
+  * Shows the how to page to the user
+  */
+  public function showhotoregister(){
+    return view('howto-register');
   }
 
+  /*
+  * Redirects to the error page with the given message
+  * @param $request The information of the error
+  */
   public function error(Request $request){
   	$request->session()->reflash();
   	return view('errors.error');

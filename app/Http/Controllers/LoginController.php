@@ -8,8 +8,11 @@ use App\Http\Requests;
 
 class LoginController extends Controller
 {
+
+	/*
+	*	Displays the login page to the user
+	*/
 	public function showcustomerlogin(){
-          //return view('auth.login',['isRest' => false]);
 		if(\Auth::check()) {
 			$isRestaurant = \Auth::user()->isRestaurant;
 
@@ -22,10 +25,4 @@ class LoginController extends Controller
 		$guestemail = 'temp' . rand() . '@temp.com';
 		return view('auth.login',compact('guestemail'));
 	}
-
-	public function showrestaurantlogin(){
-          //return view('auth.login',['isRest' => true]);
-		return view ('auth.restaurantLogin');
-	}
-
 }
