@@ -7,6 +7,12 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
+/**
+ * This Event is linked to the
+ * OrderCancellationNotification listener
+ * which emails a customer if their order has been canceled
+ * i.e. if this event is fired  
+ */
 class OrderWasCanceled extends Event
 {
     use SerializesModels;

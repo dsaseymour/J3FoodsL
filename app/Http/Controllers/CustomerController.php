@@ -169,8 +169,12 @@ public function searchrestaurants(Request $request ){
     }
 
 
+    /**
+     * [resendEmailConfirmationTo sends an account verification email to the entered address ]
+     * @param  String $email the email address of the user whose account is to be confirmed
+     * @return String $confirmation_code the confirmation code that is used in the account verification email
+     */
 
-    
   public function resendEmailConfirmationTo($email){
      $confirmation_code=str_random(30);
      $data=['confirmation_code'=>$confirmation_code];
@@ -335,7 +339,7 @@ public function searchrestaurants(Request $request ){
 
   /**
     This function is called when the user is not confirmed and they try to order
-  */ 
+  */
 public function notConfirmed(){
   return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
 }
@@ -352,7 +356,7 @@ public function notConfirmed(){
       return response('Unauthorized.', 401);
     } else {
       $orders = Orders::where('customer_id',$user->id)->where('completed','0')->get();
-      
+
       foreach($orders as $items){
         $items->submit_time=Carbon::now();
         $items->completed='1';
@@ -376,6 +380,10 @@ public function orderconfirmandnotify($order_id){
  return view('customercontent.orderconfirmed', compact('order'));
 }
 
+/**
+ * [userprofileresendfunction calls the resendEmailConfirmation function to send an email and updates the user to have the newly generated confirmation code]
+ * @return View redirects the user to the restaurant profile page after the account verification email has been sent
+ */
 public function userprofileresendfunction(){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -442,7 +450,11 @@ public function showcustomerprofile(){
   }
 
 
-
+/**
+ * [addfeedback a customer can write a review for a restaurant]
+ * @param  Request $request contains user's submitted review
+ * @return View             redirects the customer and informs to customer as to whether their review was successfully submitted           
+ */
   public function addfeedback(Request $request){
     if(\Auth::check()) {
       $id = \Auth::user()->id;
@@ -464,6 +476,11 @@ public function showcustomerprofile(){
 
   }
 
+/**
+ * [showfeedbackpage returns a view that allows customer to submit feedback]
+ * @param  String $rest_id restaurant id
+ * @return View          returns the view for customers to submit feedback
+ */
   public function showfeedbackpage($rest_id){
     $data['rest_id'] = $rest_id;
     return view('rating.restaurantfeedback',$data);

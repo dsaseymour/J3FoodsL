@@ -104,6 +104,11 @@ class RestaurantController extends Controller
       }
     }
 
+    /**
+     * [resendEmailConfirmationTo sends an account verification email to the entered address ]
+     * @param  String $email the email address of the user whose account is to be confirmed
+     * @return String $confirmation_code the confirmation code that is used in the account verification email
+     */
     public function resendEmailConfirmationTo($email){
          $confirmation_code=str_random(30);
          $data=['confirmation_code'=>$confirmation_code];
@@ -133,6 +138,10 @@ class RestaurantController extends Controller
       return view('restaurantcontent.restaurant-sethours',compact('dayNumbers','dayStrings', 'dayNames'));
     }
 
+/**
+ * [userprofileresendfunction calls the resendEmailConfirmation function to send an email and updates the user to have the newly generated confirmation code]
+ * @return View redirects the user to the restaurant profile page after the account verification email has been sent
+ */
     public function userprofileresendfunction(){
       if(\Auth::check()) {
         $id = \Auth::user()->id;
@@ -435,7 +444,7 @@ class RestaurantController extends Controller
           $checkOptions->save();
         }
       }
-      
+
     }
   }
 
@@ -636,8 +645,8 @@ public function showrestaurantprofilehours(){
   //$temp = $openFlags[0][0];
   //dd($temp);
 
-  return view('restaurantcontent.restaurant-profile-hours', 
-    compact('dayNumbers', 'dayStrings', 'dayNames', 
+  return view('restaurantcontent.restaurant-profile-hours',
+    compact('dayNumbers', 'dayStrings', 'dayNames',
       'openFlags', 'open_times','close_times'));
 
 }

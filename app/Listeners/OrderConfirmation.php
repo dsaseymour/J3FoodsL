@@ -15,8 +15,13 @@ use App\Option;
 use App\OptionChoice;
 use DB;
 
-
-
+/**
+ * This Event listener
+ * responds when an OrderwasSubmitted event is fire
+ * when a customer makes an order
+ * this listener sends all the appropriate emails including: order summaries,
+ * a request for ratings/feedback
+    */
 class OrderConfirmation
 {
     /**

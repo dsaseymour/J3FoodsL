@@ -15,7 +15,12 @@ use App\Option;
 use App\OptionChoice;
 use DB;
 
-
+/**
+ * This Event listener
+ * responds when an OrderwasCanceled event is fire
+ * when a restaurant cancels an order an email is send to the respective
+ * customer to inform them that the order was canceled
+ */
 class OrderCancellationNotification
 {
     /**
