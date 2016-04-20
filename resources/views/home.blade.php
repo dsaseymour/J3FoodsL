@@ -18,11 +18,11 @@ J3 Foods - Online Food Ordering
    width: 100%;
    margin:0px;
    top:-50px;
-   /* background-image: url("http://i.imgur.com/eIz2pGr.jpg"); */
-   background-image: url("http://i.imgur.com/OMdN4u7.jpg");
+    background-image: url("http://i.imgur.com/eIz2pGr.jpg"); 
+   /*background-image: url("http://i.imgur.com/OMdN4u7.jpg");*/
    background-size: cover;
-   /* background-position-y: 80%;  for commented out image*/
-   background-position-y:45%;
+    background-position-y: 80%;  
+   /*background-position-y:45%;*/
  }
 
  #login {
