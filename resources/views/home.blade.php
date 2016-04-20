@@ -14,21 +14,28 @@ J3 Foods - Online Food Ordering
 <style>
   .image { 
    position: relative; 
-   width: 800px; 
-   margin:auto;
+   height:100vh;
+   width: 100%;
+   margin:0px;
+   top:-50px;
+   /* background-image: url("http://i.imgur.com/eIz2pGr.jpg"); */
+   background-image: url("http://i.imgur.com/OMdN4u7.jpg");
+   background-size: cover;
+   /* background-position-y: 80%;  for commented out image*/
+   background-position-y:45%;
  }
 
  #login {
   position: absolute; 
   top: 45%; 
-  left: 25%; 
+  left: 34%; 
   width: 100%;
 }
 
 #guest{
   position: absolute; 
   top: 45%;
-  left: 60%;
+  left: 50%;
   color:white;
 }
 
@@ -49,9 +56,42 @@ h2 {
   width:20%;
 }
 
-.btn-guest{
- width:500%;
+/* New Styling*/
+
+body {
+  overflow:hidden;
+  margin:0px !important;
 }
+
+.header-textbox {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.btn-flat {
+  border: 0px;
+  border-radius:25px;
+  width:150px;
+}
+
+.btn-flat:hover {
+  background-color: rgba(0,0,0,0.9);
+}
+
+.the-buttons {
+  max-width:400px;
+}
+
+h1 {
+    padding-top: 2%;
+    color: white;
+    font-size: 70px;
+    margin-left: 25%;
+    max-width:700px;
+    text-align:center;
+}
+
+
+
 </style>
 @endsection
 
@@ -59,10 +99,16 @@ h2 {
 @section('content')
 
 <div class ="image">
-  <img src="http://www.letsgotospain-event.net/wp-content/uploads/2015/04/food-and-wine-tours-spain.jpg"/>
-  <span id="login">
+<!--   <img src="http://imgur.com/eIz2pGr.jpg"/> -->
+  
+  <div class="header-textbox">
+    <h1>Welcome to J3 Foods!</h1>
+  </div>
+
+  <div class="the-buttons">
+    <span id="login">
     <a href= "{{ route('logincust')    }}"> 
-      <button type="button" class="button btn-login btn-primary" id="landinglogin-cus" >Login</button>
+      <button type="button" class="button btn-login btn-flat" id="landinglogin-cus" >Login</button>
     </a> 
   </span>
   <span id="guest">
@@ -75,11 +121,12 @@ h2 {
       <input type="hidden" class="form-control" name="password" value="password">
       <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
-        <button type="submit" class="btn-guest btn-link btn-login btn-primary" href="">Guest</button>
+        <button type="submit" class="btn-login btn-flat" href="">Guest</button>
         </div>
       </div>
     </form>
   </span>
+  </div>
 
 </div>
 
