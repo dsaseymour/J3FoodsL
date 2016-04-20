@@ -294,11 +294,18 @@ public function searchrestaurants(Request $request ){
       $user = \Auth::user()->id;
     }
 
+    if($choice == -1){ // if the item doesnt have an option
     $item = DB::table('orders')
-        ->where('item_id',$item)
-        ->where('completed',0)
-        ->where('choice',$choice)
-        ->delete();
+      ->where('item_id',$item)
+      ->where('completed',0)
+      ->delete();
+    }else{
+      $item = DB::table('orders')
+      ->where('item_id',$item)
+      ->where('completed',0)
+      ->where('choice',$choice)
+      ->delete();
+    }
 
     return redirect()->action('CustomerController@showcustomerconfirmation');
 

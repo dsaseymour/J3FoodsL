@@ -361,7 +361,7 @@ Route::group(['middleware' => ['web']], function () {
         'as'=>'showdetails'
         ]);
 
-    Route::get('/test', function() //danny testing order confirmation
+    Route::get('/test', function() 
     {
       //  return view('email.ratingrequest');
         return view('debugging');
