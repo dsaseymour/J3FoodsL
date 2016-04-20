@@ -171,16 +171,7 @@ public function searchrestaurants(Request $request ){
      return $confirmation_code;
  }
 
-public function userprofileresendfunction(){
-  if(\Auth::check()) {
-    $id = \Auth::user()->id;
-    $updateUser = User::find($id);
-   $ccode=$this->resendEmailConfirmationTo($updateUser->email);
-   $updateUser->confirmation_code=$ccode;
-   $updateUser->save();
-   return redirect('/customerprofile')->with('status', 'Your Account Verification Email was successfully sent. Be sure to check your spam folder. ');
-   }
-}
+
 
   protected function validatecustomerupdate(array $data)
     {
@@ -315,7 +306,7 @@ public function userprofileresendfunction(){
 
   /**
     This function is called when the user is not confirmed and they try to order
-  */
+  */ 
 public function notConfirmed(){
   return redirect('error')->with('error-title', 'Error placing order')->with("error-message", "You have not confirmed your account, please check your email and confirm your account.");
 }
@@ -330,7 +321,7 @@ public function notConfirmed(){
       return response('Unauthorized.', 401);
     } else {
       $orders = Orders::where('customer_id',$user->id)->where('completed','0')->get();
-
+      
       foreach($orders as $items){
         $items->submit_time=Carbon::now();
         $items->completed='1';
