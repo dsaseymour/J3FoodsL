@@ -5,9 +5,6 @@
     <li class="nav-item" id="cpcontent-profile">
       <a class="nav-link" href="{{ route('customerprofilelink'  ) }}">Edit Information </a>
     </li>
-    <li class="nav-item" id="cpcontent-history">
-      <a class="nav-link" href="{{ route('showcpeditorderslink'  ) }}">Order History</a>
-    </li>
   </ul>
 </div>
 </div>

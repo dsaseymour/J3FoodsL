@@ -73,6 +73,7 @@ p{
 
 .buttons-and-form{
     padding-top: 6%;
+    margin:0;
 }
 
 .btn-register-customer{
