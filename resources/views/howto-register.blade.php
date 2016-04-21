@@ -13,9 +13,14 @@ J3 Foods - Online Food Ordering
     list-style: decimal inside;
     padding-left: 2%;
   }
+
+  #container{
+    background: rgba(256, 256, 256, 0.5);
+    border-radius: 15px;
+  }
 </style>
 @section('content')
-<div class="col-md-4 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2" id="container">
   <h2><u>User Manual</u></h3>
   <h2>Login and Registration</h2>
   <div class="row">

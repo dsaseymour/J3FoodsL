@@ -8,10 +8,6 @@ J3 Foods - Online Food Ordering
 <style>
 
     /* New Styling */
-
-
-
-
    .window{
     top: 50px;
     margin-left:25%;
