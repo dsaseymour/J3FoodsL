@@ -4,7 +4,9 @@
 			<td>Quantity</td>
 			<td>Menu Item</td>
 			<td>Options</td>
+			<td>Price</td>
 		</tr>
+		{{-- */ $totalPrice = 0;/* --}}
 		@foreach($orders as $order)
 		<tr>
 			<td>{{$order->quantity}}</td>
@@ -35,7 +37,13 @@
 			@else
 			<td></td>
 			@endif
+		<td>{{-- */$price = $order->item->price * $order->quantity;/* --}} {{$price}}</td>	
 		</tr>
+		{{-- */$totalPrice = $totalPrice + $price;/* --}}
 		@endforeach
+		<tr>
+			<td>Total Price:</td>
+			<td>{{$totalPrice}}</td>
+		</tr>
 	</tbody>
 </table>
