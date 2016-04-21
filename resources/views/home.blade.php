@@ -6,36 +6,22 @@ J3 Foods - Online Food Ordering
 
 
 
-@section('navigation')
-@include('includes.topbar')
-@endsection
+
 
 @section("styles")
 <style>
-  .image { 
-   position: relative; 
-   height:100vh;
-   width: 100%;
-   margin:0px;
-   top:-50px;
-    background-image: url("http://i.imgur.com/eIz2pGr.jpg"); 
-   /*background-image: url("http://i.imgur.com/OMdN4u7.jpg");*/
-   background-size: cover;
-    background-position-y: 80%;  
-   /*background-position-y:45%;*/
- }
+
+
 
  #login {
   position: absolute; 
-  top: 45%; 
-  left: 34%; 
-  width: 100%;
+  color:white;
+  left: 25%; 
 }
 
 #guest{
   position: absolute; 
-  top: 45%;
-  left: 50%;
+  right: 25%;
   color:white;
 }
 
@@ -59,7 +45,7 @@ h2 {
 /* New Styling*/
 
 body {
-  overflow:hidden;
+  overflow:auto;
   margin:0px !important;
 }
 
@@ -78,7 +64,8 @@ body {
 }
 
 .the-buttons {
-  max-width:400px;
+  max-width:40%;
+  padding-top:15%;
 }
 
 h1 {
@@ -86,7 +73,7 @@ h1 {
     color: white;
     font-size: 70px;
     margin-left: 25%;
-    max-width:700px;
+    max-width:50%;
     text-align:center;
 }
 
@@ -106,26 +93,19 @@ h1 {
   </div>
 
   <div class="the-buttons">
-    <span id="login">
     <a href= "{{ route('logincust')    }}"> 
-      <button type="button" class="button btn-login btn-flat" id="landinglogin-cus" >Login</button>
+      <button id="login"type="button" class="button btn-login btn-flat" id="landinglogin-cus" >Login</button>
     </a> 
-  </span>
-  <span id="guest">
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register')}}">
+    <form  role="form" method="POST" action="{{ url('/register')}}">
       {!! csrf_field() !!}
       <input type="hidden" class="form-control" name="isRestaurant" value="0">
       <input type="hidden" class="form-control" name="isGuest" value="1">
       <input type="hidden" class="form-control" name="name" value="guest">
       <input type="hidden" class="form-control" name="email" value={{$guestemail}}>
       <input type="hidden" class="form-control" name="password" value="password">
-      <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-        <button type="submit" class="btn-login btn-flat" href="">Guest</button>
-        </div>
+      <button id="guest" type="submit" class="btn-login btn-flat" href="">Guest</button>
       </div>
     </form>
-  </span>
   </div>
 
 </div>

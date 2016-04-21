@@ -7,6 +7,13 @@ J3 Foods - Online Food Ordering
 @include('includes.restaurant-topbar')
 @endsection
 
+@section("styles")
+<style>
+body{
+  background-image: none;
+}
+</style>
+@endsection
 
 @section('content')
 @include('includes.restaurant-nav')

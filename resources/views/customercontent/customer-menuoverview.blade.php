@@ -9,6 +9,10 @@ J3 Foods - Online Food Ordering
 
 @section("styles")
   <style>
+
+  body{
+        background-image: none;
+  }
     .menu-items {
       display: block;
       border: none;

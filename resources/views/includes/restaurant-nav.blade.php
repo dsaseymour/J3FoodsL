@@ -1,4 +1,12 @@
-<div id="restaurant-navbar " class="container topbar" >
+<style>
+#restaurant-navbar{
+  width: 85%;
+    border-radius: 6px;
+}
+</style>
+
+
+<div id="restaurant-navbar" class="container topbar" >
   <div class="row">
   <ul class="nav nav-pills">
     <!-- would need to use javascript to update the active tab when clicked? -->

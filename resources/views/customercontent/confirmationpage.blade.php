@@ -7,6 +7,19 @@ J3 Foods - Online Food Ordering
 @include('includes.customer-topbar')
 @endsection
 
+@section("styles")
+<style>
+h1{
+  background: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    width: 20%;
+    border: 0px;
+    border-radius: 25px;
+}
+</style>
+@endsection
+
 
 @section('content')
 

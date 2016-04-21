@@ -15,7 +15,12 @@ J3 Foods - Error
   		border-radius: 4px;
   		color: #004d99;
   		text-align: center;
+
   	}
+
+    .review-box{
+      padding-top: 1%;
+    }
 
   	#title {
   		font-weight: bolder;
@@ -36,7 +41,7 @@ J3 Foods - Error
 
 @section('content')
 @include('includes.restaurant-nav')
-	<div class="row">
+	<div class="row review-box">
 		<div class="spacer col-lg-4 col-md-3 col-sm-2 col-xs-1"></div>
 		<div id="reviews" class="container col-lg-4 col-md-6 col-sm-8 col-xs-10">
 			<h1 id="title">Reviews</h1>

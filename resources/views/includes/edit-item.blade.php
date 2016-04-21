@@ -82,9 +82,14 @@
                 <label class="list-group-item-heading">Choose one of</label>
                 @if($item->option_id != null) 
                   @if($item->option->type == "combo")
+                  {{-- */$currentorder=1;/* --}}
                     @foreach($item->option->choices as $choice)
-                      <input type="text" class="form-control" name="combo_{{$choice->choice_id}}" value="{{$choice->name}}">
+                      <input type="text" class="form-control" name="combo_{{$currentorder}}" value="{{$choice->name}}">
+                       {{-- */$lastid=$currentorder; $currentorder = $currentorder + 1;/* --}}
                     @endforeach
+                    @for ($i = $lastid; $i < 6; $i++)
+                    <input type="text" class="form-control" name="combo_{{$i}}">
+                    @endfor
                   @else
                   <input type="text" class="form-control" name="combo_1">
                   <input type="text" class="form-control" name="combo_2">
@@ -108,9 +113,15 @@
                 <label class="list-group-item-heading">Choose any of</label>
                 @if($item->option_id != null) 
                   @if($item->option->type == "check")
+                  {{-- */$currentorder=1;/* --}}
                     @foreach($item->option->choices as $choice)
-                    <input type="text" class="form-control" name="check_{{$choice->choice_id}}" value="{{$choice->name}}">
+                    <input type="text" class="form-control" name="check_{{$currentorder}}" value="{{$choice->name}}">
+
+                    {{-- */$lastid=$currentorder; $currentorder = $currentorder + 1;/* --}}
                     @endforeach
+                    @for ($i = $lastid; $i < 6; $i++)
+                    <input type="text" class="form-control" name="combo_{{$i}}">
+                    @endfor
                     @else
                       <input type="text" class="form-control" name="check_1">
                       <input type="text" class="form-control" name="check_2">

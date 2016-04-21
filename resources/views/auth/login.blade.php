@@ -3,38 +3,24 @@
 J3 Foods - Online Food Ordering
 @endsection
 
-@section('navigation')
-@include('includes.topbar')
-@endsection
 
 @section("styles")
 <style>
 
-/* New Styling */
+    /* New Styling */
 
 
-.image { 
-   position: relative; 
-   height:100vh;
-   width: 100%;
-   margin:0px;
-   top:-50px;
-    background-image: url("http://i.imgur.com/eIz2pGr.jpg"); 
-   /*background-image: url("http://i.imgur.com/OMdN4u7.jpg");*/
-   background-size: cover;
-    background-position-y: 80%;  
-  /* background-position-y:45%;*/
- }
 
- .window{
+
+   .window{
     top: 50px;
     margin-left:25%;
     width:50%;
 
- }
+}
 
- body {
-  overflow:hidden;
+body {
+  overflow:auto;
   margin:0px !important;
 }
 
@@ -56,23 +42,51 @@ J3 Foods - Online Food Ordering
 h1 {
     padding-top: 2%;
     color: white;
-    font-size: 70px;
+    font-size: 65px;
     margin-left: 25%;
-    max-width:700px;
+    max-width:50%;
     text-align:center;
 }
 
-.btn-customer{
-    margin-right:13%;
+/*.btn-customer{
+    padding-top: 8%;
+    padding-left: 10%;
+    position: absolute;
 }
 
+.btn-restaurant{
+    padding-left: 85%;
+    padding-top: 8%;
+    position: absolute;
+}*/
+
 p{
-   
+
     color: white;
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 10%;
     max-width:80%;
     text-align:center;
+}
+
+/*.btn-guest{
+    width:10%;
+    padding-left:40%;
+    padding-top:3%;
+}*/
+
+.buttons-and-form{
+    padding-top: 6%;
+}
+
+.btn-register-customer{
+    padding-left: 7%;
+    padding-top: 6%;
+}
+
+.btn-register-rest{
+    padding-left: 5%;
+    padding-top: 6%;
 }
 
 </style>
@@ -81,92 +95,81 @@ p{
 
 @section('content')
 
-<div class="container image">
+<div class="image">
 
-<!--   <img src="http://imgur.com/eIz2pGr.jpg"/> -->
-  
-  <div class="header-textbox">
-    <h1>Welcome to J3 Foods!</h1>
-  </div>
+    <!--   <img src="http://imgur.com/eIz2pGr.jpg"/> -->
 
-  
-    <p>
-        Are you  hungry but don't want to leave the house? Here at J3 foods, we ensure that you can order delicious food right to your door! oods, we ensure that you can order delicious food right to your door!oods, we ensure that you can order d
-    </p>
-  <p id="guest">
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register')}}">
-      {!! csrf_field() !!}
-      <input type="hidden" class="form-control" name="isRestaurant" value="0">
-      <input type="hidden" class="form-control" name="isGuest" value="1">
-      <input type="hidden" class="form-control" name="name" value="guest">
-      <input type="hidden" class="form-control" name="email" value={{$guestemail}}>
-      <input type="hidden" class="form-control" name="password" value="password">
-      <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-        <button type="submit" class="btn-login btn-flat" href="">Guest</button>
-        </div>
-      </div>
-    </form>
-  </p>
+    <div class="header-textbox">
+        <h1>Welcome to J3 Foods!</h1>
+        <p>
+            Are you hungry but don't want to leave the house? Here at J3 foods, we ensure that you can order delicious food right to your door!
+        </p>
+    </div>
 
 
+<div class="row buttons-and-form">
+    <div class="col-md-3 btn-register-customer">
+        <a class="btn btn-primary " href="{{ route('registercustomer') }}">Register As Customer</a>
+    </div>
+    <div class="col-md-6 ">
+        <div class="panel panel-default">
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">
+                <!-- WE NEED THIS ACTION TO BE WORKING-->
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    {!! csrf_field() !!}
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 window">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <!-- WE NEED THIS ACTION TO BE WORKING-->
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {!! csrf_field() !!}
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">E-Mail Address</label>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                                @endif
-                            </div>
+                            @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Password</label>
 
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" name="password">
 
-                                @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                                @endif
-                            </div>
+                            @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i><span>Login</span>
-                                </button>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-btn fa-sign-in"></i><span>Login</span>
+                            </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>   
-                        <div class="form-group">
-                            <div class=" col-md-offset-2">
-                                <a class="btn btn-primary btn-customer" href="{{ route('registercustomer') }}">Register As Customer</a>
-                                <a class="btn btn-primary" href="{{ route('registerrestaurant') }}">Register As Restaurant</a>
-                            </div>
+                            <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                         </div>
-                    </form>
+                    </div>   
+
+
+
+
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+    <div class="col-md-3 btn-register-rest">
+       <a class="btn btn-primary " href="{{ route('registerrestaurant') }}">Register As Restaurant</a>
+   </div>
+</div>
+</div>
+</div>
+
 </div>
 @endsection

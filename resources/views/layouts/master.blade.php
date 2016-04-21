@@ -6,6 +6,20 @@
               <meta http-equiv='x-ua-compatible' content='ie=edge'/>
               <title>@yield('title')</title>
 <!-- CSS -->
+<style>
+body{
+position: relative; 
+       height:100%;
+       width: 100%;
+      
+       background-image: url("http://i.imgur.com/eIz2pGr.jpg"); 
+       /*background-image: url("http://i.imgur.com/OMdN4u7.jpg");*/
+       background-size: cover;
+       background-position-y: 80%;  
+       /* background-position-y:45%;*/
+     }
+
+</style>
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/reset.css') }}" />
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/jquery-ui.min.css') }}" />
               <link rel='stylesheet' type='text/css' href="{{ URL::to('css/jquery-ui.structure.min.css') }}" />
